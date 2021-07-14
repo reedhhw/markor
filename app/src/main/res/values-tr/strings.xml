@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Klasör Oluştur</string>
     <string name="create_new_document">Yeni belge oluştur</string>
     <string name="move">Taşı</string>
+    <string name="copy">Kopyala</string>
     <string name="info">Bilgi</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Dosya/dizin zaten var! Lütfen farklı bir ad kullanın</string>
     <string name="import_from_device">Cihazdan içe aktar</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Klasör seç</string>
     <string name="edit">Düzenle</string>
     <string name="search_documents">Belgeleri ara</string>
-    <string name="share_to_arrow">Şununla paylaş…</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Şununla paylaş…</string>
     <string name="share">Paylaş</string>
     <string name="search">Ara</string>
     <string name="display_converted_markup">Dönüştürülmüş markup biçiminde görüntüleyin</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Dosyalar ve klasörler</string>
     <string name="document_browser">Belge görüntüleyici</string>
     <string name="file_browser">Dosya gezgini</string>
+    <string name="set_due_date">Bitiş tarihi belirle</string>
+    <string name="insert_replace_date">Tarih gir</string>
     <string name="create_note" needed="false">Not Oluştur</string>
     <string name="special_documents" needed="false">Özel belgeler</string>
     <string name="keep_screen_on" needed="false">Ekranı açık tut</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">İki veya daha fazla boşluk içeren satırların sonundaki boşlukları vurgula</string>
     <string name="use_monospace_for_code">Kod için monospace kullan</string>
     <string name="disable_code_block_highlight">Kod kalıpları için vurgulamayı devre dışı bırak</string>
+    <string name="auto_renumber_ordered_list">Sıralı listeleri otomatik olarak yeniden numaralandır</string>
+    <string name="auto_renumber_ordered_list_slowdown">Bu seçenek uygulama performansını etkileyebilir.</string>
     <string name="use_different_fonttype_slow_down">Farklı bir yazı tipi türünü kullan. Yazı tipi türünü dinamik olarak değiştirmek, uygulamanın performansını etkiler.</string>
     <string name="general">Genel</string>
     <string name="resources">Kaynaklar</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Sayfa Aşağı (Page Down)</string>
     <string name="move_text_one_line_up">Metni bir satır yukarı taşı</string>
     <string name="move_text_one_line_down">Metni bir satır aşağı taşı</string>
+    <string name="start_new_line_below">Aşağıda yeni satıra başla</string>
     <string name="key_pos_1">Satır Başlangıcı (Pos Home)</string>
     <string name="key_pos_end">Satır Sonu (Pos End)</string>
     <string name="key_pos_1_document">Belge Başlangıcı</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Bu uygulamayı diğer dillere çevirin</string>
     <string name="source_code">Kaynak Kodu</string>
     <string name="project_license">Proje Lisansı</string>
-    <string name="project_contribution_info">Proje katkıda bulunma rehberi</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Bu projeye nasıl katkıda bulunacağınıza dair daha fazla bilgi alın</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Projeye kod yazarak katkıda bulunun. Yeni gelenler de dahil olmak üzere herkes kabul edilir</string>
     <string name="project_team">Proje Ekibi</string>
     <string name="contributors_public_add_yourself_description">Katkıda bulunanlarla ilgili bilgileri gösterin. Katkıda bulunanlar, katkıdan sonra burada gösterilmeleri için bilgilerini sağlayabilir</string>
@@ -309,12 +313,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Yeniden Yükle</string>
     <string name="wrap_words">Kelimeleri kaydır</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Metin ekran genişliğine sığmıyorsa yumuşak ara ver. Başka şekilde yatay kaydırmayı etkinleştirir.</string>
-    <string name="recursive_search_in_current_directory">Geçerli dizinde özyinelemeli arama. Sorgu yıldız (*) içeriyorsa, regex search kullanılır, aksi halde sorgunun içerip içermediğini kontrol edin.</string>
     <string name="always_open_with_this_app">Her zaman bu uygulamayla aç</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Liste dosya uzantısını içerdiğinde dosyaları her zaman bu uygulamayla aç. Örneğin web dosyalarını ve dosya uzantısı olmayan dosyaları düzenlemek istiyorsanız \'Yok, .html, .css, .js\' seçeneğini kullanın.</string>
     <string name="template">Şablon</string>
     <string name="send_debug_log">Hata Ayıklama Günlüğü Gönder</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Geliştiricilere hata ayıklama bilgisi göndererek yardım edin. Veri, e-posta uygulamanız aracılığıyla e-posta ile gönderilir ve gönderilmeden önce tüm gönderilen verileri görebilirsiniz. Etkinleştirildiğinde, üst menüde ek bir \"Hata ayıklama günlüğü gönder\" seçeneğini bulabilirsiniz. E-posta taslağını oluşturur.</string>
     <string name="print_pdf">Yazdır / PDF</string>
     <string name="bigger_headings">Daha büyük başlıklar</string>
     <string name="increase_text_size_of_headings_according_to_level">Başlıkların metin boyutunu seviyeye göre artırın (# h1, ## h2. ### h3…)</string>
@@ -328,7 +330,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Okunuyor</string>
     <string name="read">Oku</string>
     <string name="table">Tablo</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Ne kadar sütun? Bir tablo başlatmak için tablo düğmesine uzun basın (başlık ekle), bir satır eklemek için kısa basın.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Kaç sütun var? Bir tablo başlatmak için tablo düğmesine uzun basın (başlık ekleyin), satır eklemek için kısa basın.</string>
     <string name="example_of_a_markdown_table">Markdown tablosu örneği</string>
     <string name="delete_lines">Satırları sil</string>
     <string name="unordered_list">Sırasız liste</string>
@@ -343,8 +345,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Başlık 1</string>
     <string name="heading_2">Başlık 2</string>
     <string name="heading_3">Başlık 3</string>
+    <string name="heading_4">Başlık 4</string>
+    <string name="heading_5">Başlık 5</string>
     <string name="bold">Kalın</string>
     <string name="italic">İtalik</string>
+    <string name="highlighted">Vurgulanmış</string>
     <string name="strikeout">Üstü çizili</string>
     <string name="inline_code">Satır içi kod</string>
     <string name="horizontal_line">Yatay çizgi</string>
@@ -362,8 +367,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Gerekli</string>
     <string name="append_human_readable_uuid_to_new_tasks">Yeni görevlere insan tarafından okunabilen UUID ekle</string>
     <string name="action_order">Eylem sırası</string>
+    <string name="toggle_action_visibility">Eylem görünürlüğünü değiştir</string>
     <string name="load_default_settings">Varsayılan ayarları yükle</string>
     <string name="drag">Sürükle</string>
+    <string name="created">Oluşturuldu</string>
     <string name="file_encryption_password">Dosya şifreleme parolası</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Parola ayarlanmadı, şifrelenemiyor veya şifre çözülemiyor.\nParola ayarlamak için Ayarlar -&gt; Genel -&gt; Parola menüsüne gidin.</string>
     <string name="encrypt_file_content">Dosya içeriğini şifrele</string>
@@ -371,4 +378,33 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Dosya içeriğinin şifresi çözülemedi. Yanl parola mı kullandınız? Dosya geekten Markors AES şifrelemesi ile şifrelenmiş mi?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Parola zaten ayarlanmış. Yeni bir parola belirlemek mevcut parolanın üzerine yazacaktır ve parolayı unutmanız durumunda dosyalara artık erişemeyebilirsiniz.</string>
     <string name="code_block">Kod kalıbı</string>
+    <string name="add_completion_date">Tamamlanma tarihi ekle</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Tamamlandı olarak işaretlerken yapılacak işler için tamamlanma tarihi ekleyin</string>
+    <string name="file_description_format">Dosya açıklama biçimi</string>
+    <string name="file_description_format_dialog">Dosya tarayıcısında her dosyanın altındaki açıklamanın biçimi. Dosya boyutunu göstermek için FS\'nin eklenmesiyle Android\'in SimpleDateFormat kurallarına uyar. Yerel ayarınız için varsayılan biçimi kullanmak için boş bırakın.\n\nÖrnek giriş:\nFS yyyy MMM dd hh:mm:ss aa\nçıktı biçimi:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Varsayılan değer yükleniyor</string>
+    <string name="file_settings">Dosya ayarları</string>
+    <string name="search_and_replace">Ara / Değiştir</string>
+    <string name="search_for">Bunun için ara</string>
+    <string name="replace_with">Şununla değiştir</string>
+    <string name="replace_once">Değiştir (1)</string>
+    <string name="replace_all">Tümünü değiştir</string>
+    <string name="matches">Eşleşmeler</string>
+    <string name="search_replace_pattern_error_message">Desen hatasını arayın veya değiştirin.</string>
+    <string name="backup_settings">Ayarları yedekle</string>
+    <string name="restore_settings">Ayarları geri yükle</string>
+    <string name="failed_to_create_backup">Yedek oluşturma başarısız oldu</string>
+    <string name="export_settings_to_json_file">Ayarları json dosyasına aktar</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Yedek json dosyasından ayarları içe aktarın. Başarılı olursa, uygulama yeniden başlatılır.</string>
+    <string name="failed_to_restore_settings_from_backup">Yedeklemeden ayarlar geri yüklenemedi</string>
+    <string name="newline_is_new_paragraph">Yenisatır = yeni paragraf</string>
+    <string name="keep_both">Her ikisini de koru</string>
+    <string name="skip">Atla</string>
+    <string name="overwrite">Üzerine yaz</string>
+    <string name="keep_both_all">İkisini de (tümünü) tut</string>
+    <string name="skip_all">Atla (tümünü)</string>
+    <string name="overwrite_all">Üzerine yaz (tümünün)</string>
+    <string name="copy_move_conflict_message">\'%s\' zaten %s içinde var</string>
+    <string name="additional_contexts_and_projects">Ek bağlamlar ve projeler</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Boşlukla ayrılmış @bağlamları ve +projeleri girin. Bunlar her zaman todo.txt ekleme diyaloglarında görünecektir.</string>
 </resources>

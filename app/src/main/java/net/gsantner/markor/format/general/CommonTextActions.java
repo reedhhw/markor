@@ -10,7 +10,6 @@
 package net.gsantner.markor.format.general;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StringRes;
 import android.text.Editable;
@@ -25,13 +24,10 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import net.gsantner.markor.R;
 import net.gsantner.markor.ui.SearchOrCustomTextDialogCreator;
 import net.gsantner.markor.ui.hleditor.HighlightingEditor;
-import net.gsantner.markor.util.AppSettings;
 import net.gsantner.opoc.format.plaintext.PlainTextStuff;
 import net.gsantner.opoc.util.Callback;
 import net.gsantner.opoc.util.ContextUtils;
 import net.gsantner.opoc.util.StringUtils;
-
-import java.util.Arrays;
 
 @SuppressWarnings("WeakerAccess")
 public class CommonTextActions {
@@ -56,24 +52,18 @@ public class CommonTextActions {
     public static final int ACTION_JUMP_BOTTOM_TOP_ICON = R.drawable.ic_vertical_align_center_black_24dp;
     public static final String ACTION_JUMP_BOTTOM_TOP = "tmaid_common_jump_to_bottom";
 
-    public static final String ACTION_INDENT = "tmaid_common_indent";
-
-    public static final String ACTION_DEINDENT = "tmaid_common_deindent";
+    public static final String ACTION_MOVE_UP = "tmaid_common_move_text_one_line_up";
+    public static final String ACTION_MOVE_DOWN = "tmaid_common_move_text_one_line_down";
+    public static final String ACTION_NEW_LINE_BELOW = "tmaid_common_new_line_below";
 
     private static final String LINE_SEPARATOR = TextUtils.isEmpty(System.getProperty("line.separator")) ? "\n" : System.getProperty("line.separator");
 
     private final Activity _activity;
     private final HighlightingEditor _hlEditor;
 
-    private int _tabWidth;
-
-    public CommonTextActions(Activity activity, HighlightingEditor hlEditor) {
+    public CommonTextActions(final Activity activity, final HighlightingEditor hlEditor) {
         _activity = activity;
         _hlEditor = hlEditor;
-
-        Context context = activity != null ? activity : _hlEditor.getContext();
-        AppSettings settings = new AppSettings(context);
-        _tabWidth = settings.getTabWidth();
     }
 
     private String rstr(@StringRes int resKey) {
@@ -85,6 +75,13 @@ public class CommonTextActions {
         final String origText = _hlEditor.getText().toString();
         switch (action) {
             case ACTION_SPECIAL_KEY: {
+
+                // Needed to prevent selection from being overwritten on refocus
+                final int[] sel = StringUtils.getSelection(_hlEditor);
+                _hlEditor.clearFocus();
+                _hlEditor.requestFocus();
+                _hlEditor.setSelection(sel[0], sel[1]);
+
                 SearchOrCustomTextDialogCreator.showSpecialKeyDialog(_activity, (callbackPayload) -> {
                     if (!_hlEditor.hasSelection() && _hlEditor.length() > 0) {
                         _hlEditor.requestFocus();
@@ -129,6 +126,20 @@ public class CommonTextActions {
                 });
                 return true;
             }
+            case ACTION_MOVE_UP: {
+                moveLineBy1(true);
+                return true;
+            }
+            case ACTION_MOVE_DOWN: {
+                moveLineBy1(false);
+                return true;
+            }
+            case ACTION_NEW_LINE_BELOW: {
+                // Go to end of line, works with wrapped lines too
+                _hlEditor.setSelection(StringUtils.getLineEnd(_hlEditor.getText(), StringUtils.getSelection(_hlEditor)[1]));
+                _hlEditor.simulateKeyPress(KeyEvent.KEYCODE_ENTER);
+                return true;
+            }
             case ACTION_OPEN_LINK_BROWSER: {
                 String url;
                 if ((url = PlainTextStuff.tryExtractUrlAroundPos(_hlEditor.getText().toString(), _hlEditor.getSelectionStart())) != null) {
@@ -140,10 +151,11 @@ public class CommonTextActions {
                 return true;
             }
             case ACTION_DELETE_LINES: {
-                int[] indexes = PlainTextStuff.getNeighbourLineEndings(_hlEditor.getText().toString(), _hlEditor.getSelectionStart(), _hlEditor.getSelectionEnd());
-                if (indexes != null) {
-                    _hlEditor.getText().delete(indexes[0], indexes[1]);
-                }
+                final int[] sel = StringUtils.getLineSelection(_hlEditor);
+                final Editable text = _hlEditor.getText();
+                final boolean lastLine = sel[1] == text.length();
+                final boolean firstLine = sel[0] == 0;
+                text.delete(sel[0] - (lastLine && !firstLine ? 1 : 0), sel[1] + (lastLine ? 0 : 1));
                 return true;
             }
             case ACTION_END_LINE_WITH_TWO_SPACES: {
@@ -153,18 +165,19 @@ public class CommonTextActions {
                     int insertPos = text.indexOf('\n', start);
                     insertPos = insertPos < 1 ? text.length() : insertPos;
                     _hlEditor.getText().insert(insertPos, "  " + (text.endsWith("\n") ? "" : "\n"));
-                    _hlEditor.setSelection(((insertPos + 3) > _hlEditor.length() ? _hlEditor.length() : (insertPos + 3)));
+                    _hlEditor.setSelection((Math.min((insertPos + 3), _hlEditor.length())));
                 }
                 return true;
             }
             case ACTION_SEARCH: {
-                SearchOrCustomTextDialogCreator.showSearchDialog(_activity, origText, callbackPayload -> {
-                    int cursor = origText.indexOf(callbackPayload);
-                    _hlEditor.setSelection(Math.min(_hlEditor.length(), Math.max(0, cursor)));
+                SearchOrCustomTextDialogCreator.showSearchDialog(_activity, _hlEditor.getText(), StringUtils.getSelection(_hlEditor), (lineNr) -> {
+                    if (!_hlEditor.hasFocus()) {
+                        _hlEditor.requestFocus();
+                    }
+                    _hlEditor.setSelection(StringUtils.getIndexFromLineOffset(origText, lineNr, 0));
                 });
                 return true;
             }
-
             case ACTION_JUMP_BOTTOM_TOP: {
                 int pos = _hlEditor.getSelectionStart();
                 _hlEditor.setSelection(pos == 0 ? _hlEditor.getText().length() : 0);
@@ -210,86 +223,48 @@ public class CommonTextActions {
                 });
                 return true;
             }
-            case ACTION_INDENT: {
-                runIndentLines(false);
-                return true;
-            }
-            case ACTION_DEINDENT: {
-                runIndentLines(true);
-                return true;
-            }
             default:
                 break;
         }
         return false;
     }
 
-    protected void runIndentLines(Boolean deIndent) {
+    public void moveLineBy1(final boolean up) {
 
-        Editable text = _hlEditor.getText();
+        final Editable text = _hlEditor.getText();
 
-        int[] selection = StringUtils.getSelection(_hlEditor);
-        int selectionStart = selection[0];
-        int selectionEnd = selection[1];
+        final int[] sel = StringUtils.getSelection(_hlEditor);
+        final int linesStart = StringUtils.getLineStart(text, sel[0]);
+        final int linesEnd = StringUtils.getLineEnd(text, sel[1]);
 
-        int lineStart = StringUtils.getLineStart(text, selectionStart);
+        if ((up && linesStart > 0) || (!up && linesEnd < text.length())) {
 
-        char[] tabChars = new char[_tabWidth];
-        Arrays.fill(tabChars, ' ');
-        String tabString = new String(tabChars);
+            final CharSequence lines = text.subSequence(linesStart, linesEnd);
 
-        while (lineStart <= selectionEnd) {
+            final int altStart = up ? StringUtils.getLineStart(text, linesStart - 1) : linesEnd + 1;
+            final int altEnd = StringUtils.getLineEnd(text, altStart);
+            final CharSequence altLine = text.subSequence(altStart, altEnd);
 
-            if (deIndent) {
-                int textStart = StringUtils.getNextNonWhitespace(text, lineStart, selectionEnd);
-                int spaceCount = textStart - lineStart;
-                int delCount = Math.min(_tabWidth, spaceCount);
-                int delEnd = lineStart + delCount;
-                if (delCount > 0 && delEnd < text.length()) {
-                    text.delete(lineStart, delEnd);
-                    selectionEnd -= delCount;
-                }
-            } else {
-                text.insert(lineStart, tabString);
-                selectionEnd += _tabWidth;
-            }
+            try {
+                // Prevents changes in text from triggering list prefix insert etc
+                _hlEditor.disableHighlighterAutoFormat();
 
-            text = _hlEditor.getText();
-            // Get next line
-            lineStart = StringUtils.getLineEnd(text, lineStart, selectionEnd) + 1;
-        }
-    }
+                final int[] selStart = StringUtils.getLineOffsetFromIndex(text, sel[0]);
+                final int[] selEnd = StringUtils.getLineOffsetFromIndex(text, sel[1]);
 
-    public void moveLineBy1(boolean up) {
-        selectWholeLine(true);
-        selectWholeLine(false);
-        String lineToMove = _hlEditor.getText().toString().substring(_hlEditor.getSelectionStart(), _hlEditor.getSelectionEnd());
-        if (!lineToMove.endsWith(LINE_SEPARATOR)) {
-            lineToMove += LINE_SEPARATOR;
-        }
-        _hlEditor.simulateKeyPress(KeyEvent.KEYCODE_DEL);
-        _hlEditor.simulateKeyPress(up ? KeyEvent.KEYCODE_DPAD_UP : KeyEvent.KEYCODE_DPAD_DOWN);
-        _hlEditor.simulateKeyPress(KeyEvent.KEYCODE_MOVE_HOME);
-        _hlEditor.getText().insert(_hlEditor.getSelectionStart(), lineToMove);
-    }
+                final String newPair = String.format("%s\n%s", up ? lines : altLine, up ? altLine : lines);
+                text.replace(Math.min(linesStart, altStart), Math.max(altEnd, linesEnd), newPair);
 
-    public void selectWholeLine(boolean toStart) {
-        final String content = _hlEditor.getText().toString();
-        if (_hlEditor.getSelectionStart() == content.length()) {
-            _hlEditor.setSelection(_hlEditor.getSelectionStart() - 1, _hlEditor.getSelectionEnd());
-        }
-        if (_hlEditor.getSelectionEnd() == content.length()) {
-            _hlEditor.setSelection(_hlEditor.getSelectionStart(), _hlEditor.getSelectionEnd() - 1);
-        }
+                selStart[0] += up ? -1 : 1;
+                selEnd[0] += up ? -1 : 1;
+                _hlEditor.setSelection(
+                        StringUtils.getIndexFromLineOffset(text, selStart),
+                        StringUtils.getIndexFromLineOffset(text, selEnd)
+                );
 
-        int i = (toStart ? _hlEditor.getSelectionStart() : _hlEditor.getSelectionEnd());
-        for (; i > 0 && i < content.length(); i = toStart ? (i - 1) : (i + 1)) {
-            if (content.charAt(i) == '\n' || content.charAt(i) == '\r') {
-                i = toStart ? i + 1 : i + 1;
-                break;
+            } finally {
+                _hlEditor.enableHighlighterAutoFormat();
             }
         }
-        _hlEditor.setSelection(toStart ? i : _hlEditor.getSelectionStart(), toStart ? _hlEditor.getSelectionEnd() : i);
     }
-
 }

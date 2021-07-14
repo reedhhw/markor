@@ -1,7 +1,7 @@
 /*#######################################################
  * Copyright (c) 2014 Jeff Martin
  * Copyright (c) 2015 Pedro Lafuente
- * Copyright (c) 2017-2019 Gregor Santner
+ * Copyright (c) 2017-2021 Gregor Santner
  *
  * Licensed under the MIT license.
  * You can get a copy of the license text here:
@@ -20,7 +20,7 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import net.gsantner.markor.R;
-import net.gsantner.markor.activity.DocumentActivity;
+import net.gsantner.markor.activity.DocumentRelayActivity;
 import net.gsantner.markor.activity.MainActivity;
 import net.gsantner.markor.util.AppSettings;
 import net.gsantner.markor.util.DocumentIO;
@@ -52,13 +52,10 @@ public class WrMarkorWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // Handling widget color scheme
-        handleWidgetScheme(
-                context,
-                new RemoteViews(context.getPackageName(), R.layout.widget_layout),
-                new AppSettings(context).isDarkThemeEnabled());
 
         final int N = appWidgetIds.length;
+
+        int requestCode = 0;
 
         // Perform this loop procedure for each App Widget that belongs to this provider
         for (int appWidgetId : appWidgetIds) {
@@ -72,37 +69,37 @@ public class WrMarkorWidgetProvider extends AppWidgetProvider {
             File directoryF = new File(directory);
             views.setTextViewText(R.id.widget_header_title, directoryF.getName());
 
+            AppSettings appSettings = new AppSettings(context);
+
             // ~~~Create new File~~~ Share empty text into markor, easier to access from widget than new file dialog
-            Intent newDocumentIntent = new Intent(context, DocumentActivity.class)
+            Intent openShare = new Intent(context, DocumentRelayActivity.class)
                     .setAction(Intent.ACTION_SEND)
+                    .putExtra(DocumentIO.EXTRA_PATH, directoryF)
+                    .putExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, true)
                     .putExtra(Intent.EXTRA_TEXT, "");
-            views.setOnClickPendingIntent(R.id.widget_new_note, PendingIntent.getActivity(context, 0, newDocumentIntent, 0));
+            views.setOnClickPendingIntent(R.id.widget_new_note, PendingIntent.getActivity(context, requestCode++, openShare, 0));
 
             // Open Markor
             Intent goToMain = new Intent(context, MainActivity.class);
-            views.setOnClickPendingIntent(R.id.widget_header, PendingIntent.getActivity(context, 0, goToMain, 0));
-
+            views.setOnClickPendingIntent(R.id.widget_header, PendingIntent.getActivity(context, requestCode++, goToMain, 0));
 
             // Open To-do
-            AppSettings appSettings = new AppSettings(context);
-            Intent openTodo = new Intent(context, DocumentActivity.class)
-                    .setAction(Intent.ACTION_CALL_BUTTON)
+            Intent openTodo = new Intent(context, DocumentRelayActivity.class)
+                    .setAction(Intent.ACTION_EDIT)
                     .putExtra(DocumentIO.EXTRA_PATH, appSettings.getTodoFile())
                     .putExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, false);
-            views.setOnClickPendingIntent(R.id.widget_todo, PendingIntent.getActivity(context, 0, openTodo, 0));
+            views.setOnClickPendingIntent(R.id.widget_todo, PendingIntent.getActivity(context, requestCode++, openTodo, 0));
 
             // Open QuickNote
-            Intent openQuickNote = new Intent(context, DocumentActivity.class)
-                    .setAction(Intent.ACTION_ANSWER)
+            Intent openQuickNote = new Intent(context, DocumentRelayActivity.class)
+                    .setAction(Intent.ACTION_EDIT)
                     .putExtra(DocumentIO.EXTRA_PATH, appSettings.getQuickNoteFile())
                     .putExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, false);
-            views.setOnClickPendingIntent(R.id.widget_quicknote, PendingIntent.getActivity(context, 0, openQuickNote, 0));
+            views.setOnClickPendingIntent(R.id.widget_quicknote, PendingIntent.getActivity(context, requestCode++, openQuickNote, 0));
 
             // Open Favourites
-            Intent openApp = new Intent(context, MainActivity.class)
-                    .setAction(Intent.ACTION_NEW_OUTGOING_CALL);
-            views.setOnClickPendingIntent(R.id.widget_main, PendingIntent.getActivity(context, 0, openApp, 0));
-
+            Intent openApp = new Intent(context, MainActivity.class).setAction(Intent.ACTION_VIEW);
+            views.setOnClickPendingIntent(R.id.widget_main, PendingIntent.getActivity(context, requestCode++, openApp, 0));
 
             // ListView
             Intent notesListIntent = new Intent(context, WrFilesWidgetService.class);
@@ -114,8 +111,8 @@ public class WrMarkorWidgetProvider extends AppWidgetProvider {
             views.setEmptyView(R.id.widget_list_container, R.id.widget_empty_hint);
             views.setRemoteAdapter(R.id.widget_notes_list, notesListIntent);
 
-            Intent openNoteIntent = new Intent(context, DocumentActivity.class);
-            PendingIntent openNotePendingIntent = PendingIntent.getActivity(context, 0,
+            Intent openNoteIntent = new Intent(context, DocumentRelayActivity.class);
+            PendingIntent openNotePendingIntent = PendingIntent.getActivity(context, requestCode++,
                     openNoteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setPendingIntentTemplate(R.id.widget_notes_list, openNotePendingIntent);
 
@@ -126,12 +123,10 @@ public class WrMarkorWidgetProvider extends AppWidgetProvider {
     }
 
     public static void handleWidgetScheme(Context context, RemoteViews remoteViews, Boolean enabled) {
-        if (!enabled) {
+        if (enabled) {
             remoteViews.setInt(R.id.widget_notes_list, "setBackgroundColor", context.getResources().getColor(R.color.dark__background));
-            remoteViews.setTextColor(R.id.widget_note_title, context.getResources().getColor(R.color.dark__primary_text));
         } else {
             remoteViews.setInt(R.id.widget_notes_list, "setBackgroundColor", context.getResources().getColor(R.color.light__background));
-            remoteViews.setTextColor(R.id.widget_note_title, context.getResources().getColor(R.color.light__primary_text));
         }
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(new ComponentName(context.getPackageName(), WrMarkorWidgetProvider.class.getName()), remoteViews);

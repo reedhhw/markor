@@ -17,6 +17,7 @@ import android.view.View;
 import net.gsantner.markor.R;
 import net.gsantner.markor.format.general.CommonTextActions;
 import net.gsantner.markor.model.Document;
+import net.gsantner.markor.ui.SearchOrCustomTextDialogCreator;
 import net.gsantner.markor.ui.hleditor.TextActions;
 
 import java.util.Arrays;
@@ -53,6 +54,9 @@ public class PlaintextTextActions extends TextActions {
                 new ActionItem(R.string.tmaid_common_time, R.drawable.ic_access_time_black_24dp, R.string.date_and_time),
                 new ActionItem(R.string.tmaid_common_indent, R.drawable.ic_format_indent_increase_black_24dp, R.string.indent),
                 new ActionItem(R.string.tmaid_common_deindent, R.drawable.ic_format_indent_decrease_black_24dp, R.string.deindent),
+                new ActionItem(R.string.tmaid_common_new_line_below, R.drawable.ic_baseline_keyboard_return_24, R.string.start_new_line_below),
+                new ActionItem(R.string.tmaid_common_move_text_one_line_up, R.drawable.ic_baseline_arrow_upward_24, R.string.move_text_one_line_up),
+                new ActionItem(R.string.tmaid_common_move_text_one_line_down, R.drawable.ic_baseline_arrow_downward_24, R.string.move_text_one_line_down),
         };
 
         return Arrays.asList(TMA_ACTIONS);
@@ -74,27 +78,51 @@ public class PlaintextTextActions extends TextActions {
         @Override
         public void onClick(View view) {
             view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-            runAction(_context.getString(_action), false, null);
+            switch (_action) {
+                case R.string.tmaid_common_indent: {
+                    runIndentLines(false);
+                    return;
+                }
+                case R.string.tmaid_common_deindent: {
+                    runIndentLines(true);
+                    return;
+                }
+                default: {
+                    runCommonTextAction(_context.getString(_action));
+                }
+            }
         }
 
         @Override
         public boolean onLongClick(View v) {
-            String action = _context.getString(_action);
-            switch (action) {
-                case CommonTextActions.ACTION_OPEN_LINK_BROWSER: {
-                    action = CommonTextActions.ACTION_SEARCH;
-                    break;
+            switch (_action) {
+                case R.string.tmaid_common_deindent:
+                case R.string.tmaid_common_indent: {
+                    SearchOrCustomTextDialogCreator.showIndentSizeDialog(_activity, _indent, (size) -> {
+                        _indent = Integer.parseInt(size);
+                        _appSettings.setDocumentIndentSize(getPath(), _indent);
+                    });
+                    return true;
                 }
-                case CommonTextActions.ACTION_SPECIAL_KEY: {
-                    action = CommonTextActions.ACTION_JUMP_BOTTOM_TOP;
-                    break;
-                }
-                case "tmaid_common_time": {
-                    action = "tmaid_common_time_insert_timestamp";
-                    break;
+                default: {
+                    String action = _context.getString(_action);
+                    switch (action) {
+                        case CommonTextActions.ACTION_OPEN_LINK_BROWSER: {
+                            action = CommonTextActions.ACTION_SEARCH;
+                            break;
+                        }
+                        case CommonTextActions.ACTION_SPECIAL_KEY: {
+                            action = CommonTextActions.ACTION_JUMP_BOTTOM_TOP;
+                            break;
+                        }
+                        case "tmaid_common_time": {
+                            action = "tmaid_common_time_insert_timestamp";
+                            break;
+                        }
+                    }
+                    return runAction(action, true, null);
                 }
             }
-            return runAction(action, true, null);
         }
     }
 }

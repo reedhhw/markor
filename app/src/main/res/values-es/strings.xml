@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Crear carpeta</string>
     <string name="create_new_document">Crear nuevo documento</string>
     <string name="move">Mover</string>
+    <string name="copy">Copiar</string>
     <string name="info">Información</string>
     <string name="file_folder_already_exists_please_use_a_different_name">¡El archivo/carpeta ya existe! Por favor, usa un nombre diferente</string>
     <string name="import_from_device">Importar desde dispositivo</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Seleccionar carpeta</string>
     <string name="edit">Editar</string>
     <string name="search_documents">Buscar documentos</string>
-    <string name="share_to_arrow">Compartir con...</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Compartir con...</string>
     <string name="share">Compartir</string>
     <string name="search">Búsqueda</string>
     <string name="display_converted_markup">Mostrar markup transformada</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Archivos y carpetas</string>
     <string name="document_browser">Navegador de documentos</string>
     <string name="file_browser">Explorador de archivos</string>
+    <string name="set_due_date">Fecha límite</string>
+    <string name="insert_replace_date">Insertar fecha</string>
     <string name="create_note" needed="false">Crear nota</string>
     <string name="special_documents" needed="false">Documentos especiales</string>
     <string name="keep_screen_on" needed="false">Mantener pantalla encendida</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Resaltar los espacios al final de las líneas si estas terminan en dos o más espacios</string>
     <string name="use_monospace_for_code">Usar espaciado sencillo para código</string>
     <string name="disable_code_block_highlight">Desactivar resaltado para bloques de código</string>
+    <string name="auto_renumber_ordered_list">Renumerar automáticamente las listas ordenadas</string>
+    <string name="auto_renumber_ordered_list_slowdown">Esta opción puede afectar al rendimiento de la aplicación.</string>
     <string name="use_different_fonttype_slow_down">Usa una fuente diferente. Cambiar la fuente dinámicamente afecta el desempeño de la app.</string>
     <string name="general">General</string>
     <string name="resources">Recursos</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Siguiente página (Page Down)</string>
     <string name="move_text_one_line_up">Mover texto una línea arriba</string>
     <string name="move_text_one_line_down">Mover texto una línea hacia abajo</string>
+    <string name="start_new_line_below">Empezar nueva línea a continuación</string>
     <string name="key_pos_1">Inicio de línea (Pos Home)</string>
     <string name="key_pos_end">Fin de línea (Pos End)</string>
     <string name="key_pos_1_document">Inicio de documento</string>
@@ -184,7 +190,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="start_on_bottom_when_loading_document">Al abrir un documento, posicionar el cursor al final del documento</string>
     <string name="unordered_list_character">Carácter para lista desordenada</string>
     <string name="character_to_start_items_of_unordered_list_with">Qué carácter usar para denotar listas no ordenadas</string>
-    <string name="unordered_list_char_dash">Guión (-)</string>
+    <string name="unordered_list_char_dash">Guion (-)</string>
     <string name="unordered_list_char_asterisk">Asterisco (*)</string>
     <string name="unordered_list_char_plus">Suma (+)</string>
     <string name="filemanager_doesnot_supply_required_data__appspecific">Makor sólo puede editar los documentos locales, disponibles sin conexión y no es compatible con gestores de archivos que no proporcionan la ruta de archivo completo.</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Traduce esta aplicación a otros idiomas</string>
     <string name="source_code">Código fuente</string>
     <string name="project_license">Licencia del proyecto</string>
-    <string name="project_contribution_info">Información de colaboraciones al proyecto</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Más sobre cómo participar en este proyecto</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Colabora con el proyecto. Cualquiera puede hacerlo, incluso los que usan la aplicación desde hace poco</string>
     <string name="project_team">El equipo tras el proyecto</string>
     <string name="contributors_public_add_yourself_description">Muestra información pública sobre los colaboradores. Estos pueden decidir si su información debe ser incluida con sus colaboraciones</string>
@@ -225,7 +229,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="disable_spelling_underline">Deshabilitar subrayado de errores de ortografía</string>
     <string name="spellcheck_keyboard_suggestion_stay_red_underline_vanishes">Mantener sugerencias, elimina subrayado rojo</string>
     <string name="location">Ubicación</string>
-    <string name="text_lines">Lineas</string>
+    <string name="text_lines">Líneas</string>
     <string name="text_characters">Caracteres</string>
     <string name="text_words">Palabras de texto</string>
     <string name="directory">Directorio</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Refrescar</string>
     <string name="wrap_words">Cambio de línea</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Desliza suavemente si el texto no se ajusta al ancho de pantalla. De lo contrario, activa el desplazamiento horizontal.</string>
-    <string name="recursive_search_in_current_directory">Búsqueda recursiva en el directorio actual. Cuando la consulta contiene un asterisco (*) se utiliza la búsqueda de expresiones regulares, de lo contrario, compruebe si la consulta está contenida.</string>
+    <string name="recursive_search_in_current_directory">Búsqueda recursiva en el directorio actual.</string>
     <string name="always_open_with_this_app">Siempre abierto con esta aplicación</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Siempre abra archivos con esta aplicación cuando la lista contiene la extensión de archivo. Use \'Ninguno, .html, .css , .js\' por ejemplo si desea editar archivos web y aquellos sin extensión de archivo.</string>
     <string name="template">Plantilla</string>
     <string name="send_debug_log">Enviar registro de depuración</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Ayuda enviando información de depuración a desarrollador(es). Los datos se envían por correo electrónico a través de tu aplicación de correo electrónico y puedes ver todos los datos enviados antes de enviar. Encontrarás una opción adicional de \"Enviar registro de depuración\" en el menú superior cuando esté activado. Crea el borrador de correo electrónico.</string>
     <string name="print_pdf">Imprimir / PDF</string>
     <string name="bigger_headings">Encabezados mayores</string>
     <string name="increase_text_size_of_headings_according_to_level">Incrementa el tamaño de texto de las cabeceras según el nivel (# h1, ## h2. ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Leyendo</string>
     <string name="read">Leer</string>
     <string name="table">Tabla</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">¿Cuántas columnas? Mantén pulsado el botón de la tabla para iniciar una tabla (insertar cabecera), pulsa corto para añadir una fila.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">¿Cuántas columnas? Presione el botón de tabla para iniciar una tabla (insertar cabecera), presione corto para agregar una fila.</string>
     <string name="example_of_a_markdown_table">Ejemplo de una tabla Markdown</string>
     <string name="delete_lines">Eliminar líneas</string>
     <string name="unordered_list">Lista sin ordenar</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Título 1</string>
     <string name="heading_2">Título 2</string>
     <string name="heading_3">Título 3</string>
+    <string name="heading_4">Título 4</string>
+    <string name="heading_5">Título 5</string>
     <string name="bold">Negrita</string>
     <string name="italic">Cursiva</string>
+    <string name="highlighted">Resaltado</string>
     <string name="strikeout">Tachar</string>
     <string name="inline_code">Código en línea</string>
     <string name="horizontal_line">Línea horizontal</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Esencial</string>
     <string name="append_human_readable_uuid_to_new_tasks">Añadir UUID legible por humanos a nuevas tareas</string>
     <string name="action_order">Orden de acción</string>
+    <string name="toggle_action_visibility">Alternar visibilidad de acción</string>
     <string name="load_default_settings">Cargar ajustes por defecto</string>
     <string name="drag">Arrastrar</string>
+    <string name="created">Creado</string>
     <string name="file_encryption_password">Contraseña del cifrado de archivo</string>
     <string name="no_password_set_cannot_encrypt_decrypt">No se ha establecido ninguna contraseña, no se puede cifrar o descifrar.\nVaya a Ajustes -&gt; General -&gt; Contraseña para establecer una contraseña.</string>
     <string name="encrypt_file_content">Cifrar contenido del archivo</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">No se pudo descifrar el contenido del archivo. ¿Usaste una contraseña incorrecta? ¿El archivo está realmente cifrado con el cifrado AES de Markor?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">La contraseña ya está configurada. Establecer una nueva contraseña sobrescribirá la contraseña existente y es posible que ya no pueda acceder a los archivos en caso de que olvide la contraseña.</string>
     <string name="code_block">Bloque de código</string>
+    <string name="add_completion_date">Añadir fecha de finalización</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Añadir fecha de finalización para las tareas al marcarlas como realizadas</string>
+    <string name="file_description_format">Formato de descripción de archivo</string>
+    <string name="file_description_format_dialog">Formato para la descripción bajo cada archivo en el navegador de archivos. Siga las reglas de SimpleDateFormat, con la adición de FS para mostrar el tamaño del archivo. Deje en blanco para usar el formato predeterminado para su ubicación.\n\nEjemplo de entrada:\nFS yyyy MMM dd hh:mm:ss aa\nFormato de salida:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Cargando valor por defecto</string>
+    <string name="file_settings">Ajustes de archivo</string>
+    <string name="search_and_replace">Buscar / Reemplazar</string>
+    <string name="search_for">Buscar por</string>
+    <string name="replace_with">Reemplazar por</string>
+    <string name="replace_once">Reemplazar (1)</string>
+    <string name="replace_all">Reemplazar todo</string>
+    <string name="matches">Coincidencias</string>
+    <string name="search_replace_pattern_error_message">Error de patrón de búsqueda o reemplazo.</string>
+    <string name="backup_settings">Ajustes de copia de seguridad</string>
+    <string name="restore_settings">Restaurar ajustes</string>
+    <string name="failed_to_create_backup">Error al crear copia de seguridad</string>
+    <string name="export_settings_to_json_file">Exportar ajustes a archivo json</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Importar ajustes del archivo json. Si tiene éxito, la aplicación se reinicia.</string>
+    <string name="failed_to_restore_settings_from_backup">Error al restaurar la configuración desde la copia de seguridad</string>
+    <string name="newline_is_new_paragraph">Nueva línea = nuevo párrafo</string>
+    <string name="search_in_content">Buscar en contenido</string>
+    <string name="max_search_depth">Profundidad de búsqueda</string>
+    <string name="ignore_list">Ignorar lista</string>
+    <string name="do_not_search_specified_files_and_folders">No busque archivos y carpetas especificados.\nUtilice una nueva línea como separador.\nUtilice comillas para nombres de directorio exactos: \"Test\".\nO usar Regex \'^[.].*\'\nEjemplos: ^\\..*\n\"test\"\n\"Test\"\n.*secreto.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Búsqueda Regex</string>
+    <string name="case_sensitive">Distingue mayúsculas</string>
+    <string name="stop_search_after_first_match">Detener la búsqueda después de la primera coincidencia</string>
+    <string name="regex_can_not_be_compiled">Regex no puede ser compilado</string>
+    <string name="keep_both">Mantener ambos</string>
+    <string name="skip">Saltar</string>
+    <string name="overwrite">Sobrescribir</string>
+    <string name="keep_both_all">Mantener ambos (todos)</string>
+    <string name="skip_all">Saltar (todo)</string>
+    <string name="overwrite_all">Sobrescribir (todo)</string>
+    <string name="copy_move_conflict_message">\'%s\' ya existe en %s</string>
+    <string name="additional_contexts_and_projects">Conjuntos y proyectos adicionales</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Introduzca @contexts y +projects separados por espacios. Estos siempre serán visibles en los diálogos de inserción de todo.txt.</string>
+    <string name="infinite">Infinito</string>
 </resources>

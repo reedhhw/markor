@@ -16,11 +16,14 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
+import android.support.annotation.StringRes;
 import android.support.v4.util.Pair;
 
 import net.gsantner.markor.App;
 import net.gsantner.markor.BuildConfig;
 import net.gsantner.markor.R;
+import net.gsantner.markor.format.TextFormat;
 import net.gsantner.opoc.preference.SharedPreferencesPropertyBackend;
 import net.gsantner.opoc.ui.FilesystemViewerAdapter;
 import net.gsantner.opoc.ui.FilesystemViewerFragment;
@@ -29,16 +32,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-@SuppressWarnings("SameParameterValue")
+import other.de.stanetz.jpencconverter.PasswordStore;
+
+@SuppressWarnings({"SameParameterValue", "WeakerAccess", "FieldCanBeLocal"})
 public class AppSettings extends SharedPreferencesPropertyBackend {
     private final SharedPreferences _prefCache;
     private final SharedPreferences _prefHistory;
-    public static Boolean isDeviceGoodHardware = null;
+    public static Boolean _isDeviceGoodHardware = null;
+    private final ContextUtils _contextUtils;
 
     private static final File LOCAL_TESTFOLDER_FILEPATH = new File("/storage/emulated/0/00_sync/documents/special");
 
@@ -46,16 +51,16 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         super(_context);
         _prefCache = _context.getSharedPreferences("cache", Context.MODE_PRIVATE);
         _prefHistory = _context.getSharedPreferences("history", Context.MODE_PRIVATE);
-        if (isDeviceGoodHardware == null) {
-            ContextUtils cu = new ContextUtils(_context);
-            isDeviceGoodHardware = cu.isDeviceGoodHardware();
-            cu.freeContextRef();
+        _contextUtils = new ContextUtils(_context);
+        if (_isDeviceGoodHardware == null) {
+            _isDeviceGoodHardware = _contextUtils.isDeviceGoodHardware();
         }
     }
 
     public static AppSettings get() {
         return new AppSettings(App.get());
     }
+
 
     public void setDarkThemeEnabled(boolean enabled) {
         setString(R.string.pref_key__app_theme, enabled ? "dark" : "light");
@@ -120,7 +125,7 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         return new File(getString(R.string.pref_key__quicknote_filepath, defaultValue));
     }
 
-    public void setQuickNoteFile(File file) {
+    public void setQuickNoteFile(final File file) {
         setString(R.string.pref_key__quicknote_filepath, file.getAbsolutePath());
     }
 
@@ -170,16 +175,13 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         return getBool(R.string.pref_key__markdown__disable_code_block_highlight, false);
     }
 
+    public boolean isMarkdownAutoUpdateList() {
+        return true;
+        // return getBool(R.string.pref_key__markdown__auto_renumber_ordered_list, false);
+    }
+
     public int getHighlightingDelayTodoTxt() {
         return getInt(R.string.pref_key__todotxt__hl_delay, 870);
-    }
-
-    public String getLastOpenedDirectory() {
-        return getString(R.string.pref_key__last_opened_directory, getNotebookDirectoryAsStr());
-    }
-
-    public void setLastOpenedDirectory(String value) {
-        setString(R.string.pref_key__last_opened_directory, value);
     }
 
     public boolean isRenderRtl() {
@@ -188,6 +190,10 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
 
     public boolean isMarkdownMathEnabled() {
         return getBool(R.string.pref_key__markdown_render_math, false);
+    }
+
+    public boolean isMarkdownNewlineNewparagraphEnabled() {
+        return getBool(R.string.pref_key__markdown_newline_newparagraph, false);
     }
 
     public boolean isMarkdownTableOfContentsEnabled() {
@@ -258,6 +264,10 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
 
     public boolean isTodoStartTasksWithTodaysDateEnabled() {
         return getBool(R.string.pref_key__todotxt__start_new_tasks_with_todays_date, true);
+    }
+
+    public boolean isTodoAddCompletionDateEnabled() {
+        return getBool(R.string.pref_key__todotxt__add_completion_date_for_todos, true);
     }
 
     public boolean isAppCurrentVersionFirstStart(boolean doSet) {
@@ -332,16 +342,118 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
     }
 
     private static final String PREF_PREFIX_EDIT_POS_CHAR = "PREF_PREFIX_EDIT_POS_CHAR";
-    private static final String PREF_PREFIX_EDIT_POS_SCROLL = "PREF_PREFIX_EDIT_POS_SCROLL";
+    private static final String PREF_PREFIX_WRAP_STATE = "PREF_PREFIX_WRAP_STATE";
+    private static final String PREF_PREFIX_HIGHLIGHT_STATE = "PREF_PREFIX_HIGHLIGHT_STATE";
+    private static final String PREF_PREFIX_PREVIEW_STATE = "PREF_PREFIX_PREVIEW_STATE";
+    private static final String PREF_PREFIX_INDENT_SIZE = "PREF_PREFIX_INDENT_SIZE";
+    private static final String PREF_PREFIX_FONT_SIZE = "PREF_PREFIX_FONT_SIZE";
+    private static final String PREF_PREFIX_FILE_FORMAT = "PREF_PREFIX_FILE_FORMAT";
+    private static final String PREF_PREFIX_VIEW_SCROLL_X = "PREF_PREFIX_VIEW_SCROLL_X";
+    private static final String PREF_PREFIX_VIEW_SCROLL_Y = "PREF_PREFIX_VIEW_SCROLL_Y";
 
-    public void setLastEditPosition(File file, int pos, int scrolloffset) {
+    public void setLastEditPosition(File file, int pos) {
         if (file == null || !file.exists()) {
             return;
         }
         if (!file.equals(getTodoFile()) && !file.equals(getQuickNoteFile())) {
             setInt(PREF_PREFIX_EDIT_POS_CHAR + file.getAbsolutePath(), pos, _prefCache);
-            setInt(PREF_PREFIX_EDIT_POS_SCROLL + file.getAbsolutePath(), scrolloffset, _prefCache);
         }
+    }
+
+    public void setLastViewPosition(File file, int scrollX, int scrollY) {
+        if (file == null || !file.exists()) {
+            return;
+        }
+        if (!file.equals(getTodoFile()) && !file.equals(getQuickNoteFile())) {
+            setInt(PREF_PREFIX_VIEW_SCROLL_X + file.getAbsolutePath(), scrollX, _prefCache);
+            setInt(PREF_PREFIX_VIEW_SCROLL_Y + file.getAbsolutePath(), scrollY, _prefCache);
+        }
+    }
+
+    public void setDocumentWrapState(final String path, final boolean state) {
+        if (fexists(path)) {
+            setBool(PREF_PREFIX_WRAP_STATE + path, state);
+        }
+    }
+
+    public boolean getDocumentWrapState(final String path) {
+        final boolean _default = isEditorLineBreakingEnabled();
+        if (!fexists(path)) {
+            return _default;
+        } else {
+            return getBool(PREF_PREFIX_WRAP_STATE + path, _default);
+        }
+    }
+
+    public void setDocumentFormat(final String path, @StringRes final int format) {
+        if (fexists(path) && format != TextFormat.FORMAT_UNKNOWN) {
+            setString(PREF_PREFIX_FILE_FORMAT + path, _context.getString(format));
+        }
+    }
+
+    @StringRes
+    public int getDocumentFormat(final String path, final int _default) {
+        if (!fexists(path)) {
+            return _default;
+        } else {
+            final String value = getString(PREF_PREFIX_FILE_FORMAT + path, null);
+            final int sid = _contextUtils.getResId(net.gsantner.opoc.util.ContextUtils.ResType.STRING, value);
+            // Note TextFormat.FORMAT_UNKNOWN also == 0
+            return sid != 0 ? sid : _default;
+        }
+    }
+
+    public void setDocumentFontSize(final String path, final int size) {
+        if (fexists(path)) {
+            setInt(PREF_PREFIX_FONT_SIZE + path, size);
+        }
+    }
+
+    public int getDocumentFontSize(final String path) {
+        final int _default = getFontSize();
+        if (!fexists(path)) {
+            return _default;
+        } else {
+            return getInt(PREF_PREFIX_FONT_SIZE + path, _default);
+        }
+    }
+
+    public void setDocumentIndentSize(final String path, final int size) {
+        if (fexists(path)) {
+            setInt(PREF_PREFIX_INDENT_SIZE + path, size);
+        }
+    }
+
+    public int getDocumentIndentSize(final String path) {
+        final int _default = 4;
+        if (!fexists(path)) {
+            return _default;
+        } else {
+            return getInt(PREF_PREFIX_INDENT_SIZE + path, _default);
+        }
+    }
+
+    public void setDocumentPreviewState(final String path, final boolean state) {
+        setBool(PREF_PREFIX_PREVIEW_STATE + path, state);
+    }
+
+    public boolean getDocumentPreviewState(final String path) {
+        // Use global setting as default
+        final boolean _default = isPreviewFirst();
+        if (_default || !fexists(path)) {
+            return _default;
+        } else {
+            return getBool(PREF_PREFIX_PREVIEW_STATE + path, _default);
+        }
+    }
+
+    public void setDocumentHighlightState(final String path, final boolean state) {
+        setBool(PREF_PREFIX_HIGHLIGHT_STATE + path, state);
+    }
+
+    public boolean getDocumentHighlightState(final String path, final CharSequence chars) {
+        final boolean lengthOk = chars != null && chars.length() < (_isDeviceGoodHardware ? 100000 : 35000);
+        return getBool(PREF_PREFIX_HIGHLIGHT_STATE + path, lengthOk && isHighlightingEnabled());
     }
 
     public int getLastEditPositionChar(File file) {
@@ -354,21 +466,23 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         return getInt(PREF_PREFIX_EDIT_POS_CHAR + file.getAbsolutePath(), -3, _prefCache);
     }
 
-    public int getLastEditPositionScroll(File file) {
+    public int getLastViewPositionX(File file) {
         if (file == null || !file.exists()) {
-            return 0;
+            return -1;
         }
-        return getInt(PREF_PREFIX_EDIT_POS_SCROLL + file.getAbsolutePath(), 0, _prefCache);
+        return getInt(PREF_PREFIX_VIEW_SCROLL_X + file.getAbsolutePath(), -3, _prefCache);
+    }
+
+    public int getLastViewPositionY(File file) {
+        if (file == null || !file.exists()) {
+            return -1;
+        }
+        return getInt(PREF_PREFIX_VIEW_SCROLL_Y + file.getAbsolutePath(), -3, _prefCache);
     }
 
     private List<String> getPopularDocumentsSorted() {
         List<String> popular = getRecentDocuments();
-        Collections.sort(popular, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return Integer.compare(getInt(o1, 0, _prefCache), getInt(o2, 0, _prefCache));
-            }
-        });
+        Collections.sort(popular, (o1, o2) -> Integer.compare(getInt(o1, 0, _prefCache), getInt(o2, 0, _prefCache)));
         return popular;
     }
 
@@ -495,6 +609,53 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         }
     }
 
+    public boolean isSearchQueryCaseSensitive() {
+        return getBool(R.string.pref_key__is_search_query_case_sensitive, false);
+    }
+
+    public void setSearchQueryCaseSensitivity(final boolean isQuerySensitive) {
+        setBool(R.string.pref_key__is_search_query_case_sensitive, isQuerySensitive);
+    }
+
+    public boolean isSearchQueryUseRegex() {
+        return getBool(R.string.pref_key__is_search_query_use_regex, false);
+    }
+
+    public void setSearchQueryRegexUsing(final boolean isUseRegex) {
+        setBool(R.string.pref_key__is_search_query_use_regex, isUseRegex);
+    }
+
+    public boolean isSearchInContent() {
+        return getBool(R.string.pref_key__is_search_in_content, false);
+    }
+
+    public void setSearchInContent(final boolean isSearchInContent) {
+        setBool(R.string.pref_key__is_search_in_content, isSearchInContent);
+    }
+
+    public boolean isOnlyFirstContentMatch() {
+        return getBool(R.string.pref_key__is_only_first_content_match, false);
+    }
+
+    public void setOnlyFirstContentMatch(final boolean isOnlyFirstContentMatch) {
+        setBool(R.string.pref_key__is_only_first_content_match, isOnlyFirstContentMatch);
+    }
+
+    public int getSearchMaxDepth() {
+        int depth = getIntOfStringPref(R.string.pref_key__max_search_depth, Integer.MAX_VALUE);
+
+        if (depth == 0) {
+            return Integer.MAX_VALUE;
+        }
+
+        return depth;
+    }
+
+    public List<String> getFileSearchIgnorelist() {
+        String pref = getString(R.string.pref_key__filesearch_ignorelist, "");
+        return Arrays.asList(pref.replace("\r", "").replace("\n\n", "\n").split("\n"));
+    }
+
     public @IdRes
     int getAppStartupTab() {
         int i = getIntOfStringPref(R.string.pref_key__app_start_tab_v2, R.id.nav_notebook);
@@ -544,8 +705,7 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
     }
 
     public File getFolderToLoadByMenuId(int itemId) {
-        ContextUtils contextUtils = new ContextUtils(_context);
-        List<Pair<File, String>> appDataPublicDirs = contextUtils.getAppDataPublicDirs(false, true, false);
+        List<Pair<File, String>> appDataPublicDirs = _contextUtils.getAppDataPublicDirs(false, true, false);
         switch (itemId) {
             case R.id.action_go_to_home: {
                 return getNotebookDirectory();
@@ -560,7 +720,7 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
                 return FilesystemViewerAdapter.VIRTUAL_STORAGE_FAVOURITE;
             }
             case R.id.action_go_to_appdata_private: {
-                return contextUtils.getAppDataPrivateDir();
+                return _contextUtils.getAppDataPrivateDir();
             }
             case R.id.action_go_to_storage: {
                 return Environment.getExternalStorageDirectory();
@@ -578,11 +738,11 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
                 return Environment.getExternalStorageDirectory();
             }
             case R.id.action_go_to_appdata_public: {
-                appDataPublicDirs = contextUtils.getAppDataPublicDirs(true, false, false);
+                appDataPublicDirs = _contextUtils.getAppDataPublicDirs(true, false, false);
                 if (appDataPublicDirs.size() > 0) {
                     return appDataPublicDirs.get(0).first;
                 }
-                return contextUtils.getAppDataPrivateDir();
+                return _contextUtils.getAppDataPrivateDir();
             }
         }
         return getNotebookDirectory();
@@ -649,16 +809,16 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         return extSettingCache.contains(ext) || extSettingCache.contains(".*");
     }
 
-    public boolean isDebugLogEnabled() {
-        return getBool(R.string.pref_key__is_debug_log_enabled, BuildConfig.IS_TEST_BUILD);
-    }
-
     public boolean isExperimentalFeaturesEnabled() {
         return getBool(R.string.pref_key__is_enable_experimental_features, BuildConfig.IS_TEST_BUILD);
     }
 
     public boolean isMarkdownBiggerHeadings() {
         return getBool(R.string.pref_key__editor_markdown_bigger_headings_2, false);
+    }
+
+    public boolean isZimWikiBiggerHeadings() {
+        return getBool(R.string.pref_key__editor_zimwiki_bigger_headings, false);
     }
 
     public String getViewModeLinkColor() {
@@ -682,12 +842,20 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
         return deviceid;
     }
 
-    public boolean hasPasswordBeenSetOnce() {
-        return getBool(R.string.pref_key__default_encryption_password_set_once, false);
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public char[] getDefaultPassword() {
+        return new PasswordStore(getContext()).loadKey(R.string.pref_key__default_encryption_password);
     }
 
-    public void setPasswordHasBeenSetOnce(boolean b) {
-        setBool(R.string.pref_key__default_encryption_password_set_once, b);
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean isDefaultPasswordSet() {
+        final char[] key = getDefaultPassword();
+        return (key != null && key.length > 0);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setDefaultPassword(String password) {
+        new PasswordStore(getContext()).storeKey(password, R.string.pref_key__default_encryption_password);
     }
 
     public boolean getNewFileDialogLastUsedEncryption() {
@@ -704,5 +872,39 @@ public class AppSettings extends SharedPreferencesPropertyBackend {
 
     public void setNewFileDialogLastUsedExtension(String v) {
         setString(R.string.pref_key__new_file_dialog_lastused_extension, v);
+    }
+
+    public int getNewFileDialogLastUsedType() {
+        return getInt(R.string.pref_key__new_file_dialog_lastused_type, 0);
+    }
+
+    public void setNewFileDialogLastUsedType(int i) {
+        setInt(R.string.pref_key__new_file_dialog_lastused_type, i);
+    }
+
+    public void setFileBrowserLastBrowsedFolder(File f) {
+        setString(R.string.pref_key__file_browser_last_browsed_folder, f.getAbsolutePath());
+    }
+
+    public File getFileBrowserLastBrowsedFolder() {
+        return new File(getString(R.string.pref_key__file_browser_last_browsed_folder, getNotebookDirectoryAsStr()));
+    }
+
+    public boolean getSetWebViewFulldrawing(boolean... setValue) {
+        final String k = "getSetWebViewFulldrawing";
+        if (setValue != null && setValue.length == 1) {
+            setBool(k, setValue[0]);
+            return setValue[0];
+        }
+        return getBool(k, false);
+    }
+
+    public String getTodotxtAdditionalContextsAndProjects() {
+        return getString(R.string.pref_key__todotxt__additional_projects_contexts, "+music +video @home @shop");
+    }
+
+    // Not tied to an actual settings. Just moved here for clarity.
+    public int getDueDateOffset() {
+        return getInt(R.string.pref_key__todotxt__due_date_offset, 3);
     }
 }

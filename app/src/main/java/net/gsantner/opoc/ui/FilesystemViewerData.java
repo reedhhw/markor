@@ -24,7 +24,7 @@ import java.util.List;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class FilesystemViewerData {
     public interface SelectionListener extends Serializable {
-        void onFsViewerSelected(final String request, final File file);
+        void onFsViewerSelected(final String request, final File file, final Integer lineNumber);
 
         void onFsViewerMultiSelected(final String request, final File... files);
 
@@ -41,7 +41,8 @@ public class FilesystemViewerData {
         public SelectionListener listener = new SelectionListenerAdapter();
         public File
                 rootFolder = Environment.getExternalStorageDirectory(),
-                mountedStorageFolder = null;
+                mountedStorageFolder = null,
+                startFolder = null;
         public String requestId = "show_dialog";
 
         // Dialog type
@@ -112,7 +113,7 @@ public class FilesystemViewerData {
 
     public static class SelectionListenerAdapter implements SelectionListener, Serializable {
         @Override
-        public void onFsViewerSelected(String request, File file) {
+        public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
         }
 
         @Override

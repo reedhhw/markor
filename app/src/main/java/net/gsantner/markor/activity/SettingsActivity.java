@@ -19,18 +19,20 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import net.gsantner.markor.R;
 import net.gsantner.markor.ui.FilesystemViewerCreator;
+import net.gsantner.markor.ui.SearchOrCustomTextDialogCreator;
 import net.gsantner.markor.util.ActivityUtils;
 import net.gsantner.markor.util.AppSettings;
+import net.gsantner.markor.util.BackupUtils;
 import net.gsantner.markor.util.ContextUtils;
 import net.gsantner.markor.util.PermissionChecker;
 import net.gsantner.opoc.preference.FontPreferenceCompat;
@@ -39,10 +41,11 @@ import net.gsantner.opoc.preference.SharedPreferencesPropertyBackend;
 import net.gsantner.opoc.ui.FilesystemViewerData;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import other.de.stanetz.jpencconverter.PasswordStore;
 import other.writeily.widget.WrMarkorWidgetProvider;
 
 public class SettingsActivity extends AppActivityBase {
@@ -189,12 +192,17 @@ public class SettingsActivity extends AppActivityBase {
             updateSummary(R.string.pref_key__exts_to_always_open_in_this_app, _appSettings.getString(R.string.pref_key__exts_to_always_open_in_this_app, ""));
             updateSummary(R.string.pref_key__todotxt__alternative_naming_context_project,
                     getString(R.string.category_to_context_project_to_tag, getString(R.string.context), getString(R.string.category), getString(R.string.project), getString(R.string.tag)));
+            if (_appSettings.getString(R.string.pref_key__file_description_format, "").equals("")) {
+                updateSummary(R.string.pref_key__file_description_format, getString(R.string.default_));
+            } else {
+                updateSummary(R.string.pref_key__file_description_format, _appSettings.getString(R.string.pref_key__file_description_format, ""));
+            }
 
             setPreferenceVisible(R.string.pref_key__is_multi_window_enabled, Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-            setPreferenceVisible(R.string.pref_key__default_encryption_password, Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && _as.hasPasswordBeenSetOnce()) {
-                updateSummary(R.string.pref_key__default_encryption_password, "****");
-                setDialogMessage(R.string.pref_key__default_encryption_password, getString(R.string.password_already_set_setting_a_new_password_will_overwrite));
+
+            setPreferenceVisible(R.string.pref_key__set_encryption_password, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && _as.isDefaultPasswordSet()) {
+                updateSummary(R.string.pref_key__set_encryption_password, getString(R.string.hidden_password));
             }
 
 
@@ -206,7 +214,6 @@ public class SettingsActivity extends AppActivityBase {
                     R.string.pref_key__tab_width_v2,
                     R.string.pref_key__editor_line_spacing,
                     R.string.pref_key__todotxt__start_new_tasks_with_huuid_v3,
-                    R.string.pref_key__default_encryption_password,
             };
             for (final int keyId : experimentalKeys) {
                 setPreferenceVisible(keyId, _as.isExperimentalFeaturesEnabled());
@@ -221,8 +228,13 @@ public class SettingsActivity extends AppActivityBase {
                 activityRetVal = RESULT.RESTART_REQ;
                 _as.setRecreateMainRequired(true);
             } else if (eq(key, R.string.pref_key__app_theme)) {
-                restartActivity();
+                // Handling widget color scheme
+                WrMarkorWidgetProvider.handleWidgetScheme(
+                        getContext(),
+                        new RemoteViews(getContext().getPackageName(), R.layout.widget_layout),
+                        new AppSettings(getContext()).isDarkThemeEnabled());
                 _as.setRecreateMainRequired(true);
+                getActivity().finish();
             } else if (eq(key, R.string.pref_key__is_overview_statusbar_hidden)) {
                 activityRetVal = RESULT.RESTART_REQ;
                 _as.setRecreateMainRequired(true);
@@ -230,14 +242,13 @@ public class SettingsActivity extends AppActivityBase {
                 boolean extraLaunchersEnabled = prefs.getBoolean(key, false);
                 ActivityUtils au = new ActivityUtils(getActivity());
                 au.applySpecialLaunchersVisibility(extraLaunchersEnabled);
-            } else if (eq(key, R.string.pref_key__default_encryption_password) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !TextUtils.isEmpty(prefs.getString(key, null))) {
-                new PasswordStore(getActivity()).storeKey(prefs.getString(key, null), key, PasswordStore.SecurityMode.NONE);
-                // Never delete the password, otherwise you will remove the password in PasswordStore too!
-                // Never remove this line, otherwise the password will be stored unencrypted forever.
-                // Using commit and while to ensure that the asterisk-pw is definitely written.
-                prefs.edit().remove(key).commit();
-                ((EditTextPreference) findPreference(key)).setText("");
-                _as.setPasswordHasBeenSetOnce(true);
+            } else if (eq(key, R.string.pref_key__file_description_format)) {
+                try {
+                    new SimpleDateFormat(prefs.getString(key, ""), Locale.getDefault());
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(getContext(), e.getLocalizedMessage() + "\n\n" + getString(R.string.loading_default_value), Toast.LENGTH_SHORT).show();
+                    prefs.edit().putString(key, "").commit();
+                }
             }
         }
 
@@ -252,11 +263,10 @@ public class SettingsActivity extends AppActivityBase {
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
                         FilesystemViewerCreator.showFolderDialog(new FilesystemViewerData.SelectionListenerAdapter() {
                             @Override
-                            public void onFsViewerSelected(String request, File file) {
+                            public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
                                 AppSettings as = AppSettings.get();
                                 as.setSaveDirectory(file.getAbsolutePath());
                                 as.setRecreateMainRequired(true);
-                                as.setLastOpenedDirectory(as.getNotebookDirectoryAsStr());
                                 doUpdatePreferences();
                             }
 
@@ -276,7 +286,7 @@ public class SettingsActivity extends AppActivityBase {
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
                         FilesystemViewerCreator.showFileDialog(new FilesystemViewerData.SelectionListenerAdapter() {
                             @Override
-                            public void onFsViewerSelected(String request, File file) {
+                            public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
                                 AppSettings as = AppSettings.get();
                                 as.setQuickNoteFile(file);
                                 as.setRecreateMainRequired(true);
@@ -297,7 +307,7 @@ public class SettingsActivity extends AppActivityBase {
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
                         FilesystemViewerCreator.showFileDialog(new FilesystemViewerData.SelectionListenerAdapter() {
                             @Override
-                            public void onFsViewerSelected(String request, File file) {
+                            public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
                                 AppSettings as = AppSettings.get();
                                 as.setTodoFile(file);
                                 as.setRecreateMainRequired(true);
@@ -339,6 +349,11 @@ public class SettingsActivity extends AppActivityBase {
                     _as.setEditorBasicColor(false, R.color.gruvbox_fg_light, R.color.gruvbox_bg_light);
                     break;
                 }
+                case R.string.pref_key__editor_basic_color_scheme_nord: {
+                    _as.setEditorBasicColor(true, R.color.nord_fg_dark, R.color.nord_bg_dark);
+                    _as.setEditorBasicColor(false, R.color.nord_fg_light, R.color.nord_bg_light);
+                    break;
+                }
                 case R.string.pref_key__editor_basic_color_scheme_greenscale: {
                     _as.setEditorBasicColor(true, R.color.green_dark, R.color.black);
                     _as.setEditorBasicColor(false, R.color.green_light, R.color.white);
@@ -351,19 +366,24 @@ public class SettingsActivity extends AppActivityBase {
                 }
                 case R.string.pref_key__plaintext__reorder_actions:
                 case R.string.pref_key__markdown__reorder_actions:
+                case R.string.pref_key__zimwiki__reorder_actions:
                 case R.string.pref_key__todotxt__reorder_actions: {
-                    Intent intent = new Intent(getActivity(), ActionOrderActivity.class);
-                    intent.putExtra(ActionOrderActivity.EXTRA_FORMAT_KEY, (keyResId == R.string.pref_key__markdown__reorder_actions) ? R.id.action_format_markdown : (keyResId == R.string.pref_key__todotxt__reorder_actions ? R.id.action_format_todotxt : R.id.action_format_plaintext));
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(), ActionOrderActivity.class).putExtra(ActionOrderActivity.EXTRA_FORMAT_KEY, keyResId));
+                    break;
+                }
+                case R.string.pref_key__set_encryption_password: {
+                    SearchOrCustomTextDialogCreator.showSetPasswordDialog(getActivity());
+                    break;
+                }
+                case R.string.pref_key__backup_settings: {
+                    BackupUtils.showBackupWriteToDialog(getContext(), getFragmentManager());
+                    break;
+                }
+                case R.string.pref_key__restore_settings: {
+                    BackupUtils.showBackupSelectFromDialog(getContext(), getFragmentManager());
                     break;
                 }
             }
-
-            // Handling widget color scheme
-            WrMarkorWidgetProvider.handleWidgetScheme(
-                    getContext(),
-                    new RemoteViews(getContext().getPackageName(), R.layout.widget_layout),
-                    new AppSettings(getContext()).isDarkThemeEnabled());
 
             if (key.startsWith("pref_key__editor_basic_color_scheme") && !key.contains("_fg_") && !key.contains("_bg_")) {
                 _as.setRecreateMainRequired(true);
@@ -375,13 +395,6 @@ public class SettingsActivity extends AppActivityBase {
         @Override
         public boolean isDividerVisible() {
             return true;
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            // Reset Password to ensure it's not stored as plaintext.
-            _as.getDefaultPreferencesEditor().remove(getContext().getString(R.string.pref_key__default_encryption_password)).commit();
         }
     }
 }

@@ -34,6 +34,15 @@
         <item translatable="false">@string/quicknote</item>
     </string-array>
 
+    <string-array name="pref_arrdisp__search_depth" translatable="false">
+        <item translatable="false">@string/infinite</item>
+        <item translatable="false">1</item>
+        <item translatable="false">2</item>
+        <item translatable="false">3</item>
+        <item translatable="false">5</item>
+        <item translatable="false">10</item>
+    </string-array>
+
     <string-array name="textactions_press_key__text" translatable="false">
         <item translatable="false">@string/key_page_up</item>
         <item translatable="false">@string/key_page_down</item>
@@ -59,6 +68,7 @@
         <item translatable="false">@string/markdown</item>
         <item translatable="false">@string/plaintext</item>
         <item translatable="false">@string/todo_txt</item>
+        <item translatable="false">@string/zim_wiki</item>
         <item translatable="false">@string/none</item>
     </string-array>
 
@@ -69,14 +79,17 @@
         <item translatable="false">@string/file_template__md_jekyll_post</item>
         <item translatable="false">@string/file_template__md_cooking_recipe</item>
         <item translatable="false">@string/file_template__md_presentation_beamer</item>
-        <item translatable="false">@string/file_template__txt_zim_wiki</item>
+        <item translatable="false">@string/file_template__zim_wiki_reference</item>
+        <item translatable="false">@string/file_template__zim_wiki_empty</item>
         <item translatable="false">@string/file_template__md_hugo_post_front_matter</item>
+        <item translatable="false">@string/file_template__md_zettelkasten</item>
     </string-array>
 
     <string-array name="new_file_types__file_extension" translatable="false">
         <item translatable="false">.md</item>
         <item translatable="false">.txt</item>
         <item translatable="false">.todo.txt</item>
+        <item translatable="false">.txt</item>
         <item translatable="false" />
     </string-array>
 

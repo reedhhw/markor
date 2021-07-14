@@ -1,7 +1,7 @@
 /*#######################################################
  * Copyright (c) 2014 Jeff Martin
  * Copyright (c) 2015 Pedro Lafuente
- * Copyright (c) 2017-2019 Gregor Santner
+ * Copyright (c) 2017-2021 Gregor Santner
  *
  * Licensed under the MIT license.
  * You can get a copy of the license text here:
@@ -75,7 +75,7 @@ public class WrFilesWidgetFactory implements RemoteViewsService.RemoteViewsFacto
         WrMarkorWidgetProvider.handleWidgetScheme(
                 _context,
                 new RemoteViews(_context.getPackageName(), R.layout.widget_layout),
-                !new AppSettings(_context).isDarkThemeEnabled());
+                new AppSettings(_context).isDarkThemeEnabled());
     }
 
     @Override
@@ -92,6 +92,10 @@ public class WrFilesWidgetFactory implements RemoteViewsService.RemoteViewsFacto
     public RemoteViews getViewAt(int position) {
         RemoteViews rowView = new RemoteViews(_context.getPackageName(), R.layout.widget_file_item);
         rowView.setTextViewText(R.id.widget_note_title, "???");
+        if (new AppSettings(_context).isDarkThemeEnabled())
+            rowView.setTextColor(R.id.widget_note_title, _context.getResources().getColor(R.color.dark__primary_text));
+        else
+            rowView.setTextColor(R.id.widget_note_title, _context.getResources().getColor(R.color.light__primary_text));
         if (position < _widgetFilesList.length) {
             File file = _widgetFilesList[position];
             Intent fillInIntent = new Intent().putExtra(DocumentIO.EXTRA_PATH, file).putExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, file.isDirectory());

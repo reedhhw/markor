@@ -26,6 +26,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Create Folder</string>
     <string name="create_new_document">Create new document</string>
     <string name="move">Move</string>
+    <string name="copy">Copy</string>
     <string name="info">Info</string>
     <string name="file_folder_already_exists_please_use_a_different_name">File/folder already exists! Please use a different name</string>
 
@@ -36,7 +37,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="edit">Edit</string>
 
     <string name="search_documents">Search documents</string>
-    <string name="share_to_arrow">Share to&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Share to&#8230;</string>
     <string name="share">Share</string>
     <string name="search">Search</string>
     <string name="display_converted_markup">Display converted markup</string>
@@ -127,6 +128,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Files and folders</string>
     <string name="document_browser">Document browser</string>
     <string name="file_browser">File browser</string>
+    <string name="set_due_date">Set due date</string>
+    <string name="insert_replace_date">Insert date</string>
 
     <string name="create_note" needed="false">Create Note</string>
     <string name="special_documents" needed="false">Special documents</string>
@@ -172,6 +175,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Highlight spaces at the end of lines containing two or more spaces</string>
     <string name="use_monospace_for_code">Use monospace font for code</string>
     <string name="disable_code_block_highlight">Disable highlighting for code blocks</string>
+    <string name="auto_renumber_ordered_list">Auto-renumber ordered lists</string>
+    <string name="auto_renumber_ordered_list_slowdown">This option may impact app performance.</string>
     <string name="use_different_fonttype_slow_down">Make use of a different font type. Changing it dynamically impacts app performance.</string>
     <string name="general">General</string>
     <string name="resources">Resources</string>
@@ -184,6 +189,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Page Down (Page Down)</string>
     <string name="move_text_one_line_up">Move text one line up</string>
     <string name="move_text_one_line_down">Move text one line down</string>
+    <string name="start_new_line_below">Start new line below</string>
     <string name="key_pos_1">Line Start (Pos Home)</string>
     <string name="key_pos_end">Line End (Pos End)</string>
     <string name="key_pos_1_document">Document Start</string>
@@ -228,8 +234,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Translate this app into other languages</string>
     <string name="source_code">Source Code</string>
     <string name="project_license">Project License</string>
-    <string name="project_contribution_info">Project contribution info</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">More info on how to contribute to this project</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Contribute code to the project. Everybody is welcome to do so, including newcomers</string>
     <string name="project_team">Project Team</string>
     <string name="contributors_public_add_yourself_description">Show contributor info. Provide it to be shown here on an opt-in basis after contributing</string>
@@ -324,12 +328,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Reload</string>
     <string name="wrap_words">Wrap words</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Soft break if text doesn\'t fit to screen width. Else enable horizontal scrolling.</string>
-    <string name="recursive_search_in_current_directory">Recursive search in current directory. When query contains a asterisk (*) regex search is used, otherwise check if the query is contained.</string>
+    <string name="recursive_search_in_current_directory">Recursive search in current directory.</string>
     <string name="always_open_with_this_app">Always open with this app</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Always open files with this app when the list contains the file extension. Use \'None, .html, .css , .js\' for example if you want to edit web files and those without file extension.</string>
     <string name="template">Template</string>
     <string name="send_debug_log">Send Debug Log</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Help by sending debug information to developer(s). Data is sent by email via your email app and you can see all sent data prior to sending. You will find an additional \"Send debug log\" option in top menu when enabled. It creates the email draft.</string>
     <string name="print_pdf">Print / PDF</string>
     <string name="bigger_headings">Bigger headings</string>
     <string name="increase_text_size_of_headings_according_to_level">Increase text size of headers according to level (# h1, ## h2. ### h3…)</string>
@@ -343,7 +346,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Reading</string>
     <string name="read">Read</string>
     <string name="table">Table</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">How much columns? Press table button long to start a table (insert header), press short to add a row.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">How many columns? Press table button long to start a table (insert header), press short to add a row.</string>
     <string name="example_of_a_markdown_table">Example of a Markdown table</string>
     <string name="delete_lines">Delete lines</string>
     <string name="unordered_list">Unordered list</string>
@@ -358,8 +361,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Heading 1</string>
     <string name="heading_2">Heading 2</string>
     <string name="heading_3">Heading 3</string>
+    <string name="heading_4">Heading 4</string>
+    <string name="heading_5">Heading 5</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
+    <string name="highlighted">Highlighted</string>
     <string name="strikeout">Strike out</string>
     <string name="inline_code">Inline code</string>
     <string name="horizontal_line">Horizontal line</string>
@@ -377,8 +383,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Essential</string>
     <string name="append_human_readable_uuid_to_new_tasks">Append human readable UUID to new tasks</string>
     <string name="action_order">Action order</string>
+    <string name="toggle_action_visibility">Toggle action visibility</string>
     <string name="load_default_settings">Load default settings</string>
     <string name="drag">Drag</string>
+    <string name="created">Created</string>
 
     <string name="file_encryption_password">File encryption password</string>
     <string name="no_password_set_cannot_encrypt_decrypt">No password set, cannot encrypt or decrypt.\nGo to Settings -> General -> Password to set a password.</string>
@@ -387,5 +395,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Could not decrypt file content. Did you use a wrong password? Is the file really encrypted with Markors AES encryption?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Password already set. Setting a new password will overwrite the existing password and you may not be able to access files anymore in case you forget the password.</string>
     <string name="code_block">Code block</string>
-
+    <string name="add_completion_date">Add completion date</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Add completion date for todos when marking them as done</string>
+    <string name="file_description_format">File description format</string>
+    <string name="file_description_format_dialog">Format for the description under each file in the file browser. Follows Android\'s SimpleDateFormat rules, with the addition of FS for showing file size. Leave blank to use the default format for your locale.\n\nExample input:\nFS yyyy MMM dd hh:mm:ss aa\nOutput format:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Loading default value</string>
+    <string name="file_settings">File settings</string>
+    <string name="search_and_replace">Search / Replace</string>
+    <string name="search_for">Search for</string>
+    <string name="replace_with">Replace with</string>
+    <string name="replace_once">Replace (1)</string>
+    <string name="replace_all">Replace all</string>
+    <string name="matches">Matches</string>
+    <string name="search_replace_pattern_error_message">Search or replace pattern error.</string>
+    <string name="backup_settings">Backup settings</string>
+    <string name="restore_settings">Restore settings</string>
+    <string name="failed_to_create_backup">Failed to create backup</string>
+    <string name="export_settings_to_json_file">Export settings to json file</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Import settings from backup json file. On success, the app is restarted.</string>
+    <string name="failed_to_restore_settings_from_backup">Failed to restore settings from backup</string>
+    <string name="newline_is_new_paragraph">Newline = new paragraph</string>
+    <string name="search_in_content">Search in content</string>
+    <string name="max_search_depth">Search depth</string>
+    <string name="ignore_list">Ignore list</string>
+    <string name="do_not_search_specified_files_and_folders">Do not search specified files and folders.\nUse new line as separator.\nUse quotes for exact dir names: \"Test\".\nOr use Regex \'^[.].*\'\nExamples: ^\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Regex search</string>
+    <string name="case_sensitive">Case sensitive</string>
+    <string name="stop_search_after_first_match">Stop search after first match</string>
+    <string name="regex_can_not_be_compiled">Regex can not be compiled</string>
+    <string name="keep_both">Keep both</string>
+    <string name="skip">Skip</string>
+    <string name="overwrite">Overwrite</string>
+    <string name="keep_both_all">Keep both (all)</string>
+    <string name="skip_all">Skip (all)</string>
+    <string name="overwrite_all">Overwrite (all)</string>
+    <string name="copy_move_conflict_message">\'%s\' already exists in %s</string>
+    <string name="additional_contexts_and_projects">Additional contexts and projects</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Enter space-separated @contexts and +projects. These will always be visible at todo.txt insert dialogs.</string>
+    <string name="infinite">Infinite</string>
 </resources>

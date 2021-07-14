@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.gsantner.markor.R;
+import net.gsantner.markor.format.AutoFormatter;
 import net.gsantner.markor.format.general.CommonTextActions;
 import net.gsantner.markor.model.Document;
 import net.gsantner.markor.ui.AttachImageOrLinkDialog;
@@ -24,6 +25,7 @@ import net.gsantner.markor.ui.SearchOrCustomTextDialogCreator;
 import net.gsantner.markor.ui.hleditor.TextActions;
 import net.gsantner.opoc.util.Callback;
 import net.gsantner.opoc.util.ContextUtils;
+import net.gsantner.opoc.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +78,9 @@ public class MarkdownTextActions extends TextActions {
                 new ActionItem(R.string.tmaid_common_accordion, R.drawable.ic_arrow_drop_down_black_24dp, R.string.accordion),
                 new ActionItem(R.string.tmaid_common_indent, R.drawable.ic_format_indent_increase_black_24dp, R.string.indent),
                 new ActionItem(R.string.tmaid_common_deindent, R.drawable.ic_format_indent_decrease_black_24dp, R.string.deindent),
+                new ActionItem(R.string.tmaid_common_new_line_below, R.drawable.ic_baseline_keyboard_return_24, R.string.start_new_line_below),
+                new ActionItem(R.string.tmaid_common_move_text_one_line_up, R.drawable.ic_baseline_arrow_upward_24, R.string.move_text_one_line_up),
+                new ActionItem(R.string.tmaid_common_move_text_one_line_down, R.drawable.ic_baseline_arrow_downward_24, R.string.move_text_one_line_down),
         };
 
         return Arrays.asList(TMA_ACTIONS);
@@ -99,25 +104,36 @@ public class MarkdownTextActions extends TextActions {
             }
             switch (_action) {
                 case R.string.tmaid_markdown_quote: {
-                    runRegularPrefixAction("> ");
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.toggleQuote());
                     return true;
                 }
                 case R.string.tmaid_markdown_h1: {
-                    setHeadingAction(1);
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.setOrUnsetHeadingWithLevel(1));
                     return true;
                 }
                 case R.string.tmaid_markdown_h2: {
-                    setHeadingAction(2);
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.setOrUnsetHeadingWithLevel(2));
                     return true;
                 }
                 case R.string.tmaid_markdown_h3: {
-                    setHeadingAction(3);
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.setOrUnsetHeadingWithLevel(3));
                     return true;
                 }
-                /*case R.string.tmaid_common_unordered_list_char: {
-                    runRegularPrefixAction(_appSettings.getUnorderedListCharacter() + " ");
+                case R.string.tmaid_common_unordered_list_char: {
+                    final String listChar = _appSettings.getUnorderedListCharacter();
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.replaceWithUnorderedListPrefixOrRemovePrefix(listChar));
                     return true;
-                }*/
+                }
+                case R.string.tmaid_common_checkbox_list: {
+                    final String listChar = _appSettings.getUnorderedListCharacter();
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.toggleToCheckedOrUncheckedListPrefix(listChar));
+                    return true;
+                }
+                case R.string.tmaid_common_ordered_list_number: {
+                    runRegexReplaceAction(MarkdownReplacePatternGenerator.replaceWithOrderedListPrefixOrRemovePrefix());
+                    runRenumberOrderedListIfRequired();
+                    return true;
+                }
                 case R.string.tmaid_markdown_bold: {
                     runInlineAction("**");
                     return true;
@@ -149,10 +165,25 @@ public class MarkdownTextActions extends TextActions {
                 }
                 case R.string.tmaid_common_toolbar_title_clicked_edit_action: {
                     final String origText = _hlEditor.getText().toString();
-                    SearchOrCustomTextDialogCreator.showMarkdownHeadlineDialog(_activity, origText, callbackPayload -> {
-                        int cursor = origText.indexOf(callbackPayload);
-                        _hlEditor.setSelection(Math.min(_hlEditor.length(), Math.max(0, cursor)));
+                    SearchOrCustomTextDialogCreator.showMarkdownHeadlineDialog(_activity, origText, (lineNr) -> {
+                        _hlEditor.setSelection(StringUtils.getIndexFromLineOffset(origText, lineNr, 0));
                     });
+                    return true;
+                }
+                case R.string.tmaid_common_move_text_one_line_up:
+                case R.string.tmaid_common_move_text_one_line_down: {
+                    runCommonTextAction(_context.getString(_action));
+                    runRenumberOrderedListIfRequired();
+                    return true;
+                }
+                case R.string.tmaid_common_indent: {
+                    runIndentLines(false);
+                    runRenumberOrderedListIfRequired();
+                    return true;
+                }
+                case R.string.tmaid_common_deindent: {
+                    runIndentLines(true);
+                    runRenumberOrderedListIfRequired();
                     return true;
                 }
                 default: {
@@ -184,7 +215,7 @@ public class MarkdownTextActions extends TextActions {
                 }
                 case R.string.tmaid_markdown_table_insert_columns: {
                     SearchOrCustomTextDialogCreator.showInsertTableRowDialog(_activity, true, callbackInsertTableRow);
-                    break;
+                    return true;
                 }
                 case R.string.tmaid_markdown_code_inline: {
                     _hlEditor.disableHighlighterAutoFormat();
@@ -194,6 +225,18 @@ public class MarkdownTextActions extends TextActions {
                     _hlEditor.setSelection(c + "\n```\n".length());
                     _hlEditor.enableHighlighterAutoFormat();
                     Toast.makeText(_activity, R.string.code_block, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                case R.string.tmaid_common_ordered_list_number: {
+                    AutoFormatter.renumberOrderedList(_hlEditor.getText(), StringUtils.getSelection(_hlEditor)[0], MarkdownAutoFormat.getPrefixPatterns());
+                    return true;
+                }
+                case R.string.tmaid_common_deindent:
+                case R.string.tmaid_common_indent: {
+                    SearchOrCustomTextDialogCreator.showIndentSizeDialog(_activity, _indent, (size) -> {
+                        _indent = Integer.parseInt(size);
+                        _appSettings.setDocumentIndentSize(getPath(), _indent);
+                    });
                     return true;
                 }
             }
@@ -227,37 +270,9 @@ public class MarkdownTextActions extends TextActions {
         };
     }
 
-
-    /**
-     * Set/unset ATX heading level on each selected line
-     * <p>
-     * This routine will make the following conditional changes
-     * <p>
-     * Line is heading of same level as requested -> remove heading
-     * Line is heading of different level that that requested -> add heading of specified level
-     * Line is not heading -> add heading of specified level
-     *
-     * @param level ATX heading level
-     */
-    protected void setHeadingAction(int level) {
-        // Commonmark allows headings of level 1 - 6
-        assert (level >= 1);
-        assert (level <= 6);
-
-        char[] headerChars = new char[level];
-        Arrays.fill(headerChars, '#');
-        String header = new String(headerChars) + ' ';
-
-        ReplacePattern[] patterns = {
-                // Remove extant heading of matching level (preserves leading space)
-                // Commonmark allows up to 3 leading spaces
-                new ReplacePattern(String.format("^(\\s{0,3})#{%d}\\s", level), "$1"),
-                // Convert extant heading to requested level
-                new ReplacePattern("^(\\s{0,3})(#{1,6})\\s", "$1" + header),
-                // Add heading if not a heading
-                new ReplacePattern("^", header),
-        };
-
-        runRegexReplaceAction(Arrays.asList(patterns));
+    private void runRenumberOrderedListIfRequired() {
+        if (_appSettings.isMarkdownAutoUpdateList()) {
+            AutoFormatter.renumberOrderedList(_hlEditor, StringUtils.getSelection(_hlEditor)[0], MarkdownAutoFormat.getPrefixPatterns());
+        }
     }
 }

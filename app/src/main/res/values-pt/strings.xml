@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Criar pasta</string>
     <string name="create_new_document">Criar novo documento</string>
     <string name="move">Mover</string>
+    <string name="copy">copiar</string>
     <string name="info">Info</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Ficheiro/pasta já existe! Utilize um nome diferente.</string>
     <string name="import_from_device">Importar do dispositivo</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Selecionar pasta</string>
     <string name="edit">Editar</string>
     <string name="search_documents">Pesquisar documentos</string>
-    <string name="share_to_arrow">Partilhar com&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Partilhar com&#8230;</string>
     <string name="share">Partilhar</string>
     <string name="search">Pesquisar</string>
     <string name="display_converted_markup">Mostrar \'markup\' convertida</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Ficheiros e pastas</string>
     <string name="document_browser">Explorador de ficheiros</string>
     <string name="file_browser">Explorador de ficheirosicheiros</string>
+    <string name="set_due_date">Definir data limite</string>
+    <string name="insert_replace_date">Inserir data</string>
     <string name="create_note" needed="false">Criar nota</string>
     <string name="special_documents" needed="false">Documentos especiais</string>
     <string name="keep_screen_on" needed="false">Manter ecrã ligado</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Destacar espaços no final das linhas que possuem dois ou mais espaços</string>
     <string name="use_monospace_for_code">Utilizar letra monoespaçada para código</string>
     <string name="disable_code_block_highlight">Desativar destaque para blocos de código</string>
+    <string name="auto_renumber_ordered_list">Numeração automática de listas ordenadas</string>
+    <string name="auto_renumber_ordered_list_slowdown">Esta opção pode afetar o desempenho da aplicação.</string>
     <string name="use_different_fonttype_slow_down">Utiliza um tipo de letra diferente. A alteração desta opção pode degradar o desempenho.</string>
     <string name="general">Geral</string>
     <string name="resources">Recursos</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Página abaixo (Page Down)</string>
     <string name="move_text_one_line_up">Mover texto uma linha acima</string>
     <string name="move_text_one_line_down">Mover texto uma linha abaixo</string>
+    <string name="start_new_line_below">Iniciar nova linha abaixo</string>
     <string name="key_pos_1">Início de linha (Home)</string>
     <string name="key_pos_end">Fim de linha (End)</string>
     <string name="key_pos_1_document">Início do documento</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Traduzir esta aplicação</string>
     <string name="source_code">Código fonte</string>
     <string name="project_license">Licença</string>
-    <string name="project_contribution_info">Informações sobre o projeto</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Mais informações sobre como participar</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Contribua com código. Todos os contributos serão bem-vindos.</string>
     <string name="project_team">Equipa do projeto</string>
     <string name="contributors_public_add_yourself_description">Mostrar informação sobre os colaboradores. Apenas serão visíveis se autorizadas pelos próprios.</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Recarregar</string>
     <string name="wrap_words">Moldar texto</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Ajustar texto caso este não caiba no ecrã. Também ativa a deslocação horizontal.</string>
-    <string name="recursive_search_in_current_directory">Pesquisa recursiva no diretório atual. Se a consulta possuir um asterisco (*), é utilizada a expressão regular para a pesquisa, caso contrário verifique se a consulta está contida.</string>
+    <string name="recursive_search_in_current_directory">Pesquisa recursiva no diretório atual.</string>
     <string name="always_open_with_this_app">Abrir sempre com esta aplicação</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Utilizar sempre esta aplicação se a wextensão do ficheiro estiver nesta lista. Utilize, por exemplo, \'None, .html, .css , .js\' se quiser editar ficheiros web ou ficheiros que não tenham extensão.</string>
     <string name="template">Modelo</string>
     <string name="send_debug_log">Enviar registos de debug</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Ajude-nos enviando as informações de depuração para o programador(es). Os dados são enviados por e-mail e você pode ver todos os dados que serão submetidos antes de os enviar. Se a opção estiver ativa, encontrará a opção \"Enviar registo de debug\" no menu superior. Será criado um e-mail de rascunho.</string>
     <string name="print_pdf">Imprimir/PDF</string>
     <string name="bigger_headings">Cabeçalho grande</string>
     <string name="increase_text_size_of_headings_according_to_level">Aumentar tamanho do texto dos cabeçalhos, de acordo com o nível (# h1, ## h2. ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Leitura</string>
     <string name="read">Ler</string>
     <string name="table">Tabela</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Quantas colunas? Toque longo no botão da tabela para criar uma tabela e toque curto para adicionar uma linha.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Quantas colunas? Pressione o botão de tabela para iniciar uma tabela (inserir cabeçalho), pressione a tecla curta para adicionar uma linha.</string>
     <string name="example_of_a_markdown_table">Exemplo de tabela Markdown</string>
     <string name="delete_lines">Apagar linhas</string>
     <string name="unordered_list">Lista desordenada</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Título 1</string>
     <string name="heading_2">Título 2</string>
     <string name="heading_3">Título 3</string>
+    <string name="heading_4">Título 4</string>
+    <string name="heading_5">Título 5</string>
     <string name="bold">Negrito</string>
     <string name="italic">Itálico</string>
+    <string name="highlighted">Destacado</string>
     <string name="strikeout">Rasurado</string>
     <string name="inline_code">Código em linha</string>
     <string name="horizontal_line">Linha horizontal</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Essencial</string>
     <string name="append_human_readable_uuid_to_new_tasks">Acrescentar UUID legível a novas tarefas</string>
     <string name="action_order">Ordem das ações</string>
+    <string name="toggle_action_visibility">Alternar visibilidade da ação</string>
     <string name="load_default_settings">Carregar predefinições</string>
     <string name="drag">Arrastar</string>
+    <string name="created">Criado</string>
     <string name="file_encryption_password">Senha de criptografia de arquivo</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Palavra-passe não definida, não é possível cifrar e/ou decifrar.\nAceda a Definições - &gt; Geral -&gt; Palavra-passe para a definir.</string>
     <string name="encrypt_file_content">Cifrar conteúdo do ficheiro</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Não foi possível decifrar o ficheiro. Utilizou a palavra-passe correta? O ficheiro foi cifrado com a cifra Markor AES?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">A palavra-passe já está definida. Se definir uma nova palavra-passe a atual será substituída e, caso a perca, já não será possível aceder ao ficheiro.</string>
     <string name="code_block">Bloco de código</string>
+    <string name="add_completion_date">Adicionar data de conclusão</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Adicionar data de conclusão das tarefas se forem dadas como concluídas</string>
+    <string name="file_description_format">Formato da descrição do ficheiro</string>
+    <string name="file_description_format_dialog">Formato da descrição em cada ficheiro no explorador de ficheiros. Segue as regras SimpleDateFormat do Android, com a adição de FS para mostrar o tamanho do ficheiro. Deixe em branco para usar o formato padrão da sua configuração regional.\n\nExemplo de entrada:\nFS yyyy MMM dd hh:mm:ss aa\nFormato de saída:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Carregando valor padrão</string>
+    <string name="file_settings">Configurações do arquivo</string>
+    <string name="search_and_replace">Pesquisar/Substituir</string>
+    <string name="search_for">Pesquisar por</string>
+    <string name="replace_with">Substituir por</string>
+    <string name="replace_once">Substituir (1)</string>
+    <string name="replace_all">Substituir tudo</string>
+    <string name="matches">Ocorrências</string>
+    <string name="search_replace_pattern_error_message">Erro ao pesquisar ou substituir.</string>
+    <string name="backup_settings">Configurações do backup</string>
+    <string name="restore_settings">Restaurar configurações</string>
+    <string name="failed_to_create_backup">Falha ao criar backup</string>
+    <string name="export_settings_to_json_file">Exportar configurações para arquivo json</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Importe as configurações do arquivo json de backup. Em caso de sucesso, o aplicativo é reiniciado.</string>
+    <string name="failed_to_restore_settings_from_backup">Falha ao restaurar as configurações do backup</string>
+    <string name="newline_is_new_paragraph">Nova linha = novo parágrafo</string>
+    <string name="search_in_content">Pesquisar no conteúdo</string>
+    <string name="max_search_depth">Profundidade da busca</string>
+    <string name="ignore_list">Lista de Ignorados</string>
+    <string name="do_not_search_specified_files_and_folders">Não procure por arquivos e pastas especificadas.\nUse nova linha como separador.\nUse aspas para nomes exatamente diretórios: \"Testar\".\nOu use Regex \'^[.].*\'\nExemplos: ├..*\n\"teste\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Busca por Regex</string>
+    <string name="case_sensitive">Sensível ao caso</string>
+    <string name="stop_search_after_first_match">Parar pesquisa após primeira correspondência</string>
+    <string name="regex_can_not_be_compiled">Regex não pode ser compilado</string>
+    <string name="keep_both">Manter ambos</string>
+    <string name="skip">Ignorar</string>
+    <string name="overwrite">Substituir</string>
+    <string name="keep_both_all">Manter ambos (todos)</string>
+    <string name="skip_all">Pular (todos)</string>
+    <string name="overwrite_all">Sobrescrever (todos)</string>
+    <string name="copy_move_conflict_message">\'%s\' já existe em %s</string>
+    <string name="additional_contexts_and_projects">Contextos e projetos adicionais</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Insira um espaço separado por @contextos e +projetos. Estes sempre estarão visíveis em todo.txt inserindo diálogos.</string>
+    <string name="infinite">Infinito</string>
 </resources>

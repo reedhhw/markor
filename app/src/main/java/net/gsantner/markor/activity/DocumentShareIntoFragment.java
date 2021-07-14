@@ -19,11 +19,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceGroup;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
 import net.gsantner.markor.R;
+import net.gsantner.markor.format.todotxt.TodoTxtTask;
 import net.gsantner.markor.model.Document;
 import net.gsantner.markor.ui.FilesystemViewerCreator;
 import net.gsantner.markor.ui.NewFileDialog;
@@ -35,12 +37,13 @@ import net.gsantner.markor.util.PermissionChecker;
 import net.gsantner.markor.util.ShareUtil;
 import net.gsantner.opoc.activity.GsFragmentBase;
 import net.gsantner.opoc.format.plaintext.PlainTextStuff;
-import net.gsantner.opoc.format.todotxt.SttCommander;
 import net.gsantner.opoc.preference.GsPreferenceFragmentCompat;
 import net.gsantner.opoc.ui.FilesystemViewerAdapter;
 import net.gsantner.opoc.ui.FilesystemViewerData;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnTextChanged;
@@ -48,21 +51,17 @@ import butterknife.OnTextChanged;
 public class DocumentShareIntoFragment extends GsFragmentBase {
     public static final String FRAGMENT_TAG = "DocumentShareIntoFragment";
     public static final String EXTRA_SHARED_TEXT = "EXTRA_SHARED_TEXT";
+    private File workingDir;
 
     public static DocumentShareIntoFragment newInstance(Intent intent) {
         DocumentShareIntoFragment f = new DocumentShareIntoFragment();
         Bundle args = new Bundle();
 
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT) == null ? "" : intent.getStringExtra(Intent.EXTRA_TEXT);
-        String tmp;
-        if (intent.hasExtra(Intent.EXTRA_SUBJECT) && (tmp = intent.getStringExtra(Intent.EXTRA_SUBJECT)) != null && !sharedText.contains(tmp)) {
-            if (!tmp.trim().contains("\n") && !sharedText.trim().contains("\n") && !sharedText.trim().contains(" ") && (sharedText.startsWith("http://") || sharedText.startsWith("https://"))) {
-                tmp = "[" + tmp.trim().replace("[", "\\[").replace("]", "\\]") + "]";
-                sharedText = "(" + sharedText.trim().replace("(", "\\(").replace(")", "\\)") + ")";
-            } else {
-                tmp += " ";
-            }
-            sharedText = tmp + sharedText;
+        final String sharedText = formatLink(intent.getStringExtra(Intent.EXTRA_SUBJECT), intent.getStringExtra(Intent.EXTRA_TEXT));
+
+        Object intentFile = intent.getSerializableExtra(DocumentIO.EXTRA_PATH);
+        if (intentFile != null && intent.getBooleanExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, false)) {
+            f.workingDir = (File) intentFile;
         }
 
         args.putString(EXTRA_SHARED_TEXT, sharedText);
@@ -96,6 +95,7 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
         if (_savedInstanceState == null) {
             FragmentTransaction t = getChildFragmentManager().beginTransaction();
             _shareIntoImportOptionsFragment = ShareIntoImportOptionsFragment.newInstance(sharedText);
+            _shareIntoImportOptionsFragment.setWorkingDir(workingDir);
             t.replace(R.id.document__share_into__fragment__placeholder_fragment, _shareIntoImportOptionsFragment, ShareIntoImportOptionsFragment.TAG).commit();
         } else {
             _shareIntoImportOptionsFragment = (ShareIntoImportOptionsFragment) getChildFragmentManager().findFragmentByTag(ShareIntoImportOptionsFragment.TAG);
@@ -132,7 +132,7 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
     public static class ShareIntoImportOptionsFragment extends GsPreferenceFragmentCompat<AppSettings> {
         public static final String TAG = "ShareIntoImportOptionsFragment";
         private static final String EXTRA_TEXT = Intent.EXTRA_TEXT;
-        private static final String SEP_RULER = "\n---\n";
+        private File workingDir;
 
         @Override
         public boolean isDividerVisible() {
@@ -147,6 +147,9 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
             return f;
         }
 
+        public void setWorkingDir(File dir) {
+            workingDir = dir;
+        }
 
         private String _sharedText = "";
 
@@ -170,7 +173,6 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
             super.afterOnCreate(savedInstances, context);
             if (getArguments() != null) {
                 _sharedText = getArguments().getString(EXTRA_TEXT, "");
-
             }
             if (savedInstances != null) {
                 _sharedText = savedInstances.getString(EXTRA_TEXT, _sharedText);
@@ -199,13 +201,14 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
             }
         }
 
-        private void appendToExistingDocument(File file, String seperator, boolean showEditor) {
+        private void appendToExistingDocument(final File file, final String separator, final boolean showEditor) {
             Bundle args = new Bundle();
             args.putSerializable(DocumentIO.EXTRA_PATH, file);
             args.putBoolean(DocumentIO.EXTRA_PATH_IS_FOLDER, false);
             Document document = DocumentIO.loadDocument(getContext(), args, null);
-            String currentContent = TextUtils.isEmpty(document.getContent().trim()) ? "" : (document.getContent().trim() + "\n");
-            DocumentIO.saveDocument(document, currentContent + seperator + _sharedText, new ShareUtil(getContext()), getContext());
+            String trimmedContent = document.getContent().trim();
+            String currentContent = TextUtils.isEmpty(trimmedContent) ? "" : (trimmedContent + "\n");
+            DocumentIO.saveDocument(document, currentContent + separator + _sharedText, new ShareUtil(getContext()), getContext());
             if (showEditor) {
                 showInDocumentActivity(document);
             }
@@ -242,8 +245,8 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
                 }
 
                 @Override
-                public void onFsViewerSelected(String request, File file) {
-                    appendToExistingDocument(file, SEP_RULER, true);
+                public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
+                    appendToExistingDocument(file, getSeparator(_sharedText), true);
                 }
 
             }, getFragmentManager(), getActivity(), FilesystemViewerCreator.IsMimeText);
@@ -251,23 +254,29 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
 
 
         private void createNewDocument() {
-            NewFileDialog dialog = NewFileDialog.newInstance(_appSettings.getNotebookDirectory(), (ok, f) -> {
-                if (ok && f.isFile()) {
-                    appendToExistingDocument(f, "", true);
+            FilesystemViewerCreator.showFolderDialog(new FilesystemViewerData.SelectionListenerAdapter() {
+                @Override
+                public void onFsViewerConfig(FilesystemViewerData.Options dopt) {
+                    dopt.rootFolder = (workingDir == null) ? _appSettings.getNotebookDirectory() : workingDir;
                 }
-            });
-            dialog.show(getActivity().getSupportFragmentManager(), NewFileDialog.FRAGMENT_TAG);
+
+                @Override
+                public void onFsViewerSelected(String request, File dir, final Integer lineNumber) {
+                    NewFileDialog dialog = NewFileDialog.newInstance(dir, false, (ok, f) -> {
+                        if (ok && f.isFile()) {
+                            appendToExistingDocument(f, "", true);
+                        }
+                    });
+                    dialog.show(getActivity().getSupportFragmentManager(), NewFileDialog.FRAGMENT_TAG);
+                }
+            }, getFragmentManager(), getActivity());
         }
 
         private void showInDocumentActivity(Document document) {
             if (getActivity() instanceof DocumentActivity) {
                 DocumentActivity a = (DocumentActivity) getActivity();
                 a.setDocument(document);
-                if (_appSettings.isPreviewFirst()) {
-                    a.showTextEditor(document, null, false, true);
-                } else {
-                    a.showTextEditor(document, null, false);
-                }
+                a.showTextEditor(document, null, false, _appSettings.getDocumentPreviewState(Document.getPath(document)), null);
             }
         }
 
@@ -303,7 +312,7 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
                 }
                 case R.string.pref_key__share_into__quicknote: {
                     if (permc.doIfExtStoragePermissionGranted()) {
-                        appendToExistingDocument(_appSettings.getQuickNoteFile(), _sharedText.length() > 200 ? SEP_RULER : "\n", false);
+                        appendToExistingDocument(_appSettings.getQuickNoteFile(), getSeparator(_sharedText), false);
                         close = true;
                     }
                     break;
@@ -312,7 +321,7 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
                     if (permc.doIfExtStoragePermissionGranted()) {
                         String sep = "\n";
                         if (appSettings.isTodoStartTasksWithTodaysDateEnabled()) {
-                            sep = SttCommander.getToday() + " ";
+                            sep = TodoTxtTask.getToday() + " ";
                         }
                         if (appSettings.isTodoNewTaskWithHuuidEnabled()) {
                             sep += "huuid:" + PlainTextStuff.newHuuid(appSettings.getHuuidDeviceId()) + " ";
@@ -347,7 +356,7 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
 
             if (preference.getKey().startsWith("/")) {
                 if (permc.doIfExtStoragePermissionGranted()) {
-                    appendToExistingDocument(new File(preference.getKey()), SEP_RULER, true);
+                    appendToExistingDocument(new File(preference.getKey()), getSeparator(_sharedText), true);
                     close = false;
                 }
             }
@@ -381,4 +390,57 @@ public class DocumentShareIntoFragment extends GsFragmentBase {
             }
         }
     }
+
+    /**
+     * Convert text and link into a formatted link, if the text and string appear to be a link
+     *
+     * @param text Link description
+     * @param link Link url
+     * @return formatted URL of format [text](url)
+     */
+    private static String formatLink(String text, String link) {
+        link = link == null ? "" : link;
+        text = text == null ? "" : text;
+
+        final String formattedLink;
+        final Matcher linkMatch = Patterns.WEB_URL.matcher(link.trim());
+        if (linkMatch.matches() && !link.trim().matches("\\s") && !text.trim().matches("\\s")) {
+            // Get a resonable default text if one is not present. group 4 is the domain name
+            try {
+                text = TextUtils.isEmpty(text) ? linkMatch.group(4).replaceAll("\\.$", "") : text;
+            } catch (IllegalStateException | IndexOutOfBoundsException e) {
+                text = "";
+            }
+
+            formattedLink = String.format("[%s](%s )",
+                    text.trim().replace("[", "\\[").replace("]", "\\]"),
+                    link.trim().replace("(", "\\(").replace(")", "\\)")
+            );
+        } else {
+            formattedLink = text + " " + link;
+        }
+        return formattedLink;
+    }
+
+    /**
+     * Get separator for use with appendToExistingDocument
+     * If a small amount of text is being inserted, a newline is a sufficient separator.
+     * If a larger amount of text is being inserted, a horizontal line `----` is added as well
+     *
+     * @param s String to be inserted
+     * @return Separator to be used
+     */
+    private static String getSeparator(final String s) {
+        int length = 0;
+        if (!TextUtils.isEmpty(s)) {
+            length = s.length();
+            // Detect if string to be inserted is a formatted link. If so, only count characters in the description
+            final Matcher match = Pattern.compile("\\[(.*)(?<!\\\\)\\]\\(.*(?<!\\\\)\\)").matcher(s);
+            if (match.matches()) {
+                length = match.group(1).length();
+            }
+        }
+        return (length > 50) ? "\n----\n" : "\n";
+    }
+
 }

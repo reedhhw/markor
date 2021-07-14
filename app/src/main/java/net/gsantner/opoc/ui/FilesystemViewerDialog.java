@@ -213,9 +213,9 @@ public class FilesystemViewerDialog extends DialogFragment
     }
 
     @Override
-    public void onFsViewerSelected(String request, File file) {
+    public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
         if (_callback != null) {
-            _callback.onFsViewerSelected(_dopt.requestId, file);
+            _callback.onFsViewerSelected(_dopt.requestId, file, lineNumber);
         }
         dismiss();
     }
@@ -247,6 +247,9 @@ public class FilesystemViewerDialog extends DialogFragment
     public void onFsViewerDoUiUpdate(FilesystemViewerAdapter adapter) {
         if (_dopt.doSelectMultiple && _dopt.doSelectFile) {
             _buttonOk.setVisibility(adapter.areItemsSelected() ? View.VISIBLE : View.GONE);
+        }
+        if (_callback != null) {
+            _callback.onFsViewerDoUiUpdate(adapter);
         }
     }
 

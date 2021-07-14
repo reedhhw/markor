@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Створити директорію</string>
     <string name="create_new_document">Створити документ</string>
     <string name="move">Перемістити</string>
+    <string name="copy">Копіювати</string>
     <string name="info">Інформація</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Файл або директорія з таким іменем вже існує! Будь ласка, оберіть інше</string>
     <string name="import_from_device">Імпортувати з пристрою</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Обрати директорію</string>
     <string name="edit">Редагувати</string>
     <string name="search_documents">Пошук нотаток</string>
-    <string name="share_to_arrow">Надіслати до…</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Надіслати до…</string>
     <string name="share">Надіслати</string>
     <string name="search">Пошук</string>
     <string name="display_converted_markup">Відображення перетвореного Markup</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Файли та директорії</string>
     <string name="document_browser">Перегляд документів</string>
     <string name="file_browser">Перегляд файлів</string>
+    <string name="set_due_date">Встановити дату завершення</string>
+    <string name="insert_replace_date">Вставити дату</string>
     <string name="create_note" needed="false">Створити нотатку</string>
     <string name="special_documents" needed="false">Особливі документи</string>
     <string name="keep_screen_on" needed="false">Не вимикати екран</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Підсвічувати пробіли в кінці рядків, що містять щонайменше два пробіли</string>
     <string name="use_monospace_for_code">Використовувати моноширинний шрифт для коду</string>
     <string name="disable_code_block_highlight">Вимкнути підсвічування для блоків коду</string>
+    <string name="auto_renumber_ordered_list">Автоматична зміна нумерованих списків</string>
+    <string name="auto_renumber_ordered_list_slowdown">Цей параметр може вплинути на продуктивність програми.</string>
     <string name="use_different_fonttype_slow_down">Використовувати різні шрифти. Динамічна зміна шрифту впливає на продуктивність додатку.</string>
     <string name="general">Загальне</string>
     <string name="resources">Ресурси</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">До сторінки нижче (Page Down)</string>
     <string name="move_text_one_line_up">Перемістити текст на один рядок вище</string>
     <string name="move_text_one_line_down">Перемістити текст на один рядок нижче</string>
+    <string name="start_new_line_below">Почати новий рядок нижче</string>
     <string name="key_pos_1">До початку рядка (Home)</string>
     <string name="key_pos_end">В кінець рядка (End)</string>
     <string name="key_pos_1_document">Початок документа</string>
@@ -183,7 +189,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="start_on_bottom">Починати внизу</string>
     <string name="start_on_bottom_when_loading_document">Після завантаження документа встановити курсор в кінець</string>
     <string name="unordered_list_character">Символ для невпорядкованих списків</string>
-    <string name="character_to_start_items_of_unordered_list_with">Визначає символ, який використовується для позначення невпорядкованих списків</string>
+    <string name="character_to_start_items_of_unordered_list_with">Визначає символ для позначення невпорядкованих списків</string>
     <string name="unordered_list_char_dash">Тире (-)</string>
     <string name="unordered_list_char_asterisk">Зірочка (*)</string>
     <string name="unordered_list_char_plus">Плюс (+)</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Перекласти цей додаток на інші мови</string>
     <string name="source_code">Вихідний код</string>
     <string name="project_license">Ліцензія проєкту</string>
-    <string name="project_contribution_info">Як зробити внесок у проєкт</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Докладніше про можливості зробити внесок у проєкт</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Зробити внесок у код проєкту. Запрошуются всі охочі, разом із новачками</string>
     <string name="project_team">Команда проєкту</string>
     <string name="contributors_public_add_yourself_description">Показати інформацію про учасників. Ви можете додати сюди інформацію про себе, якщо зробили внесок до проєкту</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Перезавантажити</string>
     <string name="wrap_words">Перенесення рядків</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Додавати м\'які переноси замість відображення смуги горизонтальної прокрутки, коли текст не вміщається у ширину екрану.</string>
-    <string name="recursive_search_in_current_directory">Рекурсивний пошук у поточній директорії. Якщо запит містить зірочку (*), застосовується пошук за регулярним виразом, інакше перевіряє наявність запиту в директорії.</string>
+    <string name="recursive_search_in_current_directory">Рекурсивний пошук у поточному каталозі.</string>
     <string name="always_open_with_this_app">Завжди відкривати цією програмою</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Завжди відкривати файли цією програмою, якщо розширення є у списку. Наприклад, додайте \'None, .html, .css , .js\' для редагування веб-файлів і файлів без розширення.</string>
     <string name="template">Шаблон</string>
     <string name="send_debug_log">Надсилати Debug-журнал</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Допоможіть розробникам, надсилаючи зневаджувальну інформацію. Дані надсилаються по e-mail за допомогою вашого додатку електронної пошти і ви можете переглянути ці дані перед надсиланням. Коли це налаштування увімкнено, у верхньому меню з\'явиться додатковий пункт \"Надіслати журнал зневадження\", який створює чернетку листа.</string>
     <string name="print_pdf">Друк / PDF</string>
     <string name="bigger_headings">Збільшити заголовки</string>
     <string name="increase_text_size_of_headings_according_to_level">Збільшувати розмір тексту заголовків відповідно до рівня (# h1, ## h2, ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Читання</string>
     <string name="read">Читати</string>
     <string name="table">Таблиця</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Скільки колонок? Тривале натискання кнопки таблиці починає таблицю (вставляє заголовок), коротке — додає рядок.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Скільки колонок? Тривале натискання кнопки таблиці починає таблицю (вставляє заголовок), коротке натискання для додавання ряду.</string>
     <string name="example_of_a_markdown_table">Приклад таблиці в Markdown</string>
     <string name="delete_lines">Видалити рядки</string>
     <string name="unordered_list">Ненумерований список</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Заголовок 1</string>
     <string name="heading_2">Заголовок 2</string>
     <string name="heading_3">Заголовок 3</string>
+    <string name="heading_4">Заголовок 4</string>
+    <string name="heading_5">Заголовок 5</string>
     <string name="bold">Жирний</string>
     <string name="italic">Курсив</string>
+    <string name="highlighted">Виділено</string>
     <string name="strikeout">Перекреслений</string>
     <string name="inline_code">Вбудований код</string>
     <string name="horizontal_line">Горизонтальна лінія</string>
@@ -362,13 +368,53 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Основні</string>
     <string name="append_human_readable_uuid_to_new_tasks">Додати зручний UUID до нових завдань</string>
     <string name="action_order">Впорядкувати команди</string>
+    <string name="toggle_action_visibility">Перемкнути видимість дії</string>
     <string name="load_default_settings">Встановити типові параметри</string>
     <string name="drag">Перетягніть</string>
+    <string name="created">Створено</string>
     <string name="file_encryption_password">Пароль шифрування файлу</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Пароль не встановлено, тому неможливо шифрувати чи розшифровувати.\nПерейдіть до налаштувань -&gt; Загальне -&gt; Пароль щоб встановити пароль.</string>
     <string name="encrypt_file_content">Шифрувати вміст файлу</string>
     <string name="could_not_encrypt_file_content_the_file_was_not_saved">Не вдалося зашифрувати вміст файлу. Файл не було збережено.</string>
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Не вдалося розшифрувати вміст файлу. Ви використовуєте неправильний пароль? Файл дійсно було зашифровано з використанням Markor AES?</string>
-    <string name="password_already_set_setting_a_new_password_will_overwrite">Пароль вже встановлено. Встановлення нового пароля перезапише наявний пароль, і ви втратите доступ до файлів, якщо забудете пароль.</string>
+    <string name="password_already_set_setting_a_new_password_will_overwrite">Пароль уже встановлено. Встановлення нового пароля перезапише наявний пароль, і ви втратите доступ до файлів, якщо забудете пароль.</string>
     <string name="code_block">Блок коду</string>
+    <string name="add_completion_date">Додати дату завершення</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Додати дату виконання завдань</string>
+    <string name="file_description_format">Формат опису файлу</string>
+    <string name="file_description_format_dialog">Формат для опису під кожним файлом у браузері. Слідуйте правилам SimpleDateFormat з додатком FS для відображення розміру файлу. Залиште порожнім, аби використовувати типовий формат вашої локалі.\n\nПриклад введення:\nFS yyyy MMM dd h:mm:ss\nформат виведення продукту:\n30КБ 2020 Mar 20:24:2452 PM</string>
+    <string name="loading_default_value">Завантаження типових значень</string>
+    <string name="file_settings">Налаштування файлів</string>
+    <string name="search_and_replace">Пошук / заміна</string>
+    <string name="search_for">Шукати</string>
+    <string name="replace_with">Замінити на</string>
+    <string name="replace_once">Замінити (1)</string>
+    <string name="replace_all">Замінити всe</string>
+    <string name="matches">Збіги</string>
+    <string name="search_replace_pattern_error_message">Пошук або заміна графічного ключа помилки.</string>
+    <string name="backup_settings">Параметри резервного копіювання</string>
+    <string name="restore_settings">Параметри відновлення</string>
+    <string name="failed_to_create_backup">Не вдалося створити резервну копію</string>
+    <string name="export_settings_to_json_file">Експортування налаштувань до json-файлу</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Імпортувати налаштування з резервної копії json файлу. При успішному завершенні, програму буде перезапущено.</string>
+    <string name="failed_to_restore_settings_from_backup">Не вдалося відновити налаштування з резервної копії</string>
+    <string name="newline_is_new_paragraph">Новий рядок = новий абзац</string>
+    <string name="search_in_content">Пошук у змісті</string>
+    <string name="max_search_depth">Глибина пошуку</string>
+    <string name="ignore_list">Чорний список</string>
+    <string name="do_not_search_specified_files_and_folders">Не шукайте вказані файли і папки.\nВикористовувати новий рядок як роздільник вузлів.\nВикористовуйте лапки для точних імен dir: \"Test\".\nАбо використайте Regex \'^[.].*\'\nПриклади: ^\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Метод регулярних виразів</string>
+    <string name="case_sensitive">З урахуванням регістру</string>
+    <string name="stop_search_after_first_match">Зупинити пошук після першого збігу</string>
+    <string name="regex_can_not_be_compiled">Неможливо скомпілювати Regex</string>
+    <string name="keep_both">Залишити обидва</string>
+    <string name="skip">Пропустити</string>
+    <string name="overwrite">Перезаписати</string>
+    <string name="keep_both_all">Залишити обидва (все)</string>
+    <string name="skip_all">Пропустити (все)</string>
+    <string name="overwrite_all">Перезаписати (все)</string>
+    <string name="copy_move_conflict_message">\'%s\' вже існує в %s</string>
+    <string name="additional_contexts_and_projects">Додаткові контексти та проєкти</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Уведіть контексти, розділені пробілами і +проєкти. Вони завжди будуть видимі в todo.txt діалогах.</string>
+    <string name="infinite">Нескінченно</string>
 </resources>

@@ -20,13 +20,14 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="do_you_really_want_to_delete_this_witharg">Ești sigur că vrei să ștergi acest %s?</string>
     <string name="confirm_overwrite">Confirmați Înlocuirea</string>
     <string name="file_already_exists_overwerite">Fișierul există deja, înlocuiți?</string>
-    <string name="browse_filesystem">Răsfoiţi sistemul de fişiere</string>
+    <string name="browse_filesystem">Răsfoiți sistemul de fișiere</string>
     <string name="title">Titlu</string>
     <string name="empty_directory">Golește dosarul</string>
     <string name="enter_name_of_folder">Introduceți numele dosarului dvs.</string>
     <string name="create_folder">Creați Folder</string>
     <string name="create_new_document">Creați un document nou</string>
     <string name="move">Mutați</string>
+    <string name="copy">Copiază</string>
     <string name="info">Info</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Fișierul/directorul există deja! Te rugăm să folosești un nume diferit</string>
     <string name="import_from_device">Importă de pe dispozitiv</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Selectează folder</string>
     <string name="edit">Editare</string>
     <string name="search_documents">Căutare documente</string>
-    <string name="share_to_arrow">Distribuie către&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Distribuie către&#8230;</string>
     <string name="share">Distribuire</string>
     <string name="search">Căutare</string>
     <string name="display_converted_markup">Afișare markup convertit</string>
@@ -89,13 +90,13 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="donate">Donează</string>
     <string name="project_page">Pagina proiectului</string>
     <string name="press_back_again_to_exit">Apăsați din nou \'Înapoi\' pentru a ieși</string>
-    <string name="exit">Ieșire</string>
+    <string name="exit">Ieşire</string>
     <string name="undo">Anulează</string>
     <string name="redo">Reface</string>
     <string name="more">Mai multe</string>
     <string name="notebook">Caiet</string>
     <string name="help">Ajutor</string>
-    <string name="todo_list">Listă de Fapte</string>
+    <string name="todo_list">Listă de sarcini</string>
     <string name="task">Sarcină</string>
     <string name="category">Categorie</string>
     <string name="context">Context</string>
@@ -121,9 +122,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Fișiere și dosare</string>
     <string name="document_browser">Browser de documente</string>
     <string name="file_browser">Browser de fișiere</string>
+    <string name="set_due_date">Setați data scadentă</string>
+    <string name="insert_replace_date">Introduceți data</string>
     <string name="create_note" needed="false">Creează o notă</string>
     <string name="special_documents" needed="false">Documente speciale</string>
-    <string name="keep_screen_on" needed="false">Păstraţi ecranul pornit</string>
+    <string name="keep_screen_on" needed="false">Păstrați ecranul pornit</string>
     <string name="back_to_previous_folder" needed="false">Înapoi la dosarul anterior</string>
     <string name="app_settings" needed="false">Setări aplicație</string>
     <string name="editor_settings" needed="false">Setări editor</string>
@@ -149,21 +152,23 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="other">Altele</string>
     <string name="alternative_naming">Denumire alternativă</string>
     <string name="empty_file">Fișier gol</string>
-    <string name="break_page_pdf_print">Pauză pagină (PDF/Tipărire)</string>
+    <string name="break_page_pdf_print">Întrerupere pagină (PDF/Tipărire)</string>
     <string name="underline">Subliniere</string>
     <string name="underline_hex_color_wether_or_not_to_description__appspecific">Dacă se subliniază codurile hexazecimale în funcție de culoare</string>
     <string name="underline_hex_color_codes">Subliniază codurile de culoare Hex</string>
     <string name="insert_current_date_when_starting_new_task">Introduceți data curentă când porniți o nouă sarcină</string>
     <string name="tasks_with_todays_date">Sarcini cu data de azi</string>
-    <string name="append_contexts_and_projects">Anexă contexte și proiecte</string>
-    <string name="append_contexts_and_projects_on_end_of_task">Să adauge contexte și proiecte la sfârșitul unei sarcini atunci când se utilizează textul corespunzător</string>
+    <string name="append_contexts_and_projects">Atașează contexte și proiecte</string>
+    <string name="append_contexts_and_projects_on_end_of_task">Adăugare contexte și proiecte la sfârșitul unei sarcini atunci când se utilizează textul corespunzător</string>
     <string name="rtl_rendering">RTL rendering</string>
-    <string name="highlight_line_ending">Evidențiere linie terminată</string>
-    <string name="highlight_line_ending_if_two_or_more_spaces">Evidenţiază spaţiile la capătul liniilor care conţin două sau mai multe spaţii</string>
+    <string name="highlight_line_ending">Evidențiere sfârșitul liniei</string>
+    <string name="highlight_line_ending_if_two_or_more_spaces">Evidențiază spațiile la capătul liniilor care conțin două sau mai multe spații</string>
     <string name="use_monospace_for_code">Folosește fontul monospațiu pentru cod</string>
     <string name="disable_code_block_highlight">Dezactivează evidențierea pentru blocuri de cod</string>
+    <string name="auto_renumber_ordered_list">Auto-renumărare liste ordonate</string>
+    <string name="auto_renumber_ordered_list_slowdown">Această opțiune poate afecta performanța aplicațiilor.</string>
     <string name="use_different_fonttype_slow_down">Folosiți un tip diferit de font. Schimbarea acestuia are un impact dinamic asupra performanței aplicației.</string>
-    <string name="general">Generalități</string>
+    <string name="general">General</string>
     <string name="resources">Resurse</string>
     <string name="space_between_lines_in_percent">Spațiu între linii în procente</string>
     <string name="line_spacing">Spațiere linie</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Pagină în jos (Pagina Jos)</string>
     <string name="move_text_one_line_up">Mutați textul cu o linie în sus</string>
     <string name="move_text_one_line_down">Mutați textul cu o linie în jos</string>
+    <string name="start_new_line_below">Pornește linia nouă de mai jos</string>
     <string name="key_pos_1">Pornire linie (Paca pos)</string>
     <string name="key_pos_end">Sfârșit linie (Pos Sfârșit)</string>
     <string name="key_pos_1_document">Pornire document</string>
@@ -183,8 +189,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="start_on_bottom">Pornire jos</string>
     <string name="start_on_bottom_when_loading_document">La încărcarea unui document, cursorul de poziție la sfârșit</string>
     <string name="unordered_list_character">Caracter listă neordonat</string>
-    <string name="character_to_start_items_of_unordered_list_with">Care caracter folosit pentru a indica liste neordonate</string>
-    <string name="unordered_list_char_dash">Clasa (-)</string>
+    <string name="character_to_start_items_of_unordered_list_with">Ce caracter trebuie folosit pentru a indica liste neordonate</string>
+    <string name="unordered_list_char_dash">Liniuță (-)</string>
     <string name="unordered_list_char_asterisk">Asterisc (*)</string>
     <string name="unordered_list_char_plus">Plus (+)</string>
     <string name="filemanager_doesnot_supply_required_data__appspecific">Markor poate edita doar documentele locale disponibile offline şi nu acceptă manageri de fişiere care nu oferă calea completă a fişierelor.</string>
@@ -203,9 +209,9 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="center_text">Text centru</string>
     <string name="edit_text_in_center_of_screen">Editează textul în centrul ecranului</string>
     <string name="clipboard">Clipboard</string>
-    <string name="select_existing_document">Selectaţi documentul existent</string>
+    <string name="select_existing_document">Selectați documentul existent</string>
     <string name="open_source_licenses">Licențe Open Source</string>
-    <string name="rate_this_app">Evaluează această aplicație</string>
+    <string name="rate_this_app">Evaluează aplicația</string>
     <string name="translate">Traducere</string>
     <string name="more_info_and_help">Mai multe informații și ajutor</string>
     <string name="report_bugs">Raportează erori</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Tradu această aplicație în alte limbi</string>
     <string name="source_code">Cod sursă</string>
     <string name="project_license">Licență proiect</string>
-    <string name="project_contribution_info">Informații contribuție proiect</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Mai multe informații despre cum să contribuiți la acest proiect</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Contribuie cod la proiect. Toată lumea este binevenită să facă acest lucru, inclusiv nou-veniți</string>
     <string name="project_team">Echipa proiectului</string>
     <string name="contributors_public_add_yourself_description">Arată informațiile despre contribuitor. Oferă-le pentru a fi afișate aici pe baza opt-in după contribuție</string>
@@ -238,9 +242,9 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="camera_picture">Imagine cameră foto</string>
     <string name="enable_undo_and_redo_be_patient">Activați acțiunile de anulare și reefectuare. Este potrivit doar pentru utilizare avansată, fiți răbdător pentru a nu șterge ceva important. Închideți și deschideți editorul pentru a curăța istoricul.</string>
     <string name="description">Descriere</string>
-    <string name="edit_picture">Editare imagine</string>
+    <string name="edit_picture">Editează imaginea</string>
     <string name="math">Matematică</string>
-    <string name="table_of_contents">Tabelul conținutului</string>
+    <string name="table_of_contents">Cuprins</string>
     <string name="miscellaneous">Diverse</string>
     <string name="textaction">Acțiune text</string>
     <string name="textactions">Acțiuni text</string>
@@ -253,7 +257,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="background_foreground_color_in_editor_works_dark_light">Schimbă culoarea de fundal și cea din prim-plan a editorului de text. Ajustează tema aplicației astfel disponibilă în tema deschisă și întunecată. Culorile de evidențiere a sintaxei rămân aceleași.</string>
     <string name="preset">Preset</string>
     <string name="foreground">prim-plan</string>
-    <string name="background">Context</string>
+    <string name="background">Fundal</string>
     <string name="set_foreground_or_background_color_hexcolor_also_possible">Setați culoarea în prim-plan sau de fundal a textului? Introducerea codului de culoare hexazecimală este de asemenea posibilă.</string>
     <string name="type">Tip</string>
     <string name="folder">Dosar</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Reîncarcă</string>
     <string name="wrap_words">Încadrează cuvintele</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Întrerupere ușoară dacă textul nu se potrivește cu lățimea ecranului. Altfel activează derularea orizontală.</string>
-    <string name="recursive_search_in_current_directory">Căutare recursivă în directorul curent. Când interogarea conține un asterisc (*) este folosită, altfel verificați dacă interogarea este conținută.</string>
+    <string name="recursive_search_in_current_directory">Căutare recursivă în directorul curent.</string>
     <string name="always_open_with_this_app">Deschideți întotdeauna cu această aplicație</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Deschideți întotdeauna fișiere cu această aplicație atunci când lista conține extensia de fișiere. Folosiți \'Niciunul, .html, . ss , .js de exemplu dacă doriţi să editaţi fişiere web şi cele fără extensia fişierului.</string>
     <string name="template">Șablon</string>
     <string name="send_debug_log">Trimite jurnalul de depanare</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Ajutor prin trimiterea de informații de depanare către dezvoltator(i). Datele sunt trimise prin e-mail prin intermediul aplicației dvs. de e-mail și puteți vedea toate datele trimise înainte de a le trimite. Veţi găsi o opţiune suplimentară de \"Trimite jurnalul de depanare\" în meniul de sus când este activată. Aceasta creează schiţa de e-mail.</string>
     <string name="print_pdf">Print / PDF</string>
     <string name="bigger_headings">Titluri mai mari</string>
     <string name="increase_text_size_of_headings_according_to_level">Crește dimensiunea textului în funcție de nivel (# h1, ## h2. ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Citire</string>
     <string name="read">Citește</string>
     <string name="table">Tabel</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Cât de multe coloane? Apăsați butonul de tabel pentru a porni un tabel (insert header), apăsați scurt pentru a adăuga un rând.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Câte coloane? Apăsați butonul de tabel lung pentru a porni un tabel (insert header), apăsați scurt pentru a adăuga un rând.</string>
     <string name="example_of_a_markdown_table">Exemplu de tabel Markdown</string>
     <string name="delete_lines">Ștergeți liniile</string>
     <string name="unordered_list">Listă neordonată</string>
@@ -340,11 +343,14 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="jump_to_bottom">Salt la jos</string>
     <string name="quote">Ofertă</string>
     <string name="heading">Titlu</string>
-    <string name="heading_1">Rubrica 1</string>
-    <string name="heading_2">Rubrica 2</string>
-    <string name="heading_3">Rubrica 3</string>
+    <string name="heading_1">Subtitlu 1</string>
+    <string name="heading_2">Titlu2</string>
+    <string name="heading_3">Titlu3</string>
+    <string name="heading_4">Titlu4</string>
+    <string name="heading_5">Titlu5</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
+    <string name="highlighted">Evident</string>
     <string name="strikeout">Lovitură afară</string>
     <string name="inline_code">Cod integrat</string>
     <string name="horizontal_line">Linie orizontală</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Esențial</string>
     <string name="append_human_readable_uuid_to_new_tasks">Adaugă UUID lizibil uman la sarcini noi</string>
     <string name="action_order">Ordin de acțiune</string>
+    <string name="toggle_action_visibility">Comută vizibilitatea acțiunii</string>
     <string name="load_default_settings">Încarcă setările implicite</string>
     <string name="drag">Trage</string>
+    <string name="created">Creat</string>
     <string name="file_encryption_password">Parola de criptare a fișierului</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Nici o parolă, nu se poate cripta sau decripta.\nMergeți la Setări -&gt; General -&gt; Parola pentru a seta o parolă.</string>
     <string name="encrypt_file_content">Criptați conținutul fișierului</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Conținutul fișierului nu a putut fi decriptat. Ați folosit o parolă greșită? Este fișierul criptat cu criptarea Markors AES?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Parola este deja setată. Setarea unei noi parole va suprascrie parola existentă și este posibil să nu mai puteți accesa fișiere, în cazul în care uitați parola.</string>
     <string name="code_block">Bloc cod</string>
+    <string name="add_completion_date">Adăugare dată finalizare</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Adaugă data finalizării pentru todos când le marchezi ca terminate</string>
+    <string name="file_description_format">Format descriere fișier</string>
+    <string name="file_description_format_dialog">Format pentru descrierea sub fiecare fișier în browser-ul de fișiere. Urmează regulile SimpleDateFormat ale Androidului, cu adăugarea SF pentru afișarea dimensiunii fișierului. Lăsați necompletat pentru a utiliza formatul implicit pentru localizarea dvs.\n\nExemplu de intrare:\nFS yyyy MMM dd hh:mm:ss aa\nFormat de ieșire:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Se încarcă valoarea implicită</string>
+    <string name="file_settings">Setări fișier</string>
+    <string name="search_and_replace">Căutare / Înlocuire</string>
+    <string name="search_for">Caută după</string>
+    <string name="replace_with">Înlocuiți cu</string>
+    <string name="replace_once">Înlocuiește (1)</string>
+    <string name="replace_all">Înlocuiește tot</string>
+    <string name="matches">Meciuri</string>
+    <string name="search_replace_pattern_error_message">Eroare de căutare sau înlocuire.</string>
+    <string name="backup_settings">Setări de rezervă</string>
+    <string name="restore_settings">Restabilire setări</string>
+    <string name="failed_to_create_backup">Crearea copiei de rezervă a eșuat</string>
+    <string name="export_settings_to_json_file">Exportă setările în fișier json</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Importă setări din fişierul json de rezervă. La succes, aplicația este repornită.</string>
+    <string name="failed_to_restore_settings_from_backup">Restaurarea setărilor din backup a eșuat</string>
+    <string name="newline_is_new_paragraph">Noutăți = punct nou</string>
+    <string name="search_in_content">Căutare în conținut</string>
+    <string name="max_search_depth">Adâncime căutare</string>
+    <string name="ignore_list">Lista ignora</string>
+    <string name="do_not_search_specified_files_and_folders">Nu căuta fişierele şi dosarele specificate.\nUtilizaţi linia nouă ca separator.\nUtilizaţi oferte exact pentru nume dir: \"Test\".\nSau folosește Regex \'^[.].*\'\nExemple: ^\\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Căutare Regex</string>
+    <string name="case_sensitive">Sensibil la caz</string>
+    <string name="stop_search_after_first_match">Oprește căutarea după primul meci</string>
+    <string name="regex_can_not_be_compiled">Regex nu poate fi compilat</string>
+    <string name="keep_both">Păstrați ambele</string>
+    <string name="skip">Omitere</string>
+    <string name="overwrite">Suprascrie</string>
+    <string name="keep_both_all">Păstraţi ambele (toate)</string>
+    <string name="skip_all">Omiteți (toate)</string>
+    <string name="overwrite_all">Suprascrie (toate)</string>
+    <string name="copy_move_conflict_message">\'%s\' există deja în %s</string>
+    <string name="additional_contexts_and_projects">contexte și proiecte suplimentare</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Introdu @contexte și +proiecte separate de spațiu. Acestea vor fi întotdeauna vizibile în dialogurile de inserare todo.txt.</string>
+    <string name="infinite">Infinit</string>
 </resources>

@@ -9,19 +9,24 @@
 #########################################################*/
 package net.gsantner.markor.ui.hleditor;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 
 import net.gsantner.markor.activity.MainActivity;
 import net.gsantner.markor.model.Document;
 import net.gsantner.markor.util.AppSettings;
-import net.gsantner.markor.util.ContextUtils;
+import net.gsantner.opoc.util.StringUtils;
 
 import java.io.File;
 import java.util.HashSet;
@@ -42,24 +47,16 @@ public class HighlightingEditor extends AppCompatEditText {
         void onTextChanged(String text);
     }
 
-    private final boolean _isDeviceGoodHardware;
     private boolean _modified = true;
     private boolean _hlEnabled = false;
-    private boolean _isSpellingRedUnderline;
+    private boolean _accessibilityEnabled = true;
+    private final boolean _isSpellingRedUnderline;
     private Highlighter _hl;
     private final Set<TextWatcher> _appliedModifiers = new HashSet<>(); /* Tracks currently applied modifiers */
 
-    private OnTextChangedListener _onTextChangedListener = null;
     public final static String PLACE_CURSOR_HERE_TOKEN = "%%PLACE_CURSOR_HERE%%";
     private final Handler _updateHandler = new Handler();
-    private final Runnable _updateRunnable = () -> {
-        Editable e = getText();
-        if (_onTextChangedListener != null) {
-            _onTextChangedListener.onTextChanged(e.toString());
-        }
-        highlightWithoutChange(e);
-    };
-
+    private final Runnable _updateRunnable;
 
     public HighlightingEditor(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -70,8 +67,14 @@ public class HighlightingEditor extends AppCompatEditText {
             setHighlightingEnabled(as.isHighlightingEnabled());
         }
 
-        _isDeviceGoodHardware = new ContextUtils(context).isDeviceGoodHardware();
         _isSpellingRedUnderline = !as.isDisableSpellingRedUnderline();
+        _updateRunnable = () -> {
+            highlightWithoutChange();
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            setFallbackLineSpacing(false);
+        }
 
         addTextChangedListener(new TextWatcher() {
             @Override
@@ -111,7 +114,8 @@ public class HighlightingEditor extends AppCompatEditText {
     public void setHighlighter(Highlighter newHighlighter) {
         disableHighlighterAutoFormat();
         _hl = newHighlighter;
-        reloadHighlighter();
+        enableHighlighterAutoFormat();
+        highlightWithoutChange();
 
         // Alpha in animation
         setAlpha(0.3f);
@@ -120,10 +124,14 @@ public class HighlightingEditor extends AppCompatEditText {
                 .setListener(null);
     }
 
+    public Highlighter getHighlighter() {
+        return _hl;
+    }
+
     public void enableHighlighterAutoFormat() {
         setFilters(new InputFilter[]{_hl.getAutoFormatter()});
 
-        TextWatcher modifier = (_hl != null) ? _hl.getTextModifier() : null;
+        final TextWatcher modifier = (_hl != null) ? _hl.getTextModifier() : null;
         if (modifier != null && !_appliedModifiers.contains(modifier)) {
             addTextChangedListener(modifier);
             _appliedModifiers.add(modifier);
@@ -133,7 +141,7 @@ public class HighlightingEditor extends AppCompatEditText {
     public void disableHighlighterAutoFormat() {
         setFilters(new InputFilter[]{});
 
-        TextWatcher modifier = (_hl != null) ? _hl.getTextModifier() : null;
+        final TextWatcher modifier = (_hl != null) ? _hl.getTextModifier() : null;
         if (modifier != null) {
             removeTextChangedListener(modifier);
             _appliedModifiers.remove(modifier);
@@ -144,24 +152,43 @@ public class HighlightingEditor extends AppCompatEditText {
         _updateHandler.removeCallbacks(_updateRunnable);
     }
 
-    public void reloadHighlighter() {
-        enableHighlighterAutoFormat();
-        highlightWithoutChange(getText());
+    // Accessibility code is blocked during rapid update events
+    // such as highlighting and some actions.
+    // This prevents errors and potential crashes.
+    @Override
+    public void sendAccessibilityEventUnchecked(AccessibilityEvent event) {
+        if (_accessibilityEnabled && length() < 10000) {
+            super.sendAccessibilityEventUnchecked(event);
+        }
     }
 
-    private void highlightWithoutChange(Editable editable) {
-        if (_hlEnabled && editable.length() <= (_isDeviceGoodHardware ? 100000 : 35000)) {
+    // Hleditor will report that it is not autofillable under certain circumstances
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public int getAutofillType() {
+        if (_accessibilityEnabled && length() < 10000) {
+            return super.getAutofillType();
+        } else {
+            return View.AUTOFILL_TYPE_NONE;
+        }
+    }
+
+    private void highlightWithoutChange() {
+        if (_hlEnabled) {
             _modified = false;
             try {
                 if (MainActivity.IS_DEBUG_ENABLED) {
                     AppSettings.appendDebugLog("Start highlighting");
                 }
-                _hl.run(editable);
+                setAccessibilityEnabled(false);
+                _hl.run(getText());
             } catch (Exception e) {
                 // In no case ever let highlighting crash the editor
                 e.printStackTrace();
             } catch (Error e) {
                 e.printStackTrace();
+            } finally {
+                setAccessibilityEnabled(true);
             }
             if (MainActivity.IS_DEBUG_ENABLED) {
                 AppSettings.appendDebugLog(_hl._profiler.resetDebugText());
@@ -213,27 +240,27 @@ public class HighlightingEditor extends AppCompatEditText {
     // Set selection to fill whole lines
     // Returns original selectionStart
     public int setSelectionExpandWholeLines() {
-        final int orig_s = getSelectionStart();
-        final int orig_e = getSelectionEnd();
-
-        setSelection(orig_s);
-        simulateKeyPress(KeyEvent.KEYCODE_MOVE_HOME);
-        final int new_s = getSelectionStart();
-
-        setSelection(orig_e);
-        simulateKeyPress(KeyEvent.KEYCODE_MOVE_END);
-        final int new_e = getSelectionStart();
-
-        setSelection(new_s, new_e);
-        return orig_s;
+        final int[] sel = StringUtils.getSelection(this);
+        final CharSequence text = getText();
+        setSelection(
+                StringUtils.getLineStart(text, sel[0]),
+                StringUtils.getLineEnd(text, sel[1])
+        );
+        return sel[0];
     }
 
     //
     // Simple getter / setter
     //
 
-    public void setHighlightingEnabled(boolean enable) {
-        _hlEnabled = enable;
+    public void setHighlightingEnabled(final boolean enable) {
+        if (_hlEnabled && !enable) {
+            _hlEnabled = false;
+            Highlighter.clearSpans(getText());
+        } else if (!_hlEnabled && enable && _hl != null) {
+            _hlEnabled = true;
+            highlightWithoutChange();
+        }
     }
 
 
@@ -276,5 +303,43 @@ public class HighlightingEditor extends AppCompatEditText {
         if (MainActivity.IS_DEBUG_ENABLED) {
             AppSettings.appendDebugLog("Selection changed: " + selStart + "->" + selEnd);
         }
+    }
+
+    public void smoothMoveCursor(final int startIndex, final int endIndex, int... arg0Delay__arg1Duration) {
+        final int delay = Math.max(1, arg0Delay__arg1Duration != null && arg0Delay__arg1Duration.length > 0 ? arg0Delay__arg1Duration[0] : 500);
+        final int duration = Math.max(1, arg0Delay__arg1Duration != null && arg0Delay__arg1Duration.length > 1 ? arg0Delay__arg1Duration[1] : 400);
+
+        postDelayed(() -> {
+            if (!hasFocus()) {
+                requestFocus();
+            }
+
+            ObjectAnimator anim = ObjectAnimator.ofInt(this, "selection", startIndex, endIndex);
+            anim.setDuration(duration);
+            anim.start();
+        }, delay);
+    }
+
+    public void smoothMoveCursorToLine(final int lineNumber, int... arg0Delay__arg1Duration) {
+        final int delay = Math.max(1, arg0Delay__arg1Duration != null && arg0Delay__arg1Duration.length > 0 ? arg0Delay__arg1Duration[0] : 500);
+        final int duration = Math.max(1, arg0Delay__arg1Duration != null && arg0Delay__arg1Duration.length > 1 ? arg0Delay__arg1Duration[1] : 400);
+
+        this.postDelayed(() -> {
+            String text = getText().toString();
+            int index = StringUtils.getIndexFromLineOffset(text, lineNumber, 0);
+            if (index < 0) {
+                return;
+            }
+
+            smoothMoveCursor(0, index, 1, duration);
+        }, delay);
+    }
+
+    public void setAccessibilityEnabled(final boolean enabled) {
+        _accessibilityEnabled = enabled;
+    }
+
+    public boolean getAccessibilityEnabled() {
+        return _accessibilityEnabled;
     }
 }

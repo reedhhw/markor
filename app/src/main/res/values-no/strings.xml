@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Opprett mappe</string>
     <string name="create_new_document">Opprett nytt dokument</string>
     <string name="move">Flytt</string>
+    <string name="copy">Kopier</string>
     <string name="info">Informasjon</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Filen/mappen finnes allerede! Bruk et annet navn</string>
     <string name="import_from_device">Importer fra enhet</string>
@@ -35,11 +36,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Velg mappe</string>
     <string name="edit">Rediger</string>
     <string name="search_documents">Søk i dokumenter</string>
-    <string name="share_to_arrow">Del med&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Del med&#8230;</string>
     <string name="share">Del</string>
     <string name="search">Søk</string>
     <string name="display_converted_markup">Vis konvertert markup</string>
-    <string name="editor">Redaktør</string>
+    <string name="editor">Endre</string>
     <string name="folders">Mapper</string>
     <string name="files">Filer</string>
     <string name="document">Dokument</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Filer og mapper</string>
     <string name="document_browser">Dokument nettleser</string>
     <string name="file_browser">Filens nettleser</string>
+    <string name="set_due_date">Angi forfallsdato</string>
+    <string name="insert_replace_date">Insert date</string>
     <string name="create_note" needed="false">Opprett notat</string>
     <string name="special_documents" needed="false">Spesielle dokumenter</string>
     <string name="keep_screen_on" needed="false">Behold skjermen på</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Framhev mellomrom ved linjeslutt for linjer som inneholder to eller flere mellomrom</string>
     <string name="use_monospace_for_code">Bruk monospace skrift for kode</string>
     <string name="disable_code_block_highlight">Deaktiver utheving for kodeklosser</string>
+    <string name="auto_renumber_ordered_list">Automatisk omdirigering sorterte lister</string>
+    <string name="auto_renumber_ordered_list_slowdown">Dette alternativet kan påvirke appens ytelse.</string>
     <string name="use_different_fonttype_slow_down">Bruk annen skrifttype. Endring har dynamisk innvirkning på programytelse.</string>
     <string name="general">Generelt</string>
     <string name="resources">Ressurser</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Side ned (ned)</string>
     <string name="move_text_one_line_up">Flytt teksten en linje opp</string>
     <string name="move_text_one_line_down">Flytt teksten en linje ned</string>
+    <string name="start_new_line_below">Start ny linje under</string>
     <string name="key_pos_1">Linjestart (Pos Home)</string>
     <string name="key_pos_end">Linjeslutt (Pos End)</string>
     <string name="key_pos_1_document">Dokument start</string>
@@ -204,21 +210,19 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="edit_text_in_center_of_screen">Rediger tekst i midten av skjermen</string>
     <string name="clipboard">Utklippstavle</string>
     <string name="select_existing_document">Velg eksisterende dokument</string>
-    <string name="open_source_licenses">Åpen kildekode-lisenser</string>
+    <string name="open_source_licenses">Åpen kilde-lisenser</string>
     <string name="rate_this_app">Vurder denne appen</string>
     <string name="translate">Oversett</string>
     <string name="more_info_and_help">Mer info om dette</string>
     <string name="report_bugs">Rapporter feil</string>
     <string name="more_info_on_how_to_donate_or_otherwise_support_this_project_text">Mer info om donering til utvikleren eller bidra til dette prosjektet.</string>
-    <string name="join_community">Delta i samfunnet</string>
+    <string name="join_community">Bli med i fellesskapet</string>
     <string name="bug_reports_suggest_improvements">Gi tilbakemeldinger, rapporter feil eller foreslå forbedringer</string>
-    <string name="help_translating_this_app">Oversett dette programmet til andre språk</string>
+    <string name="help_translating_this_app">Hjelp oss oversett denne appen til flere språk</string>
     <string name="source_code">Kildekode</string>
     <string name="project_license">Prosjektets lisens</string>
-    <string name="project_contribution_info">Prosjekt bidrag info</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Mer info om hvordan du kan bidra til dette prosjektet</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Bidra med kode til prosjektet. Alle er velkomne, inkludert nybegynnere</string>
-    <string name="project_team">Prosjekt team</string>
+    <string name="project_team">Prosjekt laget</string>
     <string name="contributors_public_add_yourself_description">Vis info om bidragsytere. De kan valgfritt bidra med info til visning her etter bidrag.</string>
     <string name="descending">synkende</string>
     <string name="ascending">stigende</string>
@@ -260,7 +264,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="folder_is_created_without_extension">- Mappen ble opprettet uten filtype</string>
     <string name="keep_existing_file">- Filer og mapper er ikke overskrevet</string>
     <string name="multiple_windows">Flere vinduer</string>
-    <string name="font">Font</string>
+    <string name="font">Skrifttype</string>
     <string name="open_new_documents_always_in_new_window">Åpne dokumenter alltid i separate vinduer. Bytt ved å bruke enhetens \"nylige\" nøkkel.</string>
     <string name="enter_or_select_format">Angi eller velg format</string>
     <string name="pick_date">Velg dato</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Reload</string>
     <string name="wrap_words">Bryt ord</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Myk pause hvis tekst ikke passer til skjermens bredde. Elsk aktiver horisontal scrolling.</string>
-    <string name="recursive_search_in_current_directory">Gjentatt søk i gjeldende mappe. Når spørringen inneholder et stjerne (*) regex-søk blir brukt, hvis ikke sjekk om spørringen inneholder.</string>
+    <string name="recursive_search_in_current_directory">Rekursivt søk i gjeldende katalog.</string>
     <string name="always_open_with_this_app">Åpne alltid med denne appen</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Åpne alltid filer med denne appen når listen inneholder filutvidelsen. Bruk \'None, .html, . ss , .js\' for eksempel hvis du vil redigere nettfiler og de uten filutvidelse.</string>
     <string name="template">Mal</string>
     <string name="send_debug_log">Send debug-logg</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Hjelp ved å sende feilsøkingsinformasjon til utvikler(e). Data sendes via e-post via e-postappen, og du kan se alle data som er sendt før de sendes. Du vil finne et ekstra alternativ for \"Send feilsøkingslogg\" i toppmenyen når aktivert. Den skaper e-postutkastet.</string>
     <string name="print_pdf">Print / PDF</string>
     <string name="bigger_headings">Større overskrift</string>
     <string name="increase_text_size_of_headings_according_to_level">Øk tekststørrelsen i henhold til nivå (# h1, ## h2. ### h3…)</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Overskrift 1</string>
     <string name="heading_2">Overskrift 2</string>
     <string name="heading_3">Overskrift 3</string>
+    <string name="heading_4">Overskrift 4</string>
+    <string name="heading_5">Overskrift 5</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
+    <string name="highlighted">Uthevet</string>
     <string name="strikeout">Slag ut</string>
     <string name="inline_code">Inline kode</string>
     <string name="horizontal_line">Liggende linje</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Nødvendig</string>
     <string name="append_human_readable_uuid_to_new_tasks">Legg til menneskelig lesbar UUID til nye oppgaver</string>
     <string name="action_order">Handlingen rekkefølge</string>
+    <string name="toggle_action_visibility">Vis/skjul handlingen</string>
     <string name="load_default_settings">Last inn standardinnstillinger</string>
     <string name="drag">Dra</string>
+    <string name="created">Opprettet</string>
     <string name="file_encryption_password">Fil krypteringspassord</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Ingen passordinnstilling kan ikke kryptere eller dekryptere.\nGå til Innstillinger -&gt; Generelt -&gt; Passord for å angi et passord.</string>
     <string name="encrypt_file_content">Krypter filinnhold</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Kunne ikke dekryptere filinnhold. Har du brukt et feil passord? Er filen virkelig kryptert med Markors AES kryptering?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Passordet er allerede angitt. Å oppgi et nytt passord vil overskrive det eksisterende passordet, og det kan hende du ikke har tilgang til filer lenger dersom du glemmer passordet.</string>
     <string name="code_block">Kode blokk</string>
+    <string name="add_completion_date">Legg til ferdig dato</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Legg til sluttdato for todos når du merker dem som ferdig</string>
+    <string name="file_description_format">Format for filbeskrivelse</string>
+    <string name="file_description_format_dialog">Formatet for beskrivelsen under hver fil i filnettleser. Følg reglene for Android, SimpleDateFormat med tillegg av FS for å vise filstørrelse. La være blank for å bruke standardformat for din lokalitet.\n\nEksempel input:\nFS yyyy MMM dd ht:mm:ss aa\nUtdataformat:\n30 KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">Laster inn standardverdi</string>
+    <string name="file_settings">Fil innstillinger</string>
+    <string name="search_and_replace">Søk / erstatt</string>
+    <string name="search_for">Søk etter</string>
+    <string name="replace_with">Erstatt med</string>
+    <string name="replace_once">Erstatt (1)</string>
+    <string name="replace_all">Erstatt alle</string>
+    <string name="matches">Treff</string>
+    <string name="search_replace_pattern_error_message">Søk eller erstatt mønsterfeil.</string>
+    <string name="backup_settings">Innstillinger for sikkerhetskopiering</string>
+    <string name="restore_settings">Gjenopprett innstillinger</string>
+    <string name="failed_to_create_backup">Kunne ikke opprette sikkerhetskopi</string>
+    <string name="export_settings_to_json_file">Eksporter innstillinger til json-fil</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Importer innstillinger fra backup json-fil. Når appen er startet på nytt.</string>
+    <string name="failed_to_restore_settings_from_backup">Kunne ikke gjenopprette innstillingene fra sikkerhetskopien</string>
+    <string name="newline_is_new_paragraph">Ny = ny avsnitt</string>
+    <string name="search_in_content">Søk i innhold</string>
+    <string name="max_search_depth">Søk på dybde</string>
+    <string name="ignore_list">Ignorer liste</string>
+    <string name="do_not_search_specified_files_and_folders">Ikke søk spesifikke filer og mapper.\nBruk ny linje som skilletegn.\nBruk sitater for nøyaktige dir navn: \"Test\".\nEller bruk Regex \'^[.].*\'\nEksempler: ^\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Regex søk</string>
+    <string name="case_sensitive">Kassen er følsom</string>
+    <string name="stop_search_after_first_match">Stopp søk etter første treff</string>
+    <string name="regex_can_not_be_compiled">Regex kan ikke kompileres</string>
+    <string name="keep_both">Behold begge</string>
+    <string name="skip">Hopp</string>
+    <string name="overwrite">Overskriv</string>
+    <string name="keep_both_all">Behold begge (alle)</string>
+    <string name="skip_all">Hopp over (alle)</string>
+    <string name="overwrite_all">Overskriv (alle)</string>
+    <string name="copy_move_conflict_message">\'%s\' eksisterer allerede i %s</string>
+    <string name="additional_contexts_and_projects">Flere kontekster og prosjekter</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Angi områdedaterte @contexts og +projects. Disse vil alltid være synlige på todo.txt innfør dialoger.</string>
+    <string name="infinite">Uendelig</string>
 </resources>

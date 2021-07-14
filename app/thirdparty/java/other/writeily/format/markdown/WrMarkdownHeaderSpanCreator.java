@@ -1,7 +1,7 @@
 /*#######################################################
  * Copyright (c) 2014 Jeff Martin
  * Copyright (c) 2015 Pedro Lafuente
- * Copyright (c) 2017-2019 Gregor Santner
+ * Copyright (c) 2017-2021 Gregor Santner
  *
  * Licensed under the MIT license.
  * You can get a copy of the license text here:
@@ -9,59 +9,39 @@
 ###########################################################*/
 package other.writeily.format.markdown;
 
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Typeface;
-import android.text.Editable;
 import android.text.ParcelableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.TextAppearanceSpan;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.text.Spannable;
 
-import net.gsantner.markor.format.markdown.MarkdownHighlighter;
+import net.gsantner.markor.ui.hleditor.Highlighter;
 import net.gsantner.markor.ui.hleditor.SpanCreator;
 
 import java.util.regex.Matcher;
 
+import other.writeily.format.WrProportionalHeaderSpanCreator;
+
 public class WrMarkdownHeaderSpanCreator implements SpanCreator.ParcelableSpanCreator {
     private static final Character POUND_SIGN = '#';
-    private static final DisplayMetrics DISPLAY_METRICS = Resources.getSystem().getDisplayMetrics();
     private static final float STANDARD_PROPORTION_MAX = 1.80f;
     private static final float SIZE_STEP = 0.20f;
 
-    protected MarkdownHighlighter _highlighter;
-    private final Editable _editable;
-    private final int _color;
-    private final boolean _dynmicTextSize;
+    protected Highlighter _highlighter;
+    private final Spannable _spannable;
+    private final WrProportionalHeaderSpanCreator _spanCreator;
 
-    public WrMarkdownHeaderSpanCreator(MarkdownHighlighter highlighter, Editable editable, int color, boolean dynamicTextSize) {
+    public WrMarkdownHeaderSpanCreator(Highlighter highlighter, Spannable spannable, int color, boolean dynamicTextSize) {
         _highlighter = highlighter;
-        _editable = editable;
-        _color = color;
-        _dynmicTextSize = dynamicTextSize;
+        _spannable = spannable;
+        _spanCreator = new WrProportionalHeaderSpanCreator(highlighter.getAppSettings().getFontFamily(), highlighter.getAppSettings().getFontSize(), color, dynamicTextSize);
     }
 
     public ParcelableSpan create(Matcher m, int iM) {
-        if (_dynmicTextSize) {
-            final char[] charSequence = extractMatchingRange(m);
-            float proportion = calculateProportionBasedOnHeaderType(charSequence);
-            Float size = calculateAdjustedSize(proportion);
-            return new TextAppearanceSpan(_highlighter._fontType, Typeface.BOLD, size.byteValue(),
-                    ColorStateList.valueOf(_color), null);
-        } else {
-            return new ForegroundColorSpan(_color);
-        }
-    }
-
-    private float calculateAdjustedSize(Float proportion) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                _highlighter._fontSize * proportion,
-                DISPLAY_METRICS);
+        final char[] charSequence = extractMatchingRange(m);
+        float proportion = calculateProportionBasedOnHeaderType(charSequence);
+        return _spanCreator.createHeaderSpan(proportion);
     }
 
     private char[] extractMatchingRange(Matcher m) {
-        return _editable.subSequence(m.start(), m.end()).toString().trim().toCharArray();
+        return _spannable.subSequence(m.start(), m.end()).toString().trim().toCharArray();
     }
 
     private Float calculateProportionBasedOnHeaderType(final char[] charSequence) {

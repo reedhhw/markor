@@ -31,12 +31,23 @@ public class Document implements Serializable {
     private long _lastChanged = 0;
     private long _modTime = 0;
     private boolean _forceNoHistory = false;
+    private int _initialLineNumber = -1;
 
     public Document() {
     }
 
     public Document(File file) {
         _file = file;
+    }
+
+    public static String getPath(final Document document) {
+        if (document != null) {
+            final File file = document.getFile();
+            if (file != null) {
+                return file.getPath();
+            }
+        }
+        return null;
     }
 
     public synchronized Document cloneDocument() {
@@ -234,4 +245,13 @@ public class Document implements Serializable {
     public void setModTime(long modTime) {
         _modTime = modTime;
     }
+
+    public void setInitialLineNumber(final int lineNumber) {
+        _initialLineNumber = lineNumber;
+    }
+
+    public int getInitialLineNumber() {
+        return _initialLineNumber;
+    }
+
 }

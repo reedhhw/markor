@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Создать папку</string>
     <string name="create_new_document">Создать документ</string>
     <string name="move">Переместить</string>
+    <string name="copy">Копировать</string>
     <string name="info">Инфо</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Файл или папка уже существует! Используйте другое имя</string>
     <string name="import_from_device">Импортировать с устройства</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Выбрать папку</string>
     <string name="edit">Редактировать</string>
     <string name="search_documents">Искать документы</string>
-    <string name="share_to_arrow">Поделиться с…</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Поделиться с…</string>
     <string name="share">Поделиться</string>
     <string name="search">Поиск</string>
     <string name="display_converted_markup">Показать результат разметки</string>
@@ -64,7 +65,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="items_selected_witharg" tools:ignore="PluralsCandidate">%d элемента выбрано</string>
     <string name="hide_statusbar_at_this_view">Скрывать строку состояния в этом режиме</string>
     <string name="hide_statusbar">Скрыть строку состояния</string>
-    <string name="name">По имени</string>
+    <string name="name">Имя</string>
     <string name="url_or_path">URL/путь</string>
     <string name="insert_link">Вставить ссылку</string>
     <string name="insert_image">Вставить изображение</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Файлы и папки</string>
     <string name="document_browser">Обозреватель документов</string>
     <string name="file_browser">Обозреватель файлов</string>
+    <string name="set_due_date">Установить срок выполнения</string>
+    <string name="insert_replace_date">Вставить дату</string>
     <string name="create_note" needed="false">Создать заметку</string>
     <string name="special_documents" needed="false">Особые документы</string>
     <string name="keep_screen_on" needed="false">Не отключать экран</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Подсвечивать пробелы в конце строк с двумя и более пробелами</string>
     <string name="use_monospace_for_code">Использовать моноширный шрифт для кода</string>
     <string name="disable_code_block_highlight">Отключить подсветку блоков кода</string>
+    <string name="auto_renumber_ordered_list">Автоматическое обновление упорядоченных списков</string>
+    <string name="auto_renumber_ordered_list_slowdown">Этот параметр может повлиять на производительность приложений.</string>
     <string name="use_different_fonttype_slow_down">Использовать различные типы шрифтов. Динамическое изменение типа шрифта влияет на производительность приложения.</string>
     <string name="general">Общие</string>
     <string name="resources">Ресурсы</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Листать вниз (Page Down)</string>
     <string name="move_text_one_line_up">Переместить текст на строку вверх</string>
     <string name="move_text_one_line_down">Переместить текст на строку вниз</string>
+    <string name="start_new_line_below">Начать новую строку ниже</string>
     <string name="key_pos_1">Начало строки (Home)</string>
     <string name="key_pos_end">Конец строки (End)</string>
     <string name="key_pos_1_document">Начало документа</string>
@@ -184,8 +190,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="start_on_bottom_when_loading_document">После загрузки ставить курсор в конец документа</string>
     <string name="unordered_list_character">Символ неупорядоченного списка</string>
     <string name="character_to_start_items_of_unordered_list_with">Какой символ использовать для обозначения неупорядоченных списков</string>
-    <string name="unordered_list_char_dash">Тире (-)</string>
-    <string name="unordered_list_char_asterisk">Астериск (*)</string>
+    <string name="unordered_list_char_dash">Дефис-минус (-)</string>
+    <string name="unordered_list_char_asterisk">Звёздочка (*)</string>
     <string name="unordered_list_char_plus">Плюс (+)</string>
     <string name="filemanager_doesnot_supply_required_data__appspecific">Markor может редактировать только локальные, автономно доступные документы и не поддерживает файловые менеджеры, которые не предоставляют полный путь к файлу.</string>
     <string name="sync_to_local_folder_notice">Примечание: приложения синхронизации могут размещать файлы в пользовательских папках. Откройте их, соответственно изменяя папку документов Маркора, или в другом менеджере файлов.</string>
@@ -193,14 +199,14 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="vertical_alignment">Выравнивание по вертикали</string>
     <string name="horizontal_alignment">Выравнивание по горизонтали</string>
     <string name="default_">По умолчанию</string>
-    <string name="left">Выровнить по левому краю</string>
-    <string name="right">Выровнить по правому краю</string>
-    <string name="top">Выровнить по верхнему краю</string>
+    <string name="left">По левому краю</string>
+    <string name="right">По правому краю</string>
+    <string name="top">По верхнему краю</string>
     <string name="bottom">Подвал</string>
     <string name="center">Центр</string>
     <string name="textaction_spacing">Расстояние между операциями</string>
     <string name="horizontal_space_between_textactions">Горизонтальное пространство между текстовыми кнопками действий</string>
-    <string name="center_text">Текст по центру</string>
+    <string name="center_text">Центрировать текст</string>
     <string name="edit_text_in_center_of_screen">Начинать редактирование текста по центру</string>
     <string name="clipboard">Буфер обмена</string>
     <string name="select_existing_document">Выберите существующий документ</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Перевести это приложение на другие языки</string>
     <string name="source_code">Исходный код</string>
     <string name="project_license">Лицензия проекта</string>
-    <string name="project_contribution_info">Информация о вкладе в проект</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Подробнее о том, как внести вклад в этот проект</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Внести вклад в код проекта. Все желающие могут сделать это, в том числе и новички</string>
     <string name="project_team">Команда проекта</string>
     <string name="contributors_public_add_yourself_description">Показать информации об участниках. Предоставьте информацию о себе, если вы внесли свой вклад в проект</string>
@@ -264,7 +268,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="open_new_documents_always_in_new_window">Открывать документы в отдельных окнах. Переключайтесь между ними с помощью кнопки «Обзор» на устройстве</string>
     <string name="enter_or_select_format">Введите или выберите формат</string>
     <string name="pick_date">Выбрать дату</string>
-    <string name="pick_time">Выбор времени</string>
+    <string name="pick_time">Время Выбирать</string>
     <string name="get_format_instead_date_or_time">Получить формат вместо даты или времени</string>
     <string name="always_use_current_date_and_time">Всегда использовать текущую дату &amp; время</string>
     <string name="result">Результат</string>
@@ -285,7 +289,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="appdata_private">AppData (приватный)</string>
     <string name="appdata_sdcard">Приложения (SD-карта)</string>
     <string name="internal_storage">Внутренняя память</string>
-    <string name="open_the_document_from_main_view">Вы можете открыть документ из главного вида внизу, файлового браузера или лаунчера. Также есть возможность добавить текст, разделенный в Markor.</string>
+    <string name="open_the_document_from_main_view">Вы можете открыть документ из главного окна внизу, из файлового браузера или из лаунчера. Также есть возможность добавить текст, разделенный в Markor.</string>
     <string name="notebook_is_the_home_of_your_files">Блокнот — это папка, которую Markor открывает в обозревателе файлов при запуске. Это папка по умолчанию для ваших файлов.</string>
     <string name="quicknote_is_the_fastest_option_to_write_down_notes">QuickNote помогает быстро делать заметки. Это файл в формате Markdown с именем QuickNote.md, расположенный в папке по умолчанию. Вы можете изменить папку в настройках.</string>
     <string name="todo_is_the_easiest_way_">Управляйте задачами с помощью ToDo. Это файл в формате todo.txt, расположенный в папке по умолчанию. Вы можете изменить папку в настройках.</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">Обновить</string>
     <string name="wrap_words">Переносить слова</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Вставлять мягкие переносы вместо отображения ползунка горизонтальной прокрутки, когда текст не помещается по ширине на экране.</string>
-    <string name="recursive_search_in_current_directory">Рекурсивный поиск в текущей директории. Если в запросе есть звёздочка (*), используется поиск по регулярному выражению.</string>
-    <string name="always_open_with_this_app">Всегда открывать этим приложением</string>
+    <string name="recursive_search_in_current_directory">Рекурсивный поиск в текущем каталоге.</string>
+    <string name="always_open_with_this_app">Всегда открывать в этом приложении</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Всегда открывать файлы этим приложением, если расширение есть в списке. Используйте \'None, .html, .css , .js\', например, если вы хотите редактировать веб-файлы и файлы без расширения.</string>
     <string name="template">Шаблон</string>
     <string name="send_debug_log">Отправить журнал отладки</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Помогите разработчикам, отправляя отладочную информацию. Данные отправляются по электронной почте вашим приложением электронной почты, и вы можете просмотреть перед отправкой все отправляемые данные. Вы найдете дополнительный пункт \"Отправить журнал отладки\" в верхнем меню, когда включено. Он создает черновик письма.</string>
     <string name="print_pdf">Печать / PDF</string>
     <string name="bigger_headings">Увеличивать заголовки</string>
     <string name="increase_text_size_of_headings_according_to_level">Увеличивать размер текста заголовков в соответствии с уровнем (# h1, ## h2, ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Чтение</string>
     <string name="read">Читать</string>
     <string name="table">Таблица</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Сколько колонок? Длинное нажатие на кнопку таблицы начнёт таблицу, вставив заголовок, короткое — добавит строку.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Сколько колонок? Нажмите кнопку таблицы, чтобы запустить таблицу (вставить заголовок), нажмите короткую для добавления строки.</string>
     <string name="example_of_a_markdown_table">Пример Markdown-таблицы</string>
     <string name="delete_lines">Удалить строки</string>
     <string name="unordered_list">Неупорядоченный список</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Заголовок 1</string>
     <string name="heading_2">Заголовок 2</string>
     <string name="heading_3">Заголовок 3</string>
+    <string name="heading_4">Заголовок 4</string>
+    <string name="heading_5">Заголовок 5</string>
     <string name="bold">Жирный</string>
     <string name="italic">Курсив</string>
+    <string name="highlighted">Выделено</string>
     <string name="strikeout">Перечеркнутый</string>
     <string name="inline_code">Встроенный код</string>
     <string name="horizontal_line">Горизонтальная линия</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Основное</string>
     <string name="append_human_readable_uuid_to_new_tasks">Добавить пользовательский UUID к новым задачам</string>
     <string name="action_order">Порядок действий</string>
+    <string name="toggle_action_visibility">Вкл/выкл видимость действия</string>
     <string name="load_default_settings">Загрузить настройки по умолчанию</string>
     <string name="drag">Перетащите</string>
+    <string name="created">Создано</string>
     <string name="file_encryption_password">Пароль шифрования файла</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Пароль не установлен, не могу зашифровать или расшифровать.\nПерейдите в Настройки -&gt; Общие -&gt; Пароль для установки пароля.</string>
     <string name="encrypt_file_content">Шифровать содержимое файла</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Не удалось расшифровать содержимое файла. Используете ли вы неверный пароль? Файл действительно зашифрован Markors AES?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Пароль уже установлен. Установка нового пароля перезапишет существующий пароль, и вы больше не сможете получить доступ к файлам в случае, если вы забудете пароль.</string>
     <string name="code_block">Блок кода</string>
+    <string name="add_completion_date">Добавить дату завершения</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Добавить дату завершения для задач при помечении их как выполненных</string>
+    <string name="file_description_format">Формат описания файла</string>
+    <string name="file_description_format_dialog">Формат описания для каждого файла в обозревателе. Следуйте правилам SimpleDateFormat Android, добавив FS для отображения размера файла. Оставьте пустым, чтобы использовать формат по умолчанию для вашей локали.\n\nПример ввода:\nFS yyyy MMM dd hh:mm:ss aa\nФормат вывода:\n30KB 2020 Мар 20 11:24:52 PM</string>
+    <string name="loading_default_value">Загрузка значения по умолчанию</string>
+    <string name="file_settings">Настройки файла</string>
+    <string name="search_and_replace">Поиск / Замена</string>
+    <string name="search_for">Искать</string>
+    <string name="replace_with">Заменить на</string>
+    <string name="replace_once">Заменить (1)</string>
+    <string name="replace_all">Заменить все</string>
+    <string name="matches">Совпадения</string>
+    <string name="search_replace_pattern_error_message">Поиск или замена шаблона.</string>
+    <string name="backup_settings">Сохранить настройки</string>
+    <string name="restore_settings">Восстановить настройки</string>
+    <string name="failed_to_create_backup">Не удалось создать резервную копию</string>
+    <string name="export_settings_to_json_file">Экспорт настроек в json файл</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Импорт настроек из резервной копии json файла. При успешном завершении приложение перезапускается.</string>
+    <string name="failed_to_restore_settings_from_backup">Не удалось восстановить настройки из резервной копии</string>
+    <string name="newline_is_new_paragraph">Newline = новый абзац</string>
+    <string name="search_in_content">Поиск по содержимому</string>
+    <string name="max_search_depth">Глубина поиска</string>
+    <string name="ignore_list">Игнорировать</string>
+    <string name="do_not_search_specified_files_and_folders">Не искать указанные файлы и папки.\nИспользуйте новую строку в качестве разделителя.\nИспользуйте кавычки для точных имен каталога: \"Тест\".\nИли используйте Regex \'^[.].*\'\nпримеры: ^\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Поиск по выражениям</string>
+    <string name="case_sensitive">Учитывать регистр</string>
+    <string name="stop_search_after_first_match">Остановить поиск после первого матча</string>
+    <string name="regex_can_not_be_compiled">Не удалось скомпилировать Regex</string>
+    <string name="keep_both">Оставить оба</string>
+    <string name="skip">Пропустить</string>
+    <string name="overwrite">Перезаписать</string>
+    <string name="keep_both_all">Оставить оба (все)</string>
+    <string name="skip_all">Пропустить (все)</string>
+    <string name="overwrite_all">Перезаписать (все)</string>
+    <string name="copy_move_conflict_message">\'%s\' уже существует в %s</string>
+    <string name="additional_contexts_and_projects">Дополнительные контексты и проекты</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Введите контексты, разделенные пробелами, и +проекты. Они всегда будут видны в todo.txt диалогах.</string>
+    <string name="infinite">Бесконечный</string>
 </resources>

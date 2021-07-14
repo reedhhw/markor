@@ -29,30 +29,34 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import net.gsantner.markor.R;
+import net.gsantner.markor.format.todotxt.TodoTxtTask;
+import net.gsantner.markor.format.zimwiki.ZimWikiTextActions;
 import net.gsantner.markor.util.AppSettings;
 import net.gsantner.markor.util.ShareUtil;
-import net.gsantner.opoc.format.todotxt.SttCommander;
 import net.gsantner.opoc.ui.AndroidSpinnerOnItemSelectedAdapter;
 import net.gsantner.opoc.util.Callback;
 import net.gsantner.opoc.util.ContextUtils;
 
 import java.io.File;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import other.de.stanetz.jpencconverter.JavaPasswordbasedCryption;
-import other.de.stanetz.jpencconverter.PasswordStore;
 
 public class NewFileDialog extends DialogFragment {
     public static final String FRAGMENT_TAG = "net.gsantner.markor.ui.NewFileDialog";
     public static final String EXTRA_DIR = "EXTRA_DIR";
+    public static final String EXTRA_ALLOW_CREATE_DIR = "EXTRA_ALLOW_CREATE_DIR";
     private Callback.a2<Boolean, File> callback;
 
-    public static NewFileDialog newInstance(File sourceFile, Callback.a2<Boolean, File> callback) {
+    public static NewFileDialog newInstance(final File sourceFile, final boolean allowCreateDir, final Callback.a2<Boolean, File> callback) {
         NewFileDialog dialog = new NewFileDialog();
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_DIR, sourceFile);
+        args.putSerializable(EXTRA_ALLOW_CREATE_DIR, allowCreateDir);
         dialog.setArguments(args);
         dialog.callback = callback;
         return dialog;
@@ -62,9 +66,10 @@ public class NewFileDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final File file = (File) getArguments().getSerializable(EXTRA_DIR);
+        final boolean allowCreateDir = getArguments().getBoolean(EXTRA_ALLOW_CREATE_DIR);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        AlertDialog.Builder dialogBuilder = makeDialog(file, inflater);
+        AlertDialog.Builder dialogBuilder = makeDialog(file, allowCreateDir, inflater);
         AlertDialog dialog = dialogBuilder.show();
         Window w;
         if ((w = dialog.getWindow()) != null) {
@@ -74,7 +79,7 @@ public class NewFileDialog extends DialogFragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private AlertDialog.Builder makeDialog(final File basedir, LayoutInflater inflater) {
+    private AlertDialog.Builder makeDialog(final File basedir, final boolean allowCreateDir, LayoutInflater inflater) {
         View root;
         AlertDialog.Builder dialogBuilder;
         final AppSettings appSettings = new AppSettings(inflater.getContext());
@@ -88,7 +93,7 @@ public class NewFileDialog extends DialogFragment {
         final Spinner templateSpinner = root.findViewById(R.id.new_file_dialog__template);
         final String[] typeSpinnerToExtension = getResources().getStringArray(R.array.new_file_types__file_extension);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && appSettings.hasPasswordBeenSetOnce()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && appSettings.isDefaultPasswordSet()) {
             encryptCheckbox.setChecked(appSettings.getNewFileDialogLastUsedEncryption());
         } else {
             encryptCheckbox.setVisibility(View.GONE);
@@ -102,6 +107,9 @@ public class NewFileDialog extends DialogFragment {
 
         final AtomicBoolean typeSpinnerNoTriggerOnFirst = new AtomicBoolean(true);
         typeSpinner.setOnItemSelectedListener(new AndroidSpinnerOnItemSelectedAdapter(pos -> {
+            if (pos == 3) { // Zim
+                templateSpinner.setSelection(7); // Zim empty
+            }
             if (typeSpinnerNoTriggerOnFirst.getAndSet(false)) {
                 return;
             }
@@ -115,13 +123,17 @@ public class NewFileDialog extends DialogFragment {
                 }
             }
             fileNameEdit.setSelection(fileNameEdit.length());
+            appSettings.setNewFileDialogLastUsedType(typeSpinner.getSelectedItemPosition());
         }));
+        typeSpinner.setSelection(appSettings.getNewFileDialogLastUsedType());
 
         templateSpinner.setOnItemSelectedListener(new AndroidSpinnerOnItemSelectedAdapter(pos -> {
             String prefix = null;
 
             if (pos == 3) { // Jekyll
-                prefix = SttCommander.DATEF_YYYY_MM_DD.format(new Date()) + "-";
+                prefix = TodoTxtTask.DATEF_YYYY_MM_DD.format(new Date()) + "-";
+            } else if (pos == 9) { //ZettelKasten
+                prefix = new SimpleDateFormat("yyyyMMddHHmm", Locale.ROOT).format(new Date()) + "-";
             }
             if (!TextUtils.isEmpty(prefix) && !fileNameEdit.getText().toString().startsWith(prefix)) {
                 fileNameEdit.setText(prefix + fileNameEdit.getText().toString());
@@ -153,11 +165,12 @@ public class NewFileDialog extends DialogFragment {
                     }
 
                     appSettings.setNewFileDialogLastUsedExtension(fileExtEdit.getText().toString().trim());
-                    final File f = new File(basedir, fileNameEdit.getText().toString().trim() + fileExtEdit.getText().toString().trim());
-                    final byte[] templateContents = getTemplateContent(templateSpinner, basedir, encryptCheckbox.isChecked());
+                    final String usedFilename = getFileNameWithoutExtension(fileNameEdit.getText().toString(), templateSpinner.getSelectedItemPosition());
+                    final File f = new File(basedir, usedFilename.trim() + fileExtEdit.getText().toString().trim());
+                    final byte[] templateContents = getTemplateContent(templateSpinner, basedir, f.getName(), encryptCheckbox.isChecked());
                     shareUtil.writeFile(f, false, (arg_ok, arg_fos) -> {
                         try {
-                            if (f.exists() && f.length() < 5 && templateContents != null) {
+                            if (f.exists() && f.length() < ShareUtil.MIN_OVERWRITE_LENGTH && templateContents != null) {
                                 arg_fos.write(templateContents);
                             }
                         } catch (Exception ignored) {
@@ -170,7 +183,8 @@ public class NewFileDialog extends DialogFragment {
                     if (ez(fileNameEdit)) {
                         return;
                     }
-                    File f = new File(basedir, fileNameEdit.getText().toString());
+                    final String usedFoldername = getFileNameWithoutExtension(fileNameEdit.getText().toString(), templateSpinner.getSelectedItemPosition());
+                    File f = new File(basedir, usedFoldername);
                     if (shareUtil.isUnderStorageAccessFolder(f)) {
                         DocumentFile dof = shareUtil.getDocumentFile(f, true);
                         callback(dof != null && dof.exists(), f);
@@ -180,11 +194,23 @@ public class NewFileDialog extends DialogFragment {
                     dialogInterface.dismiss();
                 });
 
+        if (!allowCreateDir) {
+            dialogBuilder.setNeutralButton("", null);
+        }
+
         return dialogBuilder;
     }
 
     private boolean ez(EditText et) {
         return et.getText().toString().isEmpty();
+    }
+
+    private String getFileNameWithoutExtension(String typedFilename, int selectedTemplatePos) {
+        if (selectedTemplatePos == 7) {
+            // zim wiki files always use underscores instead of spaces
+            return typedFilename.trim().replace(' ', '_');
+        }
+        return typedFilename;
     }
 
     private void callback(boolean ok, File file) {
@@ -200,7 +226,8 @@ public class NewFileDialog extends DialogFragment {
     //
     // 2) t = "<cursor>";  | ctrl+shift+v "paste without formatting"
     //
-    private byte[] getTemplateContent(final Spinner templateSpinner, final File basedir, final boolean encrypt) {
+    @SuppressLint("TrulyRandom")
+    private byte[] getTemplateContent(final Spinner templateSpinner, final File basedir, final String filename, final boolean encrypt) {
         String t = null;
         byte[] bytes = null;
         switch (templateSpinner.getSelectedItemPosition()) {
@@ -229,10 +256,18 @@ public class NewFileDialog extends DialogFragment {
                 break;
             }
             case 7: {
+                t = ZimWikiTextActions.createZimWikiHeaderAndTitleContents(filename.replaceAll("(\\.((zim)|(txt)))*$", "").trim().replace(' ', '_'), new Date(), getResources().getString(R.string.created));
+                break;
+            }
+            case 8: {
                 t = "---\ntags: []\ncreated: '{{ template.timestamp_date_yyyy_mm_dd }}'\ntitle: ''\n---\n\n";
                 if (basedir != null && new File(basedir.getParentFile(), ".notabledir").exists()) {
                     t = t.replace("created:", "modified:");
                 }
+                break;
+            }
+            case 9: {
+                t = "source:\ncategory:\ntag:\n------------\n";
                 break;
             }
             default:
@@ -240,10 +275,11 @@ public class NewFileDialog extends DialogFragment {
                 return null; // Empty file template (that doesn't overwrite anything
             }
         }
-        t = t.replace("{{ template.timestamp_date_yyyy_mm_dd }}", SttCommander.DATEF_YYYY_MM_DD.format(new Date()));
+        t = t.replace("{{ template.timestamp_date_yyyy_mm_dd }}", TodoTxtTask.DATEF_YYYY_MM_DD.format(new Date()));
 
-        if (encrypt && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            bytes = new JavaPasswordbasedCryption(JavaPasswordbasedCryption.Version.V001, new SecureRandom()).encrypt(t, new PasswordStore(getContext()).loadKey(R.string.pref_key__default_encryption_password));
+        if (encrypt && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final char[] pass = new AppSettings(getContext()).getDefaultPassword();
+            bytes = new JavaPasswordbasedCryption(Build.VERSION.SDK_INT, new SecureRandom()).encrypt(t, pass);
         } else {
             bytes = t.getBytes();
         }

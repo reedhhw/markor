@@ -9,20 +9,20 @@ You should have received a copy of the CC0 legalcode along with this
 work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
 -->
 <resources>
-    <string name="app_name_real">Markor</string>
+    <string name="app_name_real" translatable="false">Markor</string>
     <string name="app_name" translatable="false">@string/app_name_real</string>
     <string name="app_license_name" translatable="false">Apache 2.0</string>
     <string name="app_community_url" translatable="false">https://matrix.to/#/#markor:matrix.org</string>
-    <string name="app_bugreport_url" translatable="false">https://github.com/gsantner/markor/issues</string>
+    <string name="app_bugreport_url" translatable="false">https://github.com/gsantner/markor/discussions</string>
     <string name="app_translate_url" translatable="false">https://crowdin.com/project/markor/invite</string>
+
     <string name="app_web_url" translatable="false">https://gsantner.net/project/markor.html?source=inapp</string>
+    <string name="sync_client_support_issue_url" translatable="false">https://github.com/gsantner/markor/discussions/1381</string>
     <string name="app_source_code_url" translatable="false">https://github.com/gsantner/markor</string>
     <string name="app_donate_url" translatable="false"><![CDATA[https://gsantner.net/page/supportme.html?project=markor&source=inapp_supdon]]></string>
-    <string name="app_contribution_info_url" translatable="false">https://github.com/gsantner/markor/blob/master/README.md#contributions</string>
     <string name="more_info_on_how_to_donate_or_otherwise_support_this_project" translatable="false">@string/more_info_on_how_to_donate_or_otherwise_support_this_project_text</string>
     <string name="donate_" translatable="false">@string/donate</string>
-    <string name="app_contact_email_reverse" translatable="false">gro.xobliam@kcabdeef+rentnasg</string>
-    <string name="huuid">hUUID</string>
+    <string name="huuid" translatable="false">hUUID</string>
 
 
     <string name="checkmark_symbol" translatable="false">\u2301</string>
@@ -32,6 +32,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="share_html__mime_html" translatable="false">HTML</string>
     <string name="pdf" translatable="false">PDF</string>
     <string name="markdown" translatable="false">Markdown</string>
+    <string name="backup" translatable="false">Backup</string>
 
     <string name="community" translatable="false">Community</string>
     <string name="default_font_family" translatable="false">sans-serif-regular</string>
@@ -52,6 +53,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="editor_basic_color_scheme_black_or_white" translatable="false">Black or White</string>
     <string name="editor_basic_color_scheme_amoled" translatable="false">AMOLED</string>
     <string name="editor_basic_color_scheme_solarized" translatable="false">Solarized</string>
+    <string name="editor_basic_color_scheme_nord" translatable="false">Nord</string>
     <string name="editor_basic_color_scheme_gruvbox" translatable="false">Gruvbox</string>
     <string name="editor_basic_color_scheme_greenscale" translatable="false">Greenscale</string>
     <string name="editor_basic_color_scheme_sepia" translatable="false">Sepia</string>
@@ -68,7 +70,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
 
     <!-- About Screen -->
     <string name="copyright_license_text_official" translatable="false"><![CDATA[
-        ### Copyright © 2017-2019
+        ### Copyright © 2017-2021
         **Gregor Santner**
         \n**Official project sources:**
         [Website](https://gsantner.net/index.html?source=inapp_license_official_project_source) | [Source code](https://github.com/gsantner/markor) | [F-Droid](https://f-droid.org/repository/browse/?fdid=net.gsantner.markor) | [Google Play](https://play.google.com/store/apps/details?id=net.gsantner.markor)
@@ -111,6 +113,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="tags" translatable="false">Tags</string>
     <string name="dotfiles" translatable="false">.dotfiles</string>
     <string name="tagging" translatable="false">Tagging</string>
+    <string name="regex" translatable="false">Regex</string>
+    <string name="multiline" translatable="false">Multiline</string>
 
 
     <!--
@@ -121,6 +125,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__markdown__highlight_lineending_two_or_more_space" translatable="false">pref_key__markdown__highlight_lineending_two_or_more_space</string>
     <string name="pref_key__markdown__monospace_some_parts" translatable="false">pref_key__markdown__monospace_some_parts</string>
     <string name="pref_key__markdown__disable_code_block_highlight" translatable="false">pref_key__markdown__disable_code_block_highlight</string>
+    <string name="pref_key__markdown__auto_renumber_ordered_list" translatable="false">pref_key__markdown__auto_renumber_ordered_list</string>
     <string name="pref_key__markdown__reorder_actions" translatable="false">pref_key__markdown__reorder_actions</string>
     <string name="pref_key__todotxt__reorder_actions" translatable="false">pref_key__todotxt__reorder_actions</string>
     <string name="pref_key__plaintext__reorder_actions" translatable="false">pref_key__plaintext__reorder_actions</string>
@@ -129,6 +134,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__plaintext__action_keys" translatable="false">pref_key__plaintext__action_keys</string>
     <string name="pref_key__todotxt__hl_delay" translatable="false">pref_key__todotxt__hl_delay</string>
     <string name="pref_key__todo_filepath" translatable="false">pref_key__todo_filepath</string>
+    <string name="pref_key__todotxt__add_completion_date_for_todos" translatable="false">pref_key__todotxt__add_completion_date_for_todos</string>
     <string name="pref_key__todotxt__start_new_tasks_with_todays_date" translatable="false">pref_key__todotxt__start_new_tasks_with_todays_date</string>
     <string name="pref_key__todotxt__append_contexts_and_projects_on_end_of_task" translatable="false">pref_key__todotxt__append_contexts_and_projects_on_end_of_task</string>
     <string name="pref_key__todotxt__last_used_archive_filename" translatable="false">pref_key__todotxt__last_used_archive_filename</string>
@@ -172,7 +178,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
 
     <string name="pref_key__more_info__app" translatable="false">pref_key__more_info__app</string>
     <string name="pref_key__more_info__donate" translatable="false">pref_key__more_info__donate</string>
-    <string name="pref_key__more_info__project_contribution_info" translatable="false">pref_key__more_info__project_contribution_info</string>
     <string name="pref_key__more_info__project_community" translatable="false">pref_key__more_info__project_community</string>
     <string name="pref_key__more_info__project_team" translatable="false">pref_key__more_info__project_team</string>
     <string name="pref_key__more_info__contributors_public_info" translatable="false">pref_key__more_info__contributors_public_info</string>
@@ -188,6 +193,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__inject_to_head" translatable="false">pref_key__inject_to_head</string>
     <string name="pref_key__inject_to_body" translatable="false">pref_key__inject_to_body</string>
     <string name="pref_key__markdown_render_math" translatable="false">pref_key__markdown_render_math</string>
+    <string name="pref_key__markdown_newline_newparagraph" translatable="false">pref_key__markdown_newline_newparagraph</string>
     <string name="pref_key__markdown_show_toc" translatable="false">pref_key__markdown_show_toc</string>
     <string name="pref_key__is_launcher_for_special_files_enabled" translatable="false">pref_key__is_launcher_for_special_files_enabled</string>
     <string name="pref_key__editor_basic_color_scheme__bg_light" translatable="false">pref_key__editor_basic_color_scheme__bg_light</string>
@@ -195,6 +201,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__editor_basic_color_scheme__bg_dark" translatable="false">pref_key__editor_basic_color_scheme__bg_dark</string>
     <string name="pref_key__editor_basic_color_scheme__fg_dark" translatable="false">pref_key__editor_basic_color_scheme__fg_dark</string>
     <string name="pref_key__editor_basic_color_scheme_solarized" translatable="false">pref_key__editor_basic_color_scheme_solarized</string>
+    <string name="pref_key__editor_basic_color_scheme_nord" translatable="false">pref_key__editor_basic_color_scheme_nord</string>
     <string name="pref_key__editor_basic_color_scheme_blackorwhite" translatable="false">pref_key__editor_basic_color_scheme_blackorwhite</string>
     <string name="pref_key__editor_basic_color_scheme_amoled" translatable="false">pref_key__editor_basic_color_scheme_amoled</string>
     <string name="pref_key__editor_basic_color_scheme_markor" translatable="false">pref_key__editor_basic_color_scheme_markor</string>
@@ -204,6 +211,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__is_keep_screen_on" translatable="false">pref_key__keep_screen_on</string>
 
     <string name="tmaid_common_delete_lines" translatable="false">tmaid_common_delete_lines</string>
+    <string name="tmaid_common_new_line_below" translatable="false">tmaid_common_new_line_below</string>
     <string name="tmaid_common_attach_something" translatable="false">tmaid_common_attach_something</string>
     <string name="tmaid_common_unordered_list_char" translatable="false">tmaid_common_unordered_list_char</string>
     <string name="tmaid_common_ordered_list_number" translatable="false">tmaid_common_ordered_list_number</string>
@@ -217,7 +225,9 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="tmaid_common_accordion" translatable="false">tmaid_common_accordion</string>
     <string name="tmaid_common_indent" translatable="false">tmaid_common_indent</string>
     <string name="tmaid_common_deindent" translatable="false">tmaid_common_deindent</string>
-    <string name="tmaid_common_toolbar_title_clicked_edit_action">tmaid_common_toolbar_title_clicked_edit_action</string>
+    <string name="tmaid_common_toolbar_title_clicked_edit_action" translatable="false">tmaid_common_toolbar_title_clicked_edit_action</string>
+    <string name="tmaid_common_move_text_one_line_up" translatable="false">tmaid_common_move_text_one_line_up</string>
+    <string name="tmaid_common_move_text_one_line_down" translatable="false">tmaid_common_move_text_one_line_down</string>
 
     <string name="tmaid_markdown_quote" translatable="false">tmaid_markdown_quote</string>
     <string name="tmaid_markdown_h1" translatable="false">tmaid_markdown_h1</string>
@@ -231,6 +241,19 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="tmaid_markdown_insert_image" translatable="false">tmaid_markdown_insert_image</string>
     <string name="tmaid_markdown_insert_link" translatable="false">tmaid_markdown_insert_link</string>
     <string name="tmaid_markdown_table_insert_columns" translatable="false">tmaid_markdown_table_insert_columns</string>
+
+    <string name="tmaid_zimwiki_h1" translatable="false">tmaid_zimwiki_h1</string>
+    <string name="tmaid_zimwiki_h2" translatable="false">tmaid_zimwiki_h2</string>
+    <string name="tmaid_zimwiki_h3" translatable="false">tmaid_zimwiki_h3</string>
+    <string name="tmaid_zimwiki_h4" translatable="false">tmaid_zimwiki_h4</string>
+    <string name="tmaid_zimwiki_h5" translatable="false">tmaid_zimwiki_h5</string>
+    <string name="tmaid_zimwiki_bold" translatable="false">tmaid_zimwiki_bold</string>
+    <string name="tmaid_zimwiki_italic" translatable="false">tmaid_zimwiki_italic</string>
+    <string name="tmaid_zimwiki_highlight" translatable="false">tmaid_zimwiki_highlight</string>
+    <string name="tmaid_zimwiki_strikeout" translatable="false">tmaid_zimwiki_strikeout</string>
+    <string name="tmaid_zimwiki_code_inline" translatable="false">tmaid_zimwiki_code_inline</string>
+    <string name="tmaid_zimwiki_insert_link" translatable="false">tmaid_zimwiki_insert_link</string>
+    <string name="tmaid_zimwiki_insert_image" translatable="false">tmaid_zimwiki_insert_image</string>
 
     <string name="tmaid_todotxt_toggle_done" translatable="false">tmaid_todotxt_toggle_done</string>
     <string name="tmaid_todotxt_add_context" translatable="false">tmaid_todotxt_add_context</string>
@@ -253,16 +276,17 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="pref_key__tab_width_v2" translatable="false">pref_key__tab_width_v2</string>
     <string name="pref_key__editor_enable_line_breaking" translatable="false">pref_key__editor_enable_line_breaking</string>
     <string name="pref_key__exts_to_always_open_in_this_app" translatable="false">pref_key__exts_to_always_open_in_this_app</string>
-    <string name="pref_key__is_debug_log_enabled" translatable="false">pref_key__is_debug_log_enabled</string>
     <string name="pref_key__view_font_size" translatable="false">pref_key__view_font_size</string>
     <string name="pref_key__view_mode_link_color" translatable="false">pref_key__view_mode_link_color</string>
     <string name="pref_key__todotxt__start_new_tasks_with_huuid_v3" translatable="false">pref_key__todotxt__start_new_tasks_with_huuid_v3</string>
     <string name="features" translatable="false">Features</string>
     <string name="file_template__md_markor_markdown_reference" translatable="false">markor-markdown-reference.md</string>
     <string name="file_template__md_jekyll_post" translatable="false">2029-01-01-jekyll-post.md</string>
+    <string name="file_template__md_zettelkasten" translatable="false">202901012359-zettelkasten.md</string>
     <string name="file_template__md_cooking_recipe" translatable="false">cooking-recipe.md</string>
     <string name="file_template__txt_todo_sample" translatable="false">todo.example.txt</string>
-    <string name="file_template__txt_zim_wiki" translatable="false">zim-wiki.txt</string>
+    <string name="file_template__zim_wiki_reference" translatable="false">zim-wiki-reference.txt</string>
+    <string name="file_template__zim_wiki_empty" translatable="false">zim-wiki-empty.txt</string>
     <string name="file_template__md_hugo_post_front_matter" translatable="false">hugo-post-front-matter.md</string>
     <string name="file_template__md_presentation_beamer" translatable="false">presentation-beamer.md</string>
     <string name="key_value" translatable="false">Key - Value</string>
@@ -275,13 +299,36 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="deindent" translatable="false">De-indent</string>
     <string name="assets" translatable="false">Assets</string>
     <string name="audio" translatable="false">Audio</string>
+    <string name="screenshot" translatable="false">Screenshot</string>
     <string name="continued_overline" translatable="false">Continued overline (‾‾‾‾)</string>
     <string name="shrug" translatable="false">Shrug (¯\_(ツ)_/¯)</string>
     <string name="accordion" translatable="false">Accordion</string>
     <string name="pref_key__default_encryption_password" translatable="false">pref_key__default_encryption_password</string>
+    <string name="pref_key__set_encryption_password" translatable="false">pref_key__set_encryption_password</string>
     <string name="empty_string" translatable="false"/>
-    <string name="pref_key__default_encryption_password_set_once" translatable="false">pref_key__default_encryption_password_set_once</string>
     <string name="pref_key__new_file_dialog_lastused_encryption" translatable="false">pref_key__new_file_dialog_lastused_encryption</string>
     <string name="pref_key__new_file_dialog_lastused_extension" translatable="false">pref_key__new_file_dialog_lastused_extension</string>
+    <string name="pref_key__new_file_dialog_lastused_type" translatable="false">pref_key__new_file_dialog_lastused_type</string>
+    <string name="pref_key__file_browser_last_browsed_folder" translatable="false">pref_key__file_browser_last_browsed_folder</string>
     <string name="select_current_line" translatable="false">Select current line(s)</string>
+    <string name="pref_key__file_description_format" translatable="false">pref_key__file_description_format</string>
+    <string name="pref_key__editor_zimwiki_bigger_headings" translatable="false">pref_key__editor_zimwiki_bigger_headings</string>
+    <string name="pref_key__zimwiki__reorder_actions" translatable="false">pref_key__zimwiki__reorder_actions</string>
+    <string name="pref_key__zimwiki__action_keys" translatable="false">pref_key__zimwiki__action_keys</string>
+    <string name="pref_key__max_search_depth" translatable="false">pref_key__max_search_depth</string>
+    <string name="pref_key__filesearch_ignorelist" translatable="false">pref_key__filesearch_ignorelist</string>
+    <string name="pref_key__is_search_query_case_sensitive" translatable="false">pref_key__is_search_query_case_sensitive</string>
+    <string name="pref_key__is_search_query_use_regex" translatable="false">pref_key__is_search_query_use_regex</string>
+    <string name="pref_key__is_search_in_content" translatable="false">pref_key__is_search_in_content</string>
+    <string name="pref_key__is_only_first_content_match" translatable="false">pref_key__is_only_first_content_match</string>
+    <string name="pref_key__restore_settings" translatable="false">pref_key__restore_settings</string>
+    <string name="pref_key__backup_settings" translatable="false">pref_key__backup_settings</string>
+    <string name="hidden_password" translatable="false">****</string>
+    <string name="pref_key__todotxt__additional_projects_contexts" translatable="false">"pref_key__todotxt__additional_projects_contexts"</string>
+    <string name="pref_key__todotxt__due_date_offset" translatable="false">pref_key__todotxt_due_date_offset</string>
+    <string name="action_format_keyvalue" translatable="false">action_format_keyvalue</string>
+    <string name="action_format_plaintext" translatable="false">action_format_plaintext</string>
+    <string name="action_format_markdown" translatable="false">action_format_markdown</string>
+    <string name="action_format_todotxt" translatable="false">action_format_todotxt</string>
+    <string name="action_format_zimwiki" translatable="false">action_format_zimwiki</string>
 </resources>

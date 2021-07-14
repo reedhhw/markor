@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">フォルダーを作成</string>
     <string name="create_new_document">新しいドキュメントを作成</string>
     <string name="move">移動</string>
+    <string name="copy">コピー</string>
     <string name="info">情報</string>
     <string name="file_folder_already_exists_please_use_a_different_name">ファイルまたはフォルダ名はすでに存在しています。別の名前を使用してください。</string>
     <string name="import_from_device">デバイスからインポート</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">フォルダーの選択</string>
     <string name="edit">編集</string>
     <string name="search_documents">ドキュメントを検索</string>
-    <string name="share_to_arrow">共有&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">共有&#8230;</string>
     <string name="share">共有</string>
     <string name="search">検索</string>
     <string name="display_converted_markup">変換されたマークアップを表示</string>
@@ -69,7 +70,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="insert_link">リンクを挿入</string>
     <string name="insert_image">画像を挿入</string>
     <string name="contributors">貢献者</string>
-    <string name="save_location">場所を保存</string>
+    <string name="save_location">保存場所</string>
     <string name="select_storage_folder">ストレージのフォルダーを選択</string>
     <string name="licenses">ライセンス</string>
     <string name="changelog">変更履歴</string>
@@ -81,7 +82,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="error_need_storage_permission_to_save_documents">ドキュメントを保存するにはストレージのアクセス許可が必要です</string>
     <string name="open_with">開く…</string>
     <string name="sort">並べ替え</string>
-    <string name="date">日付順に並べ替え</string>
+    <string name="date">日付</string>
     <string name="deleteme____1">名前順に並び替え</string>
     <string name="size">サイズ</string>
     <string name="reverse_order">逆順</string>
@@ -91,7 +92,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="press_back_again_to_exit">もう一度戻るを押すと終了します</string>
     <string name="exit">終了</string>
     <string name="undo">元に戻す</string>
-    <string name="redo">繰り返し</string>
+    <string name="redo">やり直し</string>
     <string name="more">さらに</string>
     <string name="notebook">ノート</string>
     <string name="help">ヘルプ</string>
@@ -112,7 +113,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="archive">アーカイブ</string>
     <string name="add_task">タスクを追加</string>
     <string name="add_x_witharg">%s を追加</string>
-    <string name="document_to_be_loaded_and_saved_as_witharg">ドキュメントをクイックノートとして読み込みおよび保存します \"%s\"</string>
+    <string name="document_to_be_loaded_and_saved_as_witharg">ドキュメントを読み込んで、\"%s\"として保存します。</string>
     <string name="refresh">更新</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="tried_to_create_shortcut_for_this_notice">編集中のこのドキュメントに対して、ホーム画面にショートカットを追加します。 一部のランチャーはこの機能をサポートしていません。</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">ファイルとフォルダー</string>
     <string name="document_browser">ドキュメントブラウザー</string>
     <string name="file_browser">ファイルブラウザー</string>
+    <string name="set_due_date">期日を設定</string>
+    <string name="insert_replace_date">日付を挿入</string>
     <string name="create_note" needed="false">ノートを作成</string>
     <string name="special_documents" needed="false">特別なドキュメント</string>
     <string name="keep_screen_on" needed="false">画面をオンのままにする</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">2 つ以上のスペースを含む行の末尾にスペースを強調表示します</string>
     <string name="use_monospace_for_code">コードは等幅フォントを使用</string>
     <string name="disable_code_block_highlight">コードブロックのハイライト表示を無効にする</string>
+    <string name="auto_renumber_ordered_list">自動番号付けリスト</string>
+    <string name="auto_renumber_ordered_list_slowdown">このオプションはアプリのパフォーマンスに影響を与える可能性があります。</string>
     <string name="use_different_fonttype_slow_down">異なるフォントの種類を使用します。動的に変更するとアプリのパフォーマンスに影響します。</string>
     <string name="general">一般</string>
     <string name="resources">リソース</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">ページ下移動 (Page Down)</string>
     <string name="move_text_one_line_up">テキストを１行上に移動</string>
     <string name="move_text_one_line_down">テキストを１行下に移動</string>
+    <string name="start_new_line_below">以下の新しい行を開始します</string>
     <string name="key_pos_1">行の先頭 (Pos Home)</string>
     <string name="key_pos_end">行の末尾 (Pos End)</string>
     <string name="key_pos_1_document">ドキュメントの始め</string>
@@ -215,8 +221,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">このアプリを他の言語に翻訳してください</string>
     <string name="source_code">ソースコード</string>
     <string name="project_license">プロジェクトライセンス</string>
-    <string name="project_contribution_info">プロジェクト貢献情報</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">このプロジェクトに貢献する方法についての詳細情報</string>
     <string name="contribute_code_to_this_project_anybody_welcome">プロジェクトにコードを貢献してください。新規参画者を含めて誰でも歓迎します</string>
     <string name="project_team">プロジェクトチーム</string>
     <string name="contributors_public_add_yourself_description">貢献者の情報を表示します。貢献後にオプトインした方法でここに表示されます</string>
@@ -239,12 +243,12 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="enable_undo_and_redo_be_patient">操作の、元に戻す、繰り返しを有効にします。高度な使用にのみ適しています。重要なものを削除しないように気をつけてください。履歴を消去するにはエディターを閉じてから開いてください。</string>
     <string name="description">説明</string>
     <string name="edit_picture">画像を編集</string>
-    <string name="math">計算</string>
+    <string name="math">数式</string>
     <string name="table_of_contents">目次</string>
     <string name="miscellaneous">その他</string>
     <string name="textaction">テキスト操作</string>
     <string name="textactions">テキスト操作</string>
-    <string name="prefer_view">お好みビュー</string>
+    <string name="prefer_view">表示を優先</string>
     <string name="no_calendar_app_is_installed">カレンダーアプリがインストールされていません!</string>
     <string name="popular_documents">人気のあるドキュメント</string>
     <string name="color">色</string>
@@ -278,7 +282,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="app_start_tab">アプリ開始タブ</string>
     <string name="tab_to_select_at_start">アプリを起動する時に選択するタブ</string>
     <string name="swipe_to_change_mode">スワイプしてモードを変更</string>
-    <string name="swipe_to_change_to_edit_or_view_mode">スワイプして編集と表示モードを変更します (現在のモードを反対に)</string>
+    <string name="swipe_to_change_to_edit_or_view_mode">スワイプして編集モードまたは表示モード (現在のモードの反対) に変更します</string>
     <string name="folder_first">フォルダを上に表示</string>
     <string name="go_to">移動</string>
     <string name="appdata_public">AppData (公開)</string>
@@ -309,12 +313,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reload">再読み込み</string>
     <string name="wrap_words">単語の折り返し</string>
     <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">テキストが画面幅に合わない場合に折り返します。 それ以外は、水平スクロールを有効にします。</string>
-    <string name="recursive_search_in_current_directory">現在のディレクトリでの再帰検索。 クエリにアスタリスク (*) が含まれる場合は正規表現検索が使用されます。それ以外の場合、クエリが含まれるかどうかを確認してください。</string>
+    <string name="recursive_search_in_current_directory">現在のディレクトリの再帰的な検索。</string>
     <string name="always_open_with_this_app">いつもこのアプリで開く</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">リストにファイル拡張子が含まれている場合は、常にこのアプリでファイルを開きます。 たとえば、Webファイルやファイル拡張子のないファイルを編集したい場合は、 \'なし, .html, .css , .js\' を使用してください。</string>
     <string name="template">テンプレート</string>
     <string name="send_debug_log">デバッグログを送信</string>
-    <string name="help_by_sending_debug_information_to_the_developer">開発者にデバッグ情報を送信して支援してください。 データはメールアプリを使用してメールで送信され、送信前にすべての送信データを確認できます。 有効にすると、トップメニューに \"デバッグログを送信\" オプションが追加されます。 メールの下書きを作成します。</string>
     <string name="print_pdf">印刷 / PDF</string>
     <string name="bigger_headings">見出しを大きくする</string>
     <string name="increase_text_size_of_headings_according_to_level">レベルに応じて見出しのテキストサイズを大きくします (# h1, ## h2. ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">読み込み中</string>
     <string name="read">読み込み</string>
     <string name="table">表</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">列はいくつですか? 表ボタンを長押しすると、表を開始し (ヘッダーを挿入)、短く押すと行を追加します。</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">何列ですか? テーブルボタンを長押ししてテーブルを開始(ヘッダーを挿入)、短く押して行を追加します。</string>
     <string name="example_of_a_markdown_table">マークダウン表の例</string>
     <string name="delete_lines">行を削除</string>
     <string name="unordered_list">箇条書き</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">見出し 1</string>
     <string name="heading_2">見出し 2</string>
     <string name="heading_3">見出し 3</string>
+    <string name="heading_4">見出し 4</string>
+    <string name="heading_5">見出し 5</string>
     <string name="bold">太字</string>
     <string name="italic">斜体</string>
+    <string name="highlighted">強調表示</string>
     <string name="strikeout">取り消し線</string>
     <string name="inline_code">インラインコード</string>
     <string name="horizontal_line">水平線</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">必須</string>
     <string name="append_human_readable_uuid_to_new_tasks">人間が読めるUUIDを新しいタスクに追加</string>
     <string name="action_order">操作の順序</string>
+    <string name="toggle_action_visibility">アクションの表示を切り替える</string>
     <string name="load_default_settings">デフォルトの設定を読み込む</string>
     <string name="drag">ドラッグ</string>
+    <string name="created">作成済み</string>
     <string name="file_encryption_password">ファイルの暗号化パスワード</string>
     <string name="no_password_set_cannot_encrypt_decrypt">パスワードが設定されていません。暗号化、復号化できません。\n設定 -&gt; 全般 -&gt; パスワードに移動して、パスワードを設定してください。</string>
     <string name="encrypt_file_content">ファイルの内容を暗号化する</string>
@@ -371,4 +379,41 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">ファイルの内容を復号化できません。パスワードが間違っていませんか? ファイルがMarkorのAES暗号で暗号化されていますか?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">パスワードがすでに設定されています。新しいパスワードを設定すると、既存のパスワードを上書きします。パスワードを忘れた場合はファイルにアクセスできなくなる可能性があります。</string>
     <string name="code_block">コードブロック</string>
+    <string name="add_completion_date">完了日を追加</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">完了時にタスクの完了日を追加する</string>
+    <string name="file_description_format">ファイル説明の形式</string>
+    <string name="file_description_format_dialog">ファイルブラウザの各ファイルの下の説明のためのフォーマット。ファイルサイズを表示するためのFSの追加で、AndroidのSimpleDateFormatルールに従います。 ロケールにデフォルトの形式を使用するには、空白のままにしてください。\n\n入力例:\nFS yyyyMMM dd hhh:mm:ss aa\n出力形式:\n30KB 2020 Mar 20 11:24:52 PM</string>
+    <string name="loading_default_value">既定値を読み込み中</string>
+    <string name="file_settings">ファイル設定</string>
+    <string name="search_and_replace">検索/置換</string>
+    <string name="search_for">検索テキスト</string>
+    <string name="replace_with">置換テキスト</string>
+    <string name="replace_once">置換 (1)</string>
+    <string name="replace_all">すべて置換</string>
+    <string name="matches">一致</string>
+    <string name="search_replace_pattern_error_message">検索または置換パターンエラー。</string>
+    <string name="backup_settings">設定をバックアップ</string>
+    <string name="restore_settings">設定を復元</string>
+    <string name="failed_to_create_backup">バックアップの作成に失敗しました</string>
+    <string name="export_settings_to_json_file">json ファイルに設定をエクスポート</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">バックアップ json ファイルから設定をインポートします。アプリを再起動します。</string>
+    <string name="failed_to_restore_settings_from_backup">バックアップから設定を復元できませんでした</string>
+    <string name="newline_is_new_paragraph">format@@0 = 新しい段落</string>
+    <string name="search_in_content">内容を検索</string>
+    <string name="max_search_depth">検索の深さ</string>
+    <string name="ignore_list">無視リスト</string>
+    <string name="regex_search">正規表現検索</string>
+    <string name="case_sensitive">大文字と小文字を区別する</string>
+    <string name="stop_search_after_first_match">最初の一致後に検索を停止</string>
+    <string name="regex_can_not_be_compiled">正規表現をコンパイルできません</string>
+    <string name="keep_both">両方を保持</string>
+    <string name="skip">スキップ</string>
+    <string name="overwrite">上書き</string>
+    <string name="keep_both_all">両方を保持 (すべて)</string>
+    <string name="skip_all">スキップ (all)</string>
+    <string name="overwrite_all">上書き (すべて)</string>
+    <string name="copy_move_conflict_message">\'%s\' はすでに %s に存在します</string>
+    <string name="additional_contexts_and_projects">追加のコンテキストとプロジェクト</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">スペースで区切られた @contexts と +projects を入力してください。これらは常に todo.txt のダイアログで表示されます。</string>
+    <string name="infinite">Infinite</string>
 </resources>

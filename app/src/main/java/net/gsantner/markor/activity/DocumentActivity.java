@@ -11,10 +11,12 @@ package net.gsantner.markor.activity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,6 +41,7 @@ import net.gsantner.markor.util.PermissionChecker;
 import net.gsantner.opoc.activity.GsFragmentBase;
 import net.gsantner.opoc.util.Callback;
 import net.gsantner.opoc.util.ShareUtil;
+import net.gsantner.opoc.util.StringUtils;
 
 import java.io.File;
 
@@ -48,7 +51,6 @@ import other.so.AndroidBug5497Workaround;
 
 public class DocumentActivity extends AppActivityBase {
     public static final String EXTRA_DO_PREVIEW = "EXTRA_DO_PREVIEW";
-    public static final String EXTRA_LAUNCHER_SHORTCUT_PATH = "real_file_path_2";
 
     @BindView(R.id.document__placeholder_fragment)
     FrameLayout _fragPlaceholder;
@@ -65,12 +67,16 @@ public class DocumentActivity extends AppActivityBase {
 
     private static boolean nextLaunchTransparentBg = false;
 
-    public static void launch(Activity activity, File path, Boolean isFolder, Boolean doPreview, Intent intent) {
+
+    public static void launch(Activity activity, File path, Boolean isFolder, Boolean doPreview, Intent intent, final Integer lineNumber) {
         if (intent == null) {
             intent = new Intent(activity, DocumentActivity.class);
         }
         if (path != null) {
             intent.putExtra(DocumentIO.EXTRA_PATH, path);
+        }
+        if (lineNumber != null && lineNumber >= 0) {
+            intent.putExtra(DocumentIO.EXTRA_FILE_LINE_NUMBER, lineNumber);
         }
         if (isFolder != null) {
             intent.putExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, isFolder);
@@ -78,8 +84,10 @@ public class DocumentActivity extends AppActivityBase {
         if (doPreview != null) {
             intent.putExtra(DocumentActivity.EXTRA_DO_PREVIEW, doPreview);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && new AppSettings(activity.getApplicationContext()).isMultiWindowEnabled()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && new AppSettings(activity).isMultiWindowEnabled()) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
         nextLaunchTransparentBg = (activity instanceof MainActivity);
         activity.startActivity(intent);
@@ -91,7 +99,7 @@ public class DocumentActivity extends AppActivityBase {
             return new Object[]{true, ""};
         }
         String ext = fn.substring(fn.lastIndexOf("."));
-        for (String ce : new String[]{".py", ".cpp", ".h", ".js", ".html", ".css", ".java", ".qml", ".go", ".sh", ".rb", ".tex", ".json", ".xml", ".ini", ".yaml", ".yml", ".csv"}) {
+        for (String ce : new String[]{".py", ".cpp", ".h", ".js", ".html", ".css", ".java", ".qml", ".go", ".sh", ".rb", ".tex", ".json", ".xml", ".ini", ".yaml", ".yml", ".csv", ".xlf"}) {
             if (ext.equals(ce)) {
                 return new Object[]{true, ext};
             }
@@ -107,7 +115,7 @@ public class DocumentActivity extends AppActivityBase {
 
         Callback.a1<Boolean> openFile = (openInThisApp) -> {
             if (openInThisApp) {
-                DocumentActivity.launch(activity, file, false, null, null);
+                DocumentActivity.launch(activity, file, false, null, null, null);
             } else {
                 new net.gsantner.markor.util.ShareUtil(activity).viewFileInOtherApp(file, null);
             }
@@ -153,10 +161,6 @@ public class DocumentActivity extends AppActivityBase {
             AndroidBug5497Workaround.assistActivity(this);
         }
 
-        Intent receivingIntent = getIntent();
-        String intentAction = receivingIntent.getAction();
-        File file = (File) receivingIntent.getSerializableExtra(DocumentIO.EXTRA_PATH);
-
         setSupportActionBar(_toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -167,33 +171,66 @@ public class DocumentActivity extends AppActivityBase {
 
         _fragManager = getSupportFragmentManager();
 
+        handleLaunchingIntent(getIntent());
+    }
 
-        boolean fileIsFolder = receivingIntent.getBooleanExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, false);
-        if ((Intent.ACTION_VIEW.equals(intentAction) || Intent.ACTION_EDIT.equals(intentAction)) || Intent.ACTION_SEND.equals(intentAction)) {
-            if (Intent.ACTION_SEND.equals(intentAction) && receivingIntent.hasExtra(Intent.EXTRA_TEXT)) {
-                showShareInto(receivingIntent);
-            } else {
-                file = new ShareUtil(getApplicationContext()).extractFileFromIntent(receivingIntent);
-                if (file == null && receivingIntent.getData() != null && receivingIntent.getData().toString().startsWith("content://")) {
-                    String msg = getString(R.string.filemanager_doesnot_supply_required_data__appspecific) + "\n\n"
-                            + getString(R.string.sync_to_local_folder_notice) + "\n\n"
-                            + getString(R.string.sync_to_local_folder_notice_paths, getString(R.string.configure_in_the_apps_settings));
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleLaunchingIntent(intent);
+    }
 
-                    new AlertDialog.Builder(this)
-                            .setMessage(Html.fromHtml(msg.replace("\n", "<br/>")))
-                            .setNegativeButton(R.string.more_info, (dialogInterface, i) -> _contextUtils.openWebpageInExternalBrowser("https://github.com/gsantner/markor/issues/197"))
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setOnDismissListener((dialogInterface) -> finish())
-                            .create().show();
-                }
+    private void handleLaunchingIntent(Intent intent) {
+        if (intent == null) return;
+
+        String intentAction = intent.getAction();
+        Uri intentData = intent.getData();
+
+        File file = (File) intent.getSerializableExtra(DocumentIO.EXTRA_PATH);
+        boolean fileIsFolder = intent.getBooleanExtra(DocumentIO.EXTRA_PATH_IS_FOLDER, false);
+
+        boolean intentIsView = Intent.ACTION_VIEW.equals(intentAction);
+        boolean intentIsSend = Intent.ACTION_SEND.equals(intentAction);
+        boolean intentIsEdit = Intent.ACTION_EDIT.equals(intentAction);
+
+        if (intentIsSend && intent.hasExtra(Intent.EXTRA_TEXT)) {
+            showShareInto(intent);
+        } else if (file == null && (intentIsView || intentIsEdit)) {
+            // No EXTRA_PATH and view of open intent
+            file = new ShareUtil(getApplicationContext()).extractFileFromIntent(intent);
+            if (file == null && intentData != null && intentData.toString().startsWith("content://")) {
+                showNotSupportedMessage();
             }
         }
 
-        if (file != null) {
-            boolean preview = receivingIntent.getBooleanExtra(EXTRA_DO_PREVIEW, false) || _appSettings.isPreviewFirst() && file.exists() && file.isFile() || file.getName().startsWith("index.");
-            showTextEditor(null, file, fileIsFolder, preview);
+        if (!intentIsSend && file != null) {
+            final int paramLineNumber = intent.getIntExtra(DocumentIO.EXTRA_FILE_LINE_NUMBER, (intentData != null ? StringUtils.tryParseInt(intentData.getQueryParameter("line"), -1) : -1));
+            final boolean paramPreview = (paramLineNumber < 0) && (intent.getBooleanExtra(EXTRA_DO_PREVIEW, false)
+                    || (file.exists() && file.isFile() && _appSettings.getDocumentPreviewState(file.getPath()))
+                    || file.getName().startsWith("index."));
+            showTextEditor(null, file, fileIsFolder, paramPreview, paramLineNumber);
         }
+    }
 
+    private void showNotSupportedMessage() {
+
+        final String notSupportedMessage = (
+                getString(R.string.filemanager_doesnot_supply_required_data__appspecific) + "\n\n"
+                        + getString(R.string.sync_to_local_folder_notice) + "\n\n"
+                        + getString(R.string.sync_to_local_folder_notice_paths,
+                        getString(R.string.configure_in_the_apps_settings))
+        ).replace("\n", "<br/>");
+
+        DialogInterface.OnClickListener listener = (dialogInterface, i) -> {
+            _contextUtils.openWebpageInExternalBrowser(getString(R.string.sync_client_support_issue_url));
+        };
+
+        new AlertDialog.Builder(this)
+                .setMessage(Html.fromHtml(notSupportedMessage))
+                .setNegativeButton(R.string.more_info, listener)
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener((dialogInterface) -> finish())
+                .create().show();
     }
 
     private final RectF point = new RectF(0, 0, 0, 0);
@@ -202,7 +239,7 @@ public class DocumentActivity extends AppActivityBase {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (_appSettings.isSwipeToChangeMode() && getCurrentVisibleFragment() instanceof DocumentEditFragment) {
+        if (_appSettings.isSwipeToChangeMode() && _appSettings.isEditorLineBreakingEnabled() && getCurrentVisibleFragment() instanceof DocumentEditFragment) {
             try {
                 Rect activityVisibleSize = new Rect();
                 getWindow().getDecorView().getWindowVisibleDisplayFrame(activityVisibleSize);
@@ -239,19 +276,24 @@ public class DocumentActivity extends AppActivityBase {
         }
     }
 
+    public void showTextEditor(@Nullable Document document, @Nullable File file, boolean fileIsFolder, boolean preview, final Integer lineNumber) {
+        GsFragmentBase currentFragment = getCurrentVisibleFragment();
+        File reqFile = (document != null) ? document.getFile() : file;
+        final int fileLineNumber = lineNumber != null && lineNumber >= 0 ? lineNumber : -1;
 
-    public GsFragmentBase showTextEditor(@Nullable Document document, @Nullable File file, boolean fileIsFolder) {
-        return showTextEditor(document, file, fileIsFolder, false);
-    }
-
-    public GsFragmentBase showTextEditor(@Nullable Document document, @Nullable File file, boolean fileIsFolder, boolean preview) {
-        GsFragmentBase frag;
-        if (document != null) {
-            frag = showFragment(DocumentEditFragment.newInstance(document).setPreviewFlag(preview));
-        } else {
-            frag = showFragment(DocumentEditFragment.newInstance(file, fileIsFolder, true).setPreviewFlag(preview));
+        boolean sameDocumentRequested = false;
+        if (currentFragment instanceof DocumentEditFragment) {
+            String reqPath = (reqFile != null) ? reqFile.getPath() : "";
+            sameDocumentRequested = reqPath.equals(((DocumentEditFragment) currentFragment).getPath());
         }
-        return frag;
+
+        if (!sameDocumentRequested) {
+            if (document != null) {
+                showFragment(DocumentEditFragment.newInstance(document).setPreviewFlag(preview));
+            } else {
+                showFragment(DocumentEditFragment.newInstance(file, fileIsFolder, fileLineNumber).setPreviewFlag(preview));
+            }
+        }
     }
 
     public void showShareInto(Intent intent) {
@@ -304,20 +346,17 @@ public class DocumentActivity extends AppActivityBase {
     }
 
     public GsFragmentBase showFragment(GsFragmentBase fragment) {
-        GsFragmentBase currentTop = (GsFragmentBase) _fragManager.findFragmentById(R.id.document__placeholder_fragment);
 
-        if (currentTop == null || !currentTop.getFragmentTag().equals(fragment.getFragmentTag())) {
+        if (fragment != getCurrentVisibleFragment()) {
+
             _fragManager.beginTransaction()
-                    //.addToBackStack(null)
                     .replace(R.id.document__placeholder_fragment, fragment, fragment.getFragmentTag())
                     .commit();
-        } else {
-            fragment = currentTop;
+
+            supportInvalidateOptionsMenu();
         }
-        supportInvalidateOptionsMenu();
         return fragment;
     }
-
 
     public synchronized GsFragmentBase getExistingFragment(final String fragmentTag) {
         FragmentManager fmgr = getSupportFragmentManager();

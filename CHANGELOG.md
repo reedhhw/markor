@@ -1,18 +1,128 @@
-### v2.3 (in progress)
-- Add action to Move current selected line(s)/cursor text up/down by 1
+### Recent changes
+
+### v2.7 [Blog Post](https://gsantner.net/blog/2021/06/26/markor-v2.7-search-in-content-backup-restore.html?source=changelog)
+- Recursive file search with in-content search, #1337 by @adelobosko @harshad1 @gsantner
+- Backup and restore settings, Format selection with radio buttons, #1244 by @harshad1 @gsantner
+- Per-file font size, #1332 by @harshad1
+- Markdown: Support superscript^2^ syntax, #1268 by @gsantner
+- View mode: Image/PDF export whole page, add seperate screenshot option, by @gsantner
+- todo.txt: Fix trailing space resulting in contexts/projects/due-dates to be entered twice, #1282 by @harshad1
+- Markdown: Enable GitLab extension, display video links as html5-video, #1280 by @gsantner
+- Markdown: Enable typographic transformation, #1277 by @gsantner
+- todo.txt: Fix tags dialog not shows up onLongClick, #1292 by @gsantner
+- Editor: Allow top-menu back button also when the file is empty, #1290 by @harshad1
+- ShareInto: Improve automatic link reformatting, #1275 by @harshad1
+- Search dialogs: Hide search input field when if there is no data, #1298 by @harshad1
+- Decrease scrollbar width for better usability, #1306 by @harshad1
+- todo.txt: Settings option for always-visible @contexts & +projects, #1305 by @harshad1 @gsantner
+- TextActions: Improve cursor placement at Regex replace, #1310 by @harshad1
+- File manager: Move/Copy file improvements, add Yes/No/All overwrite options, #1281 by @harshad1
+- Fix App might crash on toolbar-click for TOC, #1336 by @adelobosko
+- Fix Android 4.4 crash on file move/copy, #1333 by @harshad1
+- Fix Android 4.4 crash when opening .txt file due to ZimWiki format detection, #1341 by @fredericjacob
+- Markdown: Don't match extra spaces at ordered-list regex, #1367 by @harshad1
+- File Manager: Fix MB being displayed as GB at description (SI 1000 unit), #1352 by @gsantner
+- File Manager: Duplicate file / allow copy into same folder, #1345 by @harshad1- Filemanager formatter: fix MB being displayed as GB (SI 1000 unit), #1352 by @gsantner
+
+### v2.6 [Blog Post](https://gsantner.net/blog/2021/02/28/markor-v2.6-per-file-settings-zim-wiki-markdown-newline-paragraph.html?source=changelog)
+- Markdown: Add settings option for newlines to start new paragraphs, #1260 by @gsantner
+- Editor/Viewer: Remember last used file format, show current selected format, #1226 by @harshad1
+- Editor/Viewer: Back arrow (top menu) finish activity, #1165 by @gsantner
+- Editor: Per-file option to enable/disable syntax highlighting, #1168 by @harshad1
+- Share-Into: Add launcher, #1184 by @gsantner
+- Markdown: Apply Markor Table of Content config for custom `[TOC]: #` too, #1189 by @gsantner
+- Editor: Improve writing to sdcard, #1192 by @gsantner
+- Zim: Support file generation on `Android<7/Java=6`, #1194 by @gsantner
+- Zim: Editor: Support Table of contents (top menu), #1186 by @fredericjacob
+- Markdown: Math/KaTex: Improve \\ line breaks usage, #1196 by @radanovicnik
+- ShareInto: Add space after formatted link - messengers then show correct link preview, by @gsantner
+- Markdown: Add break page example to Markdown reference, by @gsantner
+- Editor: Prevent Android accessibility & autofill to produce errors, #1204 by @harshad1
+- Main page: Reduce friction when app was running in background for a while, #1210 by @harshad1
+- Search: Add input field to filter search results, #1222 by @harshad1
+- Markdown: Don't start new list item when reaching file end and toggling, #1213 by @harshad1
+- Zim: Simplify Zim format detection, #1227 by @gsantner
+- Zim: Add more text actions (links, images, checkbox, ..), #1195 by @fredericjacob
+- All formats: Date/Time dialog don't add entry twice to history, #1229 by @harshad1
+- Editor/Viewer: Increase scrollbar width, #1241 by @harshad1
+- File browser: File move start from current folder, #1234 by @harshad1
+- Editor/Viwer: Add file info option (document top menu), #1233 by @harshad1
+- Viewer: Privacy: Opt-out of Android WebView's internal metrics, #1181 by @gsantner
+- Markdown: Support Notable's special home brewed syntax for attachments, #1252 by @gsantner
+- Dependencies: Add source code of colorpicker and build subproject, by @gsantner
+- Optimize image assets, by @gsantner
+- DevOps: Improvements to GitHub Actions CI/CD configuration, by @gsantner
+- Improve encryption wording & usage, #1171 #1179 by @opensource21
+
+
+### v2.5 [Blog Post](https://gsantner.net/blog/2020/12/20/markor-v2.5-zimwiki-searchreplace-githubactions-zettelkasten.html?source=changelog)
+- Add Zim Wiki format and template #1098
+- Add search & replace (simple|regex, replace once|all) #1112
+- Add settings for current file to toolbar #1129
+- Fix file sometimes not opens from launcher shortcut #1139
+- Use GitHub Actions for CI/CD #1151
+- Add template for Zettelkasten #1156
+- Add Nord editor color scheme #1134
+- Allow to select folder when create new file via share into Markor #1138
+- Improve license dialog readability #1119
+- General improvements, fixes and translations
+
+### v2.4 [Blog Post](https://gsantner.net/blog/2020/10/30/markor-v2.4-todotxt-source-code-syntax-highlighting.html?source=changelog)
+- Markdown: Correctly insert or remove list item on press enter at empty list item
+- Remove title from todo.txt date dialog, better usable on small devices
+- Fix search sometimes not working when chaging from view to edit mode
+- Rework Indent & Move lines Actions
+- Add settings option to control todo.txt completition date auto insert
+- All new todo.txt support in Markor
+- Add many languages to view-mode code highlighting
+- Add xlf format (plaintext)
+- Remove colored highlighting from changelog dialog
+- Add search to Markdown edit-mode outline/TOC dialog
+- New file dialog remember type selection
+- Better preserve current open folder across device rotation & reboot
+- todo.txt: Long press sort to sort by most recent used method
+- Markdown: Improve bold/italic syntax highlighting with punctuations
+- todo.txt: Create done file again when not exists
+- Add Actions: Move line up & down, start new line
+- Insert Date/Time text action: List of recent time formats
+- Control visibility of text actions
+- Edit-Mode Search: Open selected position instead of first match
+- File browser: Add settings option to customize file description format
+- todo.txt: Syntax highlighting in edit-mode search dialog
+- Save last used folder to settings, use info for titlebar
+- New File Dialog: Remember type selection
+
+### v2.3 [Blog Post](https://gsantner.net/blog/2020/07/25/markor-v2.3-outline-action-custom-order-todotxt-markdown-plaintext.html?source=changelog)
+- Add action to Move current selected line(s)/cursor text up/down
 - Add settings option for View-Mode link color
-- Improve table of contents - add border around, disable underline
-- Update Markdown parser
+- Improve table of contents - add border, disable underline
 - Long press toolbar to jump to top/bottom (edit & view mode)
 - Add search to View Mode
 - Accessibility improvements & Talkback support
-- Allow http on Android>=9
+- Allow http protocol on Android>=9
 - Telegram file edit support
-- Add accordion dropdown markdown button
-- Yellow icon for favourite files
 - Markdown: Normal sized headers by default, increases performance
 - Disable highlighting on big files to improve edit performance
 - Don't sort non-document files in third group
+- Add Accordion (Click to expand) example and add action button
+- Tooltips for action buttons
+- For index.html files, show foldername at favourites/recents
+- todo.txt: Set completition date also when there is no creation date
+- Markdown: Configurable unordered list character
+- Custom order of action buttons
+- Markdown: Add alternative more performant heading highlighting
+- Fix foldername in Main toolbar not reloaded
+- Plaintext: Add extensions for AsciiDoc (.adoc), OrgMode (.org), Ledger (.dg .ledger), Diff (.diff .patch)
+- Remember last used file extension for new file creation
+- todo.txt: Preselect last used archive file by default for archiving
+- Markdown: Long press code to insert code block
+- todo.txt: Improved task sort functionalities
+- Add action button to expand selection of cursror to whole line
+- Markdown: Add Table of contents / Outline for Edit mode (Press toolbar)
+- Vertical Scrollbar now draggable at view & edit mode
+- todo.txt: Date&Time selection dialogs
+- Markdown: Auto update ordered list numbers
+
 
 ### v2.2 [Blog Post](https://gsantner.net/blog/2019/10/27/markor-v2.2-markdown-presentations-voicenotes-audiorecord-tables.html?source=changelog)
 - Added Presentations & Slides with Markdown

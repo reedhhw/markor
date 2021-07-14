@@ -35,7 +35,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">கோப்புறையைத் தேர்வு செய்</string>
     <string name="edit">திருத்து</string>
     <string name="search_documents">கோப்புகளை தேடு</string>
-    <string name="share_to_arrow">&#8230; ல் பகிரவும்</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">&#8230; ல் பகிரவும்</string>
     <string name="share">பகிர்</string>
     <string name="search">தேடு</string>
     <string name="display_converted_markup">Markup க்கு திரை மாற்றப்பட்டுள்ளது</string>
@@ -121,6 +121,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">கோப்பு மற்றும் கோப்புறைகள்</string>
     <string name="document_browser">ஆவணங்களின் உலாவி</string>
     <string name="file_browser">கோப்பு உலாவி</string>
+    <string name="set_due_date">முடிவு தேதி</string>
+    <string name="insert_replace_date">தேதியை சொருகு</string>
     <string name="create_note" needed="false">குறிப்பை உருவாக்கு</string>
     <string name="special_documents" needed="false">சிறப்பு கோப்புகள்</string>
     <string name="keep_screen_on" needed="false">திரையை இயக்கத்தில் வைத்திரு</string>
@@ -174,6 +176,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">பக்கம் கீழ் (கீழ்நோக்கி நகர்த்து)</string>
     <string name="move_text_one_line_up">உரையை ஒரு வரி மேல் நோக்கி நகர்த்து</string>
     <string name="move_text_one_line_down">உரையை ஒரு வரி கீழ் நோக்கி நகர்த்து</string>
+    <string name="start_new_line_below">கீழே புதிய வரியை தொடங்கவும்</string>
     <string name="key_pos_1">வரி தொடக்கம் (துவக்க இடம்)</string>
     <string name="key_pos_end">வரி முடிவு (முடியும் இடம்)</string>
     <string name="key_pos_1_document">ஆவணத்தின் ஆரம்பம்</string>
@@ -188,6 +191,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="unordered_list_char_asterisk">நட்சத்திர குறி (*)</string>
     <string name="unordered_list_char_plus">கூட்டல் குறி (+)</string>
     <string name="filemanager_doesnot_supply_required_data__appspecific">Markor ஆல் உங்கள் சாதனத்தில் இருக்கும், இணையத்தொடர்பு தேவைப்படாத ஆவணங்களை மட்டுமே திருத்த முடியும் மற்றும் முழு கோப்பு பாதை வழங்காத கோப்பு மேலாளர் செயலிக்கு ஆதரவளிக்காது.</string>
+    <string name="sync_to_local_folder_notice">குறிப்பு: ஒத்திசைவு செயலிகள் ஆவணங்களை தனிப்பயன் கோப்புறைகளில் வைக்கலாம். Markor ன் ஆவண கோப்புறையை மாற்றுதல் அல்லது மற்றய கோப்பு நிர்வாகி மூலம் அவைகளை திறக்கலாம்.</string>
     <string name="configure_in_the_apps_settings">செயலியின் அமைப்புகளுடன் கட்டமைக்கவும்</string>
     <string name="vertical_alignment">செங்குத்து சீரமைப்பு</string>
     <string name="horizontal_alignment">கிடைமட்ட சீரமைப்பு</string>
@@ -214,14 +218,13 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">மற்ற மொழிகளில் இந்த செயலியை மொழிபெயர்க்கவும்</string>
     <string name="source_code">மூல நிரல்</string>
     <string name="project_license">இந்த திட்டத்தின் உரிமம்</string>
-    <string name="project_contribution_info">திட்டத்திற்கு பங்களிப்பது தொடர்பான தகவல்</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">இந்த திட்டத்திற்கு எப்படி பங்களிப்பது குறித்து மேலும் தகவல்களுக்கு</string>
     <string name="contribute_code_to_this_project_anybody_welcome">இந்த திட்டத்திற்கு நிரல் எழுதும் பணிக்கு பங்களியுங்கள். அனைவரும் இதற்காக வரவேற்கப்படுகின்றனர், புதுமுகங்கள் உட்பட</string>
     <string name="project_team">திட்டக்குழு</string>
     <string name="contributors_public_add_yourself_description">பங்களிப்பாளரின் விவரத்தை காண்பிக்கவும். தன்னுடைய பங்களிப்பை வழங்கிய பிறகு அந்த நபரின் விருப்பத்தின் படியே இங்கே அவரின் விவரங்கள் காண்பிக்கப்படவேண்டும்</string>
     <string name="descending">இறங்கு வரிசை</string>
     <string name="ascending">ஏறுவரிசை</string>
     <string name="disable_spelling_underline">எழுத்து பிழைகளை அடிகோடிடுவதை முடக்கவும்</string>
+    <string name="spellcheck_keyboard_suggestion_stay_red_underline_vanishes">விசைப்பலகை பரிந்துரைகள் இருக்கும், சிவப்பு அடிக்கோடு மறைந்துவிடும்</string>
     <string name="location">இடம்</string>
     <string name="text_lines">உரை வரிகள்</string>
     <string name="text_characters">உரை எழுத்துக்கள்</string>
@@ -283,6 +286,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="appdata_private">செயலித்தரவு (தனிப்பட்டவை)</string>
     <string name="appdata_sdcard">செயலித்தரவு (நினைவக அட்டை)</string>
     <string name="internal_storage">அகச் சேமிப்பகம்</string>
+    <string name="open_the_document_from_main_view">கீழேயுள்ள பிரதான பார்வை, கோப்பு உலாவி அல்லது துவக்கியிலிருந்து ஆவணத்தைத் திறக்கலாம். பகிரப்பட்ட உரையை சேர்ப்பதற்கும் Markor ல் ஒரு விருப்ப தேர்வு உள்ளது.</string>
     <string name="notebook_is_the_home_of_your_files">குறிப்புப்புத்தகம் என்பது ஒரு கோப்புறையாகும் Markor ஆவண உலாவியில் இருந்து செயலி தொடங்கும்போது இதை ஏற்றுகிறது. இதுவே உங்கள் ஆவணங்களின் முதன்மை கோப்புறையாகும்.</string>
     <string name="quicknote_is_the_fastest_option_to_write_down_notes">QuickNote என்பது விரைவாக குறிப்புகளை எழுதுவதற்கு ஒரு தேர்வாகும். இது Markdown முறையில் உள்ள ஒரு ஆவணமாகும் இதன் இயல்புநிலை இடமானது &gt;Notebook/QuickNote.md&lt;, நீங்கள் இந்த ஆவணத்திற்கு வேறு ஒரு கோப்பு பாதையை அமைப்புகளில் மாற்ற முடியும்.</string>
     <string name="todo_is_the_easiest_way_">உங்கள் செயல்களை நிர்வகிக்க ToDo வகை ஆவணத்தை பயன்படுத்தவும். அது  todo.txt முறையில் உள்ள ஆவணமாகும் இதன் இயல்புநிலை இடமானது &gt;Notebook/todo.txt&lt;, நீங்கள் இந்த ஆவணத்திற்கு வேறு ஒரு கோப்பு பாதையை அமைப்புகளில் மாற்ற முடியும்.</string>
@@ -310,7 +314,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">இந்த பட்டியலில் உள்ள கோப்பு வகை நீட்சிகள் கொண்ட ஆவணங்களை இந்த செயலியை கொண்டே திறக்கவும். உதாரணமாக நீங்கள் வலை ஆவணங்களையும் மற்றும் எந்த நீட்சிகள் அற்ற ஆவணங்களையும் திருத்த விரும்பினால் \'None, .html, .css , .js\' ஆகியவற்றை பயன்படுத்துங்கள்.</string>
     <string name="template">வார்ப்புரு</string>
     <string name="send_debug_log">Debug பதிவை அனுப்பவும்</string>
-    <string name="help_by_sending_debug_information_to_the_developer">debug தகவலை இந்த செயலியின் நிரலை எழுதுபவர்களுக்கு அனுப்புவதன் மூலம் உதவுங்கள். உங்கள் மின்னஞ்சல் செயலியின் வழியாக தரவானது மின்னஞ்சலாக அனுப்பப்படும் மற்றும் அனுப்புவதற்கு முன்னதாக நீங்கள் அனுப்பப்போகிற தரவை காணலாம். இதை இயக்குவதன் மூலம் மேலே உள்ள பட்டியில் கூடுதலாக \"debug பதிவை அனுப்பவும்\" தேர்வை காணலாம். இது ஒரு மின்னஞ்சல் வரைவை உருவாக்கும்.</string>
     <string name="print_pdf">அச்சிடு / PDF ஆக மாற்று</string>
     <string name="bigger_headings">பெரிய தலைப்புகள்</string>
     <string name="increase_text_size_of_headings_according_to_level">தலைப்புகளின் உரையின் அளவை அது இருக்கும் நிலையின் படி அதிகரிக்கவும் (# h1, ## h2. ### h3…)</string>
@@ -324,7 +327,6 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">படிக்கிறது</string>
     <string name="read">படி</string>
     <string name="table">அட்டவணை</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">எத்தனை நெடுவரிசைகள்? அட்டவணை பொத்தானை நீண்டு அழுத்துவதன் மூலம் ஒரு அட்டவணையை துவக்கு (தலைப்பை சேர்க்கவும்), குறுகி அழுத்துவதன் மூலம் ஒரு குறுக்குவரிசையை சேர்க்க முடியும்.</string>
     <string name="example_of_a_markdown_table">Markdown முறையில் ஒரு அட்டவணையின் உதாரணம்</string>
     <string name="delete_lines">வரிகளை நீக்கு</string>
     <string name="unordered_list">எண்கள் அல்லாத பட்டியல்</string>
@@ -339,6 +341,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">தலைப்பு 1</string>
     <string name="heading_2">தலைப்பு 2</string>
     <string name="heading_3">தலைப்பு 3</string>
+    <string name="heading_4">தலைப்பு 4</string>
+    <string name="heading_5">தலைப்பு 5</string>
     <string name="bold">தடித்த</string>
     <string name="italic">சாய்வெழுத்து</string>
     <string name="strikeout">அடித்திடு</string>

@@ -18,7 +18,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="rename">Byt namn</string>
     <string name="confirm_delete">Bekräfta radering</string>
     <string name="do_you_really_want_to_delete_this_witharg">Vill du verkligen radera den här %s?</string>
-    <string name="confirm_overwrite">Skriva över?</string>
+    <string name="confirm_overwrite">Bekräfta överskrivning</string>
     <string name="file_already_exists_overwerite">Filen finns redan, skriva över?</string>
     <string name="browse_filesystem">Bläddra i filsystemet</string>
     <string name="title">Titel</string>
@@ -27,6 +27,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="create_folder">Skapa mapp</string>
     <string name="create_new_document">Skapa nytt dokument</string>
     <string name="move">Flytta</string>
+    <string name="copy">Kopiera</string>
     <string name="info">Information</string>
     <string name="file_folder_already_exists_please_use_a_different_name">Fil/mapp finns redan! Använd ett annat namn</string>
     <string name="import_from_device">Importera från enhet</string>
@@ -35,7 +36,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="select_folder">Välj map</string>
     <string name="edit">Redigera</string>
     <string name="search_documents">Sök dokument</string>
-    <string name="share_to_arrow">Dela till&#8230;</string>
+    <string name="share_to_arrow" tools:ignore="TypographyEllipsis">Dela till&#8230;</string>
     <string name="share">Dela</string>
     <string name="search">Söc</string>
     <string name="display_converted_markup">Visa konverterad märkspråk</string>
@@ -47,7 +48,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="html_as_plaintext">HTML (som klartext)</string>
     <string name="document_editor_font">Redigerartypsnitt</string>
     <string name="theme">Tema</string>
-    <string name="open_existing_files_in_view_mode">Öppna existerande fil i vyläge</string>
+    <string name="open_existing_files_in_view_mode">Öppna befintliga filer i visningsläge</string>
     <string name="about">Om</string>
     <string name="plaintext">Klartext</string>
     <string name="file">Fil</string>
@@ -121,6 +122,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="files_and_folders">Filar och mappar</string>
     <string name="document_browser">Dokumentbläddrare</string>
     <string name="file_browser">Filhanterare</string>
+    <string name="set_due_date">Ange förfallodatum</string>
+    <string name="insert_replace_date">Insert date</string>
     <string name="create_note" needed="false">Skapa anteckning</string>
     <string name="special_documents" needed="false">Specialdokument</string>
     <string name="keep_screen_on" needed="false">Håll skärmen påslagen</string>
@@ -132,13 +135,13 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="app_wide">Global</string>
     <string name="main_view">Huvudvy</string>
     <string name="overall_theme_used_in_app">Appens övergripande tema</string>
-    <string name="remember_last_directory">Ladda </string>
+    <string name="remember_last_directory">Kom ihåg senaste katalogen</string>
     <string name="syntax_highlighting">Syntaxfärgning</string>
     <string name="highlighting_delay">Fördröjning för syntaxfärgning</string>
     <string name="highlighting_delay_lower_value_more_battery_drain_description__appspecific">Fördröjning i millisekunder innan syntaxfärgningen uppdateras. Ett lägre värde startar syntaxfärgningen tidigare, men drar mer batteri och minskar prestandan.</string>
-    <string name="highlighting_enabled_or_not__appspecific">Ska inskriven text vara syntaxfärgad?</string>
+    <string name="highlighting_enabled_or_not__appspecific">Kontrollera huruvida den angivna texten borde markeras eller inte</string>
     <string name="control_font_size_in_editor">Ändra typsnittsstorlek i redigeraren</string>
-    <string name="textactions_show_useful_actions_description__appspecific">Visa verktyg för att infoga vanliga textmoduler</string>
+    <string name="textactions_show_useful_actions_description__appspecific">Visa en stapel med praktiska knappar längst ned. De här textåtgärderna ändrar texten eller kör en åtgärd som baseras på texten.</string>
     <string name="load_last_opened_folder_at_startup">Ladda senaste öppnade mapp vid start</string>
     <string name="format">Format</string>
     <string name="contexts">Kontexter</string>
@@ -162,6 +165,8 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="highlight_line_ending_if_two_or_more_spaces">Markera mellanslag i slutet av rader som innehåller två eller flera mellanslag</string>
     <string name="use_monospace_for_code">Monospace för kod</string>
     <string name="disable_code_block_highlight">Inaktivera markering för kodblock</string>
+    <string name="auto_renumber_ordered_list">Auto-döpta beställda listor</string>
+    <string name="auto_renumber_ordered_list_slowdown">Det här alternativet kan påverka appens prestanda.</string>
     <string name="use_different_fonttype_slow_down">Använd typsnitt med fast bredd för kod. Att ändra typsnitt dynamiskt påverkar appens prestanda.</string>
     <string name="general">Generella</string>
     <string name="resources">Resurser</string>
@@ -174,6 +179,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="key_page_down">Sida ned (Page down)</string>
     <string name="move_text_one_line_up">Flytta text en rad upp</string>
     <string name="move_text_one_line_down">Flytta text en rad nedåt</string>
+    <string name="start_new_line_below">Starta ny rad nedan</string>
     <string name="key_pos_1">Början av rad (Pos home)</string>
     <string name="key_pos_end">Slutet av rad (Pos end)</string>
     <string name="key_pos_1_document">Dokumentets början</string>
@@ -215,13 +221,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="help_translating_this_app">Översätt appen till fler språk</string>
     <string name="source_code">Källkod</string>
     <string name="project_license">Projektets licens</string>
-    <string name="project_contribution_info">Projektbidragsinformation</string>
-    <string name="more_info_on_how_to_contribute_to_this_project">Mer information om hur du birdar till det här projektet</string>
     <string name="contribute_code_to_this_project_anybody_welcome">Bidrag med kod till projektet. Alla är välkommna, även nybörjare</string>
     <string name="project_team">Projektlag</string>
     <string name="contributors_public_add_yourself_description">Visa bidragsinformation. Lämna information för att synas här, om du vill, efter bidragande</string>
     <string name="descending">fallande ordning</string>
-    <string name="ascending">Stigande ordning</string>
+    <string name="ascending">stigande</string>
     <string name="disable_spelling_underline">Stäng av stavningsunderstrykning</string>
     <string name="spellcheck_keyboard_suggestion_stay_red_underline_vanishes">Tangentbordsförslag förblir, röda understrykningar försvinner</string>
     <string name="location">Plats</string>
@@ -308,13 +312,12 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="list_in_recent_files">Visa senaste filerna</string>
     <string name="reload">Ladda om</string>
     <string name="wrap_words">Bryt långa rader</string>
-    <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Mjuk brytning om texten inte får plats på skärmen. Annars, sätt på horisontell skrollning.</string>
-    <string name="recursive_search_in_current_directory">Sök rekursivt ned i katalogen när förfrågan innehåller regex med asteriks (*) används; stanna se om förfrågan är hållen i sammanhanget.</string>
+    <string name="soft_break_if_not_fit_to_width_else_enable_horizontal_scrolling">Mjuk brytning om texten inte får plats på skärmen. Annars, sätt på horisontell rullning.</string>
+    <string name="recursive_search_in_current_directory">Rekursiv sökning i aktuell katalog.</string>
     <string name="always_open_with_this_app">Föredra att öppna med appen</string>
     <string name="always_open_files_with_this_app_when_list_contains_file_extension">Öppna alltid filer av typen i listan med den här appen. Använd till exempel \'None, .html, .css , .js\' om du vill redigera webfiler och filer utan filändelse.</string>
     <string name="template">Mall</string>
     <string name="send_debug_log">Skicka felsökningslogg</string>
-    <string name="help_by_sending_debug_information_to_the_developer">Hjälp genom att skicka felsökningsinformation till utvecklare. Data skickas via e-post via din e-postapp och du kan se alla skickade data innan du skickar. Du hittar ytterligare ett alternativ för \"Skicka felsökningslogg\" i toppmenyn när det är aktiverat. Det skapar ett e-postutkast.</string>
     <string name="print_pdf">Print / PDF</string>
     <string name="bigger_headings">Större rubriker</string>
     <string name="increase_text_size_of_headings_according_to_level">Öka textstorleken på rubriker enligt nivå (# h1, ## h2. ### h3…)</string>
@@ -328,7 +331,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="reading">Läser</string>
     <string name="read">Läsa</string>
     <string name="table">Tabell</string>
-    <string name="how_much_columns_press_table_button_long_to_start_table">Hur mycket kolumner? Tryck på bordsknappen för att starta ett bord (infoga sidhuvud), tryck kort för att lägga till en rad.</string>
+    <string name="how_much_columns_press_table_button_long_to_start_table">Hur många kolumner? Tryck på tabellknappen för att starta en tabell (infoga sidhuvud), tryck kort för att lägga till en rad.</string>
     <string name="example_of_a_markdown_table">Exempel på en markdown tabell</string>
     <string name="delete_lines">Ta bort rader</string>
     <string name="unordered_list">Osorterad lista</string>
@@ -343,8 +346,11 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="heading_1">Rubrik 1</string>
     <string name="heading_2">Rubrik 2</string>
     <string name="heading_3">Rubrik 3</string>
+    <string name="heading_4">Rubrik 4</string>
+    <string name="heading_5">Rubrik 5</string>
     <string name="bold">Bold</string>
     <string name="italic">Italic</string>
+    <string name="highlighted">Markerad</string>
     <string name="strikeout">Slå ut</string>
     <string name="inline_code">Infogad kod</string>
     <string name="horizontal_line">Horisontell linje</string>
@@ -362,8 +368,10 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="essential">Viktig</string>
     <string name="append_human_readable_uuid_to_new_tasks">Lägg till läsbar UUID för nya uppgifter</string>
     <string name="action_order">Åtgärd order</string>
+    <string name="toggle_action_visibility">Växla åtgärdens synlighet</string>
     <string name="load_default_settings">Ladda standardinställningar</string>
     <string name="drag">Dra</string>
+    <string name="created">Skapad</string>
     <string name="file_encryption_password">Lösenord för filkryptering</string>
     <string name="no_password_set_cannot_encrypt_decrypt">Inget lösenord satt, kan inte kryptera eller dekryptera.\nGå till Inställningar -&gt; Allmänt -&gt; Lösenord för att ange ett lösenord.</string>
     <string name="encrypt_file_content">Kryptera filens innehåll</string>
@@ -371,4 +379,42 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="could_not_decrypt_file_content_wrong_password_or_is_the_file_maybe_not_encrypted">Kunde inte dekryptera filens innehåll. Har du använt ett fel lösenord? Är filen verkligen krypterad med Markors AES-kryptering?</string>
     <string name="password_already_set_setting_a_new_password_will_overwrite">Lösenord har redan angetts Att sätta ett nytt lösenord kommer att skriva över det befintliga lösenordet och du kanske inte kommer åt filer längre om du glömmer lösenordet.</string>
     <string name="code_block">Kod block</string>
+    <string name="add_completion_date">Lägg till slutdatum</string>
+    <string name="add_completion_date_for_todos_when_marking_them_as_done">Lägg till slutdatum för todos när de markeras som gjort</string>
+    <string name="file_description_format">Filens beskrivningsformat</string>
+    <string name="file_description_format_dialog">Format för beskrivningen under varje fil i filwebbläsaren. Följer Android SimpleDateFormat regler, med tillägg av FS för att visa filstorlek. Lämna tomt för att använda standardformatet för din lokal.\n\nExempel input:\nFS yyyyy MMM dd hh:mm:ss aa\nUtdataformat:\n30KB 2020 Mar 20 11:24:52</string>
+    <string name="loading_default_value">Laddar standardvärde</string>
+    <string name="file_settings">Fil inställningar</string>
+    <string name="search_and_replace">Sök / Ersätt</string>
+    <string name="search_for">Sök efter</string>
+    <string name="replace_with">Ersätt med</string>
+    <string name="replace_once">Ersätt (1)</string>
+    <string name="replace_all">Ersätt alla</string>
+    <string name="matches">Träffar</string>
+    <string name="search_replace_pattern_error_message">Sök eller ersätt mönsterfel.</string>
+    <string name="backup_settings">Säkerhetskopiera inställningar</string>
+    <string name="restore_settings">Återställ inställningar</string>
+    <string name="failed_to_create_backup">Kunde inte skapa säkerhetskopia</string>
+    <string name="export_settings_to_json_file">Exportera inställningar till json-fil</string>
+    <string name="import_settings_from_backup_json_file_on_success_the_app_is_restarted">Importera inställningar från backup-json-fil. Vid lyckat tillfälle startas appen om.</string>
+    <string name="failed_to_restore_settings_from_backup">Det gick inte att återställa inställningarna från säkerhetskopia</string>
+    <string name="newline_is_new_paragraph">Newline = nytt stycke</string>
+    <string name="search_in_content">Sök i innehåll</string>
+    <string name="max_search_depth">Sök djup</string>
+    <string name="ignore_list">Ignorera listan</string>
+    <string name="do_not_search_specified_files_and_folders">Sök inte efter angivna filer och mappar.\nAnvänd ny rad som separator.\nAnvänd citat för exakta dir namn: \"Test\".\nEller använd Regex \'^[.].*\'\nExempel: ^\\..*\n\"test\"\n\"Test\"\n.*secret.*\n.*BACKUP.*\n.*.ini</string>
+    <string name="regex_search">Regex sökning</string>
+    <string name="case_sensitive">Ärende känslig</string>
+    <string name="stop_search_after_first_match">Stoppa sökning efter första matchningen</string>
+    <string name="regex_can_not_be_compiled">Regex kan inte kompileras</string>
+    <string name="keep_both">Behåll båda</string>
+    <string name="skip">Hoppa</string>
+    <string name="overwrite">Skriv över</string>
+    <string name="keep_both_all">Behåll båda (alla)</string>
+    <string name="skip_all">Hoppa över (alla)</string>
+    <string name="overwrite_all">Skriv över (alla)</string>
+    <string name="copy_move_conflict_message">\'%s\' finns redan i %s</string>
+    <string name="additional_contexts_and_projects">Ytterligare sammanhang och projekt</string>
+    <string name="enter_space_seperated_contexts_and_projects_these_will">Ange mellanslagsseparerade @kontexter och +projekt. Dessa kommer alltid att synas på todo.txt infoga dialogrutor.</string>
+    <string name="infinite">Oändlig</string>
 </resources>

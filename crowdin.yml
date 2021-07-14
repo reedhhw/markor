@@ -1,5 +1,5 @@
 # vim: sw=2 ts=2 noexpandtab:
-commit_message: "[ci skip] Crowdin translation bot: New translations for %language%"
+commit_message: "[ci skip] Update translations (%language%)"
 append_commit_message: false
 files:
   - source: /app/src/main/res/values/strings.xml
@@ -56,4 +56,7 @@ files:
         kn: kn # Kannada (Asian)
         ta: ta # Tamil (Asian)
         sq: sq # Albanian
+        mk: mk # Macedonian
+        si-LK: si # Sinhala (Sri Lanka)
+        eo: eo # Esperanto
     translate_attributes: 0

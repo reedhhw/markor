@@ -19,6 +19,7 @@
  */
 package net.gsantner.opoc.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import net.gsantner.markor.format.TextFormat;
 import net.gsantner.markor.ui.FileInfoDialog;
 import net.gsantner.markor.ui.FilesystemViewerCreator;
 import net.gsantner.markor.ui.SearchOrCustomTextDialogCreator;
+import net.gsantner.markor.ui.fsearch.SearchEngine;
 import net.gsantner.markor.util.AppSettings;
 import net.gsantner.markor.util.ContextUtils;
 import net.gsantner.markor.util.PermissionChecker;
@@ -50,9 +52,11 @@ import net.gsantner.opoc.activity.GsFragmentBase;
 import net.gsantner.opoc.util.FileUtils;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -74,9 +78,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
     public static final int SORT_BY_FILESIZE = 2;
 
     public static FilesystemViewerFragment newInstance(FilesystemViewerData.Options options) {
-        FilesystemViewerFragment f = new FilesystemViewerFragment();
-        options.listener.onFsViewerConfig(options);
-        return f;
+        return new FilesystemViewerFragment();
     }
 
     //########################
@@ -138,6 +140,10 @@ public class FilesystemViewerFragment extends GsFragmentBase
         });
 
         _filesystemViewerAdapter.restoreSavedInstanceState(savedInstanceState);
+
+        if (SearchEngine.isSearchExecuting) {
+            SearchEngine.activity.set(new WeakReference<>(getActivity()));
+        }
     }
 
 
@@ -154,6 +160,9 @@ public class FilesystemViewerFragment extends GsFragmentBase
     private void setDialogOptions(FilesystemViewerData.Options options) {
         _dopt = options;
         _callback = _dopt.listener;
+        if (_callback != null) {
+            _callback.onFsViewerConfig(_dopt); // Configure every time
+        }
         _dopt.listener = this;
         checkOptions();
     }
@@ -179,10 +188,11 @@ public class FilesystemViewerFragment extends GsFragmentBase
         }
     }
 
+
     @Override
-    public void onFsViewerSelected(String request, File file) {
+    public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
         if (_callback != null) {
-            _callback.onFsViewerSelected(_dopt.requestId, file);
+            _callback.onFsViewerSelected(_dopt.requestId, file, lineNumber);
         }
     }
 
@@ -248,6 +258,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
             _fragmentMenu.findItem(R.id.action_rename_selected_item).setVisible(selMulti1 && selWritable);
             _fragmentMenu.findItem(R.id.action_info_selected_item).setVisible(selMulti1);
             _fragmentMenu.findItem(R.id.action_move_selected_items).setVisible((selMulti1 || selMultiMore) && selWritable && !_shareUtil.isUnderStorageAccessFolder(getCurrentFolder()));
+            _fragmentMenu.findItem(R.id.action_copy_selected_items).setVisible((selMulti1 || selMultiMore) && selWritable && !_shareUtil.isUnderStorageAccessFolder(getCurrentFolder()));
             _fragmentMenu.findItem(R.id.action_share_files).setVisible(selFilesOnly && (selMulti1 || selMultiMore) && !_shareUtil.isUnderStorageAccessFolder(getCurrentFolder()));
             _fragmentMenu.findItem(R.id.action_go_to).setVisible(!_filesystemViewerAdapter.areItemsSelected());
             _fragmentMenu.findItem(R.id.action_sort).setVisible(!_filesystemViewerAdapter.areItemsSelected());
@@ -401,15 +412,8 @@ public class FilesystemViewerFragment extends GsFragmentBase
                 return true;
             }
             case R.id.action_search: {
-                final File currentFolder = getCurrentFolder();
-                SearchOrCustomTextDialogCreator.showSearchFilesDialog(getActivity(), currentFolder, relFilePath -> {
-                    File load = new File(currentFolder, relFilePath);
-                    if (load.isDirectory()) {
-                        _filesystemViewerAdapter.loadFolder(load);
-                    } else {
-                        onFsViewerSelected("", load);
-                    }
-                });
+                executeSearchAction();
+
                 return true;
             }
             case R.id.action_folder_first: {
@@ -457,7 +461,11 @@ public class FilesystemViewerFragment extends GsFragmentBase
             }
 
             case R.id.action_move_selected_items: {
-                askForMove();
+                askForMoveOrCopy(true);
+                return true;
+            }
+            case R.id.action_copy_selected_items: {
+                askForMoveOrCopy(false);
                 return true;
             }
 
@@ -490,7 +498,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
             case R.id.action_fs_copy_to_clipboard: {
                 if (_filesystemViewerAdapter.areItemsSelected()) {
                     File file = new ArrayList<>(_filesystemViewerAdapter.getCurrentSelection()).get(0);
-                    if (TextFormat.isTextFile(file, file.getAbsolutePath())) {
+                    if (TextFormat.isTextFile(file)) {
                         _shareUtil.setClipboard(FileUtils.readTextFileFast(file));
                         Toast.makeText(getContext(), R.string.clipboard, Toast.LENGTH_SHORT).show();
                         _filesystemViewerAdapter.unselectAll();
@@ -507,6 +515,20 @@ public class FilesystemViewerFragment extends GsFragmentBase
         }
 
         return false;
+    }
+
+    private void executeSearchAction() {
+        if (new PermissionChecker(getActivity()).doIfExtStoragePermissionGranted()) {
+            final File currentFolder = getCurrentFolder();
+            SearchOrCustomTextDialogCreator.showSearchFilesDialog(getActivity(), currentFolder, (relFilePath, lineNumber) -> {
+                File load = new File(currentFolder, relFilePath);
+                if (load.isDirectory()) {
+                    _filesystemViewerAdapter.loadFolder(load);
+                } else {
+                    onFsViewerSelected("", load, lineNumber);
+                }
+            });
+        }
     }
 
     public static Comparator<File> sortFolder(List<File> filesToSort) {
@@ -569,21 +591,42 @@ public class FilesystemViewerFragment extends GsFragmentBase
         confirmDialog.show(getActivity().getSupportFragmentManager(), WrConfirmDialog.FRAGMENT_TAG);
     }
 
-    private void askForMove() {
-        final ArrayList<File> filesToMove = new ArrayList<>(_filesystemViewerAdapter.getCurrentSelection());
+    private void askForMoveOrCopy(final boolean isMove) {
+        final List<File> files = new ArrayList<>(_filesystemViewerAdapter.getCurrentSelection());
         FilesystemViewerCreator.showFolderDialog(new FilesystemViewerData.SelectionListenerAdapter() {
+            private FilesystemViewerData.Options _doptMoC;
+
             @Override
-            public void onFsViewerSelected(String request, File file) {
-                super.onFsViewerSelected(request, file);
-                WrMarkorSingleton.getInstance().moveSelectedNotes(filesToMove, file.getAbsolutePath(), getContext());
+            public void onFsViewerSelected(String request, File file, Integer lineNumber) {
+                super.onFsViewerSelected(request, file, null);
+                WrMarkorSingleton.getInstance().moveOrCopySelected(files, file, getActivity(), isMove);
                 _filesystemViewerAdapter.unselectAll();
                 _filesystemViewerAdapter.reloadCurrentFolder();
             }
 
             @Override
             public void onFsViewerConfig(FilesystemViewerData.Options dopt) {
-                dopt.titleText = R.string.move;
-                dopt.rootFolder = _appSettings.getNotebookDirectory();
+                _doptMoC = dopt;
+                _doptMoC.titleText = isMove ? R.string.move : R.string.copy;
+                _doptMoC.rootFolder = _appSettings.getNotebookDirectory();
+                _doptMoC.startFolder = getCurrentFolder();
+                // Directories cannot be moved into themselves. Don't give users the option
+                final Set<String> selSet = new HashSet<>();
+                for (final File f : files) {
+                    selSet.add(f.getAbsolutePath());
+                }
+                _doptMoC.fileOverallFilter = (test) -> !selSet.contains(test.getAbsolutePath());
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onFsViewerDoUiUpdate(FilesystemViewerAdapter adapter) {
+                if (_doptMoC.listener instanceof FilesystemViewerDialog) {
+                    final TextView titleView = ((FilesystemViewerDialog) _doptMoC.listener)._dialogTitle;
+                    if (titleView != null) {
+                        titleView.setText(String.format("%s → %s", titleView.getContext().getString(isMove ? R.string.move : R.string.copy), adapter.getCurrentFolder().getName()));
+                    }
+                }
             }
         }, getActivity().getSupportFragmentManager(), getActivity());
     }
@@ -591,7 +634,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
     private void showImportDialog() {
         FilesystemViewerCreator.showFileDialog(new FilesystemViewerData.SelectionListenerAdapter() {
             @Override
-            public void onFsViewerSelected(String request, File file) {
+            public void onFsViewerSelected(String request, File file, final Integer lineNumber) {
                 importFile(file);
                 reloadCurrentFolder();
             }
@@ -619,7 +662,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
             String message = getString(R.string.file_already_exists_overwerite) + "\n[" + file.getName() + "]";
             // Ask if overwriting is okay
             WrConfirmDialog d = WrConfirmDialog.newInstance(
-                    getString(R.string.confirm_overwrite), message, file, (WrConfirmDialog.ConfirmDialogCallback) (confirmed, data) -> {
+                    getString(R.string.confirm_overwrite), message, file, (confirmed, data) -> {
                         if (confirmed) {
                             importFileToCurrentDirectory(getActivity(), file);
                         }
@@ -643,6 +686,7 @@ public class FilesystemViewerFragment extends GsFragmentBase
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && getCurrentFolder() != null && !TextUtils.isEmpty(getCurrentFolder().getName()) && getToolbar() != null) {
             getToolbar().setTitle(getCurrentFolder().getName());
+            reloadCurrentFolder();
         }
     }
 }
