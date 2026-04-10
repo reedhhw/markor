@@ -88,10 +88,16 @@
 
         <activity
             android:name=".activity.ActionButtonSettingsActivity"
+            android:exported="true"
             android:parentActivityName=".activity.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.SettingsActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity
